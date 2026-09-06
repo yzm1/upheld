@@ -89,16 +89,23 @@ are here.
 
 ## Where every defense actually runs
 
-A local run of `tests/contracts` and the six `tests/cli/test_contract_*` files on 2026-09-06 at c8c9362 did not complete within the 300-second budget allowed for it, so no pass count is recorded here. Nothing else is known to have run these tests.
+`tests/contracts` -- the six library-level files, 149 tests including the
+dbt execution half, since dbt is on PATH here -- was run locally on 2026-09-06
+at `7f9addc` on a component tree with 4 uncommitted file(s), with `python -m pytest`: **149 passed, 0 failed, 0
+skipped**, in under ten minutes. The six `tests/cli/test_contract_*` files were
+not run to completion: each CLI test spawns a subprocess whose startup is
+dominated by metric discovery, and the attempt including them timed out at 300
+seconds. So the library half has one known execution and the CLI half has none.
 
 The repository is 468 commits ahead of `origin/main`, whose last commit is
 2026-08-27. The workflow that would run `pytest tests/` has not fired on any
 of them. The pre-commit hook is not installed. Every `guarded_by: test` and
-`guarded_by: checker` here therefore has **no execution anyone can point to**:
-the workflow has not fired, the hook is not installed, and the one attempt made
-for this survey did not finish. By the method's V3 the honest
-`last_actually_ran` for the component is unknown, and a register that wrote a
-timestamp here would be guessing.
+`guarded_by: checker` under `tests/contracts` therefore has exactly one
+execution anyone can point to, the one above. Every defense under
+`tests/cli/test_contract_*` has none: the workflow has not fired, the hook is
+not installed, and the attempt made for this survey did not finish. By the
+method's V3 the honest `last_actually_ran` is that one timestamp for the
+library half and unknown for the CLI half.
 
 `prove` itself is wired to no contract in its own repository: there is no
 committed `soundness.json` and no example contract under `examples/`. The

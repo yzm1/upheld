@@ -62,8 +62,8 @@ Promises that are made and defended by nothing, or that nobody made.
   repository. No committed `soundness.json`, no example contract. The gate
   exists and gates nothing.
 - **Nobody made this one either:** `last_actually_ran`. 468 commits, zero CI
-  runs, no hook, and the one local attempt for this survey timed out before
-  finishing. No execution of this component's tests is known.
+  runs, no hook. One local run of the library half for this survey: 149
+  passed. The CLI half timed out and has no known execution.
 
 ## What the queue says
 
