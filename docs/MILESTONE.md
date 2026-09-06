@@ -17,7 +17,9 @@ Hash rules and run context need agreement before the checker can produce trustwo
 
 Use two independent public projects: one ordinary mature codebase outside Upheld's source projects, and another in a different language. Record target choice, commit, component, environment, and the engineer's prior knowledge before each trial.
 
-Each discovery trial lasts two hours. A useful finding is a distinct, previously unknown defect or consequential undocumented promise, confirmed against the target. Record duplicates, wrong claims, unresolved questions, probe time, and all human review time. The maintainer adjudicates disputed findings against the source and run record.
+Each discovery trial lasts two hours. Apply the [survey outcome definitions](SURVEY_TOOL.md): a useful finding is a distinct, consequential defect or accepted new promise, confirmed against the target. Primary novelty means new to the project, checked with the maintainer. Unknown novelty remains unresolved. Record duplicates, wrong claims, unresolved questions, probe time, and all human review time, including setup and failed triage. The maintainer adjudicates disputed findings against the source and run record.
+
+E01 must register source boundaries, sampled omission checks, reviewers, and comparison arms before execution. The [research comparison plan](SURVEY_RESEARCH.md) includes human search, a non-generative workflow, a direct agent prompt, and the hybrid proposal. Feasibility pilots and controlled method comparisons need separate result claims.
 
 The initial success rule requires at least one confirmed useful finding in each trial and at most 60 human review minutes per finding. A zero-finding trial or a higher review cost triggers a scope review before adding checker features. Small samples limit any general claim.
 
