@@ -1,0 +1,246 @@
+{
+  "observed_on": "2026-09-06",
+  "source_upheld_commit": "3cc993edf7810901ce285b013e18fc670e18919a",
+  "unit": "top-level finding bullet",
+  "findings": [
+    {
+      "id": "TRI-001",
+      "group": "odd",
+      "promise_ids": [
+        "CTR-016"
+      ],
+      "source_bullet": "**CTR-016.** A checker that guards \"every actionable verdict is produced by",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-002",
+      "group": "odd",
+      "promise_ids": [
+        "CTR-018"
+      ],
+      "source_bullet": "**CTR-018.** `accepted:` keys are unchecked free strings inside a model",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-003",
+      "group": "odd",
+      "promise_ids": [
+        "CTR-003"
+      ],
+      "source_bullet": "**CTR-003.** Two duration parsers in one package with different grammars:",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-004",
+      "group": "odd",
+      "promise_ids": [
+        "CTR-014",
+        "CTR-043"
+      ],
+      "source_bullet": "**CTR-014, CTR-043.** Two doc-versus-code sweeps, each with a static",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-005",
+      "group": "odd",
+      "promise_ids": [
+        "CTR-017"
+      ],
+      "source_bullet": "**CTR-017.** A plain YAML contract can never be answered by `type`, because",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-006",
+      "group": "ambiguous",
+      "promise_ids": [
+        "CTR-002"
+      ],
+      "source_bullet": "**CTR-002.** The `[0, 1]` bound on `max_null_percentage` is a `Field`",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-007",
+      "group": "ambiguous",
+      "promise_ids": [
+        "CTR-009"
+      ],
+      "source_bullet": "**CTR-009.** The additive-compatibility half -- an extra column passes -- is",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-008",
+      "group": "ambiguous",
+      "promise_ids": [
+        "CTR-011"
+      ],
+      "source_bullet": "**CTR-011.** `_cell` escaping is narrated in the docstring with the defect",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-009",
+      "group": "ambiguous",
+      "promise_ids": [
+        "CTR-032"
+      ],
+      "source_bullet": "**CTR-032.** The `own & run.absent` branch has no test named for it. A",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-010",
+      "group": "ambiguous",
+      "promise_ids": [
+        "CTR-041"
+      ],
+      "source_bullet": "**CTR-041.** Missing-file exit code is asserted for `prove`. The handler",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-011",
+      "group": "ambiguous",
+      "promise_ids": [
+        "CTR-038"
+      ],
+      "source_bullet": "**CTR-038.** dbt is on PATH here, so the execution half of the adapter can",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-012",
+      "group": "missing",
+      "promise_ids": [
+        "CTR-005"
+      ],
+      "source_bullet": "**CTR-005.** `CONTRACTS.md:91` says `references` is not enforced. It is. The",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-013",
+      "group": "missing",
+      "promise_ids": [
+        "CTR-044"
+      ],
+      "source_bullet": "**CTR-044.** The example contract in the same page fails its own witness.",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-014",
+      "group": "missing",
+      "promise_ids": [
+        "CTR-019"
+      ],
+      "source_bullet": "**CTR-019.** Exit 4 on ungradeable: documented in two places, implemented in",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-015",
+      "group": "missing",
+      "promise_ids": [
+        "CTR-021"
+      ],
+      "source_bullet": "**CTR-021.** `expected_verdict` is erased by the next write. Documented as",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-016",
+      "group": "missing",
+      "promise_ids": [
+        "CTR-012"
+      ],
+      "source_bullet": "**CTR-012.** The init-to-verify round trip. The workflow test says in its",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-017",
+      "group": "missing",
+      "promise_ids": [
+        "CTR-037"
+      ],
+      "source_bullet": "**CTR-037.** The parser's error shapes.",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-018",
+      "group": "missing",
+      "promise_ids": [],
+      "source_bullet": "**Nobody made this one:** `prove` is applied to no contract in its own",
+      "disposition": "historical finding; current target not rechecked"
+    },
+    {
+      "id": "TRI-019",
+      "group": "missing",
+      "promise_ids": [],
+      "source_bullet": "**Nobody made this one either:** `last_actually_ran`. 468 commits, zero CI",
+      "disposition": "historical finding; current target not rechecked"
+    }
+  ],
+  "historical_summary": {
+    "claimed_items": 18,
+    "counted_items": 19,
+    "claimed_probe_count_in_readme": 4,
+    "claimed_probe_count_in_triage": 5,
+    "confirmed_probe_count": null
+  },
+  "observations": [
+    {
+      "id": "OBS-001",
+      "promise_ids": [
+        "CTR-044"
+      ],
+      "kind": "reported_probe",
+      "result": "Published example: exit 4; 12 promises; 0 defended; 11 unassessed; 1 errored",
+      "source_rev": "c8c9362",
+      "raw_run_record": null,
+      "command": "contract prove (full arguments unavailable)"
+    },
+    {
+      "id": "OBS-002",
+      "promise_ids": [
+        "CTR-019"
+      ],
+      "kind": "reported_probe",
+      "result": "Arbitrary expr clause: exit 0 in write mode and check mode",
+      "source_rev": null,
+      "raw_run_record": null,
+      "command": null
+    },
+    {
+      "id": "OBS-003",
+      "promise_ids": [
+        "CTR-021"
+      ],
+      "kind": "reported_write_check",
+      "result": "Next register write drops expected_verdict",
+      "source_rev": null,
+      "raw_run_record": null,
+      "command": null
+    },
+    {
+      "id": "RUN-001",
+      "kind": "reported_suite_attempt",
+      "source_rev": "c8c9362",
+      "command": null,
+      "scope": "contracts library and six CLI test files",
+      "result": "Incomplete at 300 seconds",
+      "raw_run_record": null
+    },
+    {
+      "id": "RUN-002",
+      "kind": "reported_suite_completion",
+      "source_rev": "7f9addc",
+      "command": "python -m pytest (selection arguments unavailable)",
+      "scope": "tests/contracts, including dbt execution",
+      "dirty_files": 4,
+      "result": {
+        "passed": 149,
+        "failed": 0,
+        "skipped": 0
+      },
+      "raw_run_record": null
+    }
+  ],
+  "unresolved": [
+    "No raw probe logs or per-probe times are committed.",
+    "The identity of an additional fourth or fifth probe is unknown.",
+    "The nine mechanical, five probe, four decision split has no item-level dispositions.",
+    "The exact dirty-file contents and any subject changes between c8c9362 and 7f9addc are unknown."
+  ]
+}

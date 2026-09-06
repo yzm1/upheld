@@ -1,0 +1,302 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/yzm1/upheld/schemas/0.1/register.schema.json",
+  "title": "Upheld 0.1 register",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "producer": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source_repo": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_rev": {
+          "type": "string",
+          "minLength": 1
+        },
+        "surveyed_on": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "inputs"
+      ],
+      "additionalProperties": false
+    },
+    "promises": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "subject_scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "published_in": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "confidence": {
+            "enum": [
+              "verified",
+              "suspected"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          },
+          "evidence_tier": {
+            "enum": [
+              "read",
+              "unread_dependence",
+              "structural",
+              "fuzzy",
+              "unknown"
+            ]
+          },
+          "why": {
+            "type": "string",
+            "minLength": 1
+          },
+          "the_test_that_would_catch_it": {
+            "type": "string",
+            "minLength": 1
+          },
+          "next_step": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reachability": {
+            "enum": [
+              "live",
+              "latent",
+              "impossible",
+              "unknown"
+            ]
+          },
+          "armed_by": {
+            "type": "string",
+            "minLength": 1
+          },
+          "defenses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "promise_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "guarded_by": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "test",
+                        "property",
+                        "checker",
+                        "ratchet",
+                        "type",
+                        "runtime_invariant"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^x-[a-z][a-z0-9_-]*$"
+                    }
+                  ]
+                },
+                "artifact_locator": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "minItems": 1,
+                      "uniqueItems": true
+                    }
+                  ]
+                },
+                "subject_scope": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "why_this_kind": {
+                  "type": "string"
+                },
+                "needs_environment": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "last_actually_ran": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "run_reference": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "mechanism": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "metadata": {
+                  "type": "object"
+                }
+              },
+              "required": [
+                "id",
+                "promise_id",
+                "guarded_by",
+                "artifact_locator",
+                "subject_scope",
+                "why_this_kind",
+                "needs_environment"
+              ],
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "guarded_by": {
+                        "pattern": "^x-"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "mechanism"
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "gap": {
+            "type": "object",
+            "properties": {
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "accepted_by": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "accepted_at": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "reason"
+            ],
+            "additionalProperties": false
+          },
+          "metadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "text",
+          "subject_scope",
+          "source",
+          "confidence",
+          "evidence_tier",
+          "why",
+          "the_test_that_would_catch_it",
+          "reachability",
+          "defenses"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "reachability": {
+                  "const": "latent"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "armed_by"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "producer",
+    "promises"
+  ],
+  "additionalProperties": false
+}
