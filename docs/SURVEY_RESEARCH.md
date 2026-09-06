@@ -4,7 +4,7 @@ Readers are engineers deciding how Upheld should discover promises worth checkin
 
 **Use a hybrid workflow: fixed rules preserve sources and run checks; an optional generative language model interprets prose and proposes questions.** Let users configure their existing agent CLI before the first model-assisted survey. Keep a useful local mode that requires no generative model. “Non-generative” below means the model does not compose or rewrite claims.
 
-This research supports S01's design, as of 6 September 2026. It does not establish a winning product through a common benchmark. Published studies test different tasks and corpora; vendor documentation establishes advertised behavior. No comparative survey trial or provider integration ran during this work. The scanner remains unbuilt.
+This research supports S01's design, as of 6 September 2026. It does not establish a winning product through a common benchmark. Published studies test different tasks and corpora; vendor documentation establishes advertised behavior. No comparative survey trial or provider integration ran during this work. At this research stage the scanner remained unbuilt. The later [S02 prototype](SURVEY_PROTOTYPE.md) now supports bounded source review; comparative quality trials remain open.
 
 ## Literature review supplies the main comparison
 
@@ -116,6 +116,6 @@ Advance a language model stage only when its added useful findings or saved revi
 
 ## S01 completes the design; the trials remain open
 
-S01 now defines the survey objective, outcome categories, attention measures, and omission checks. The milestone uses those definitions. E01 must still register concrete experiments, and S02 must build the scanner.
+S01 now defines the survey objective, outcome categories, attention measures, and omission checks. The milestone uses those definitions. E01 must still register concrete experiments, and the [S02 prototype](SURVEY_PROTOTYPE.md) still needs independent quality trials.
 
 On 6 September 2026, `python tools/check_docs.py` passed the prose, schema, task, and local-link checks for this change. It also passed the supplied prose-check tests. These checks assess the written artifacts; they do not demonstrate survey quality or working backend adapters.

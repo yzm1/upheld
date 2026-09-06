@@ -1,8 +1,8 @@
-# D01–D08 and the S01 survey design are complete
+# D01–D08, S01, and the S02 prototype are complete
 
 Readers are engineers choosing the next Upheld task. This list tracks the supplied discussion against the repository, updated 6 September 2026.
 
-Nine tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXES.md), plus S01's survey objective and research. D04, D06, and D08 were reopened and repaired; the original completion claim overstated their checks. The other 56 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
+Ten tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXES.md), plus S01's research and S02's source-review prototype. D04, D06, and D08 were reopened and repaired; the original completion claim overstated their checks. The other 55 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
 
 [The completion record](docs/COMPLETED_D01_D08.md) links the changes and checks. [The original derived list](docs/history/2026-09-06/DERIVED_TODO.md) preserves the full reasoning, dependencies, and sources for the original 64 items. S11 adds research requested on 6 September 2026, bringing the total to 65.
 
@@ -20,6 +20,8 @@ Nine tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXE
 | D08 | Complete | Recorded README drift, added a status defense, and exercised seeded failures. | [Artifact](examples/upheld-status/README.md) |
 | S01 | Complete | Defined useful, new, confirmed, and decision-required outcomes; specified attention and omission measures; compared cross-domain methods and user-configured backends. E01 trial registration remains open. | [Objective](docs/SURVEY_TOOL.md), [research](docs/SURVEY_RESEARCH.md), [backend proposal](docs/SURVEY_BACKENDS.md) |
 
+| S02 | Complete | Implemented bounded source packets, external judgment import, exact quote checks, replay comparison, and an experimental Codex adapter. Live provider checks and independent quality evaluation remain open. | [Guide](docs/SURVEY_PROTOTYPE.md), [run and tests](examples/survey-heldtospec/README.md) |
+
 ## Build the survey and small checker together
 
 The [milestone](docs/MILESTONE.md) defines the next trial and proposed effort split. Complete hash rules and run-context policy before relying on product evidence.
@@ -29,14 +31,13 @@ Priority P0 means a trust blocker. P1 means the next learning milestone. P2 mean
 | ID | Priority | Task | Completion condition |
 |---|---|---|---|
 | S11 | P1 | Research how existing agents can use Upheld to make judgments | A source-backed comparison, interface recommendation, and registered-test proposal meet the research brief below. Research completion does not imply a shipped skill or measured benefit. |
-| S02 | P1 | Turn the hand survey into a repeatable scanner workflow | heldtospec's component can be rescanned by a documented procedure whose judgment and serialization steps are distinguishable. Do not credit `build_register.py` as an automated scanner. |
 | S03 | P1 | Add test/code sources and audit source-selection bias | the survey records what each source adds and checks the documented undercount of shape/type-related promises. |
 | S04 | P1 | Build skeptical triage with explicit uncertainty | the example queue has an auditable disposition per item and unknowns cannot be converted into verified coverage by a default. |
 | S05 | P1 | Build the cheap-probe stage before investing heavily in a classifier | the first queue can be mechanically reduced with a measured cost per resolved item. Findings about a promise remain distinct from evidence grading a defense. |
 | S06 | P1 | Implement classification without a preselected defense | the interface cannot silently turn uncertainty, unavailable infrastructure, or every new row into `test`. |
 | S07 | P1 | Define document-to-subject mapping and usable locators | supported locators resolve deterministically and scope containment can be checked without pretending the artifact locator is subject scope. |
 | S08 | P1 | Make register generation preserve human decisions | a second survey run retains reviewed decisions or surfaces an explicit conflict, leaves bindings intact, and never emits accepted evidence merely because it found a defense. |
-| S09 | P1 | Deliver a one-command first-use path | a first-time engineer can reach a useful finding without manually authoring six ontology files. Counts distinguish candidates, unbound defenses, findings, and confirmed evidence; the review's sample “104 well supported” is illustrative, not a valid evidence claim. |
+| S09 | P1 | Deliver a one-command first-use path | a first-time engineer can reach a useful finding without manually authoring six ontology files. Complete live adapter checks for authentication, output, effective permissions, cancellation, and costs before claiming provider readiness. Counts distinguish candidates, unbound defenses, findings, and confirmed evidence; the review's sample “104 well supported” is illustrative, not a valid evidence claim. |
 | S10 | P1 | Choose the minimum review surface and measure its usability | a new user can resolve a triage item and resume a rescan without understanding the whole checker ontology. |
 | P01 | P0 | Specify an execution-provenance object or equivalent linked run record | the recorded observation can be identified beyond a Git SHA and absent fields have explicit meaning. |
 | P02 | P0 | Define what `verify` can and cannot establish about runtime context | “tree basis unchanged” does not imply an independently checked execution environment, and cross-machine comparisons follow a documented policy. |

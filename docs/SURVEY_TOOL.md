@@ -2,7 +2,7 @@
 
 Readers are engineers building the first survey workflow. The committed hand survey produced 44 promises and 17 next questions. Its triage page contains 19 finding bullets.
 
-The scanner remains unbuilt. The serializer writes choices already present in its source. [The count audit](../examples/heldtospec-contracts/reconciliation.md) explains why the earlier 18-item count and probe totals cannot support a yield ratio.
+The [S02 prototype](SURVEY_PROTOTYPE.md) now prepares source packets and imports candidate judgments. Its experimental Codex adapter still needs a live trial. The historical serializer writes choices already present in its source. [The count audit](../examples/heldtospec-contracts/reconciliation.md) explains why the earlier 18-item count and probe totals cannot support a yield ratio.
 
 ## Give the reader a useful finding before explaining the records
 
@@ -12,7 +12,7 @@ The planned first-use path is `upheld survey`. It should collect candidates, run
 
 The [cross-domain research](SURVEY_RESEARCH.md) compares scientific claim extraction, evidence search, systematic review, interview analysis, and software probes. It recommends fixed rules for source handling and optional language model help with prose. The [backend proposal](SURVEY_BACKENDS.md) lets users configure their own CLI or model API before model-assisted work.
 
-These are S01 design decisions dated 6 September 2026. S02–S10 still own implementation; E01 still owns the registered trial protocol. No trial has established the recommended approach's advantage.
+These are S01 design decisions dated 6 September 2026. S02 now has a [bounded source-review demonstration](../examples/survey-heldtospec/README.md). S03–S10 still own the remaining workflow; E01 owns the registered trial protocol. No trial has established the recommended approach's advantage.
 
 ## Count a discovery only after resolving its meaning
 
