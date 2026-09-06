@@ -152,5 +152,50 @@
     "diagnostics",
     "counts"
   ],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "anyOf": [
+          {
+            "properties": {
+              "findings": {
+                "contains": {
+                  "properties": {
+                    "consequence": {
+                      "const": "unresolvable"
+                    }
+                  },
+                  "required": [
+                    "consequence"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "properties": {
+              "counts": {
+                "properties": {
+                  "unresolvable": {
+                    "minimum": 1
+                  }
+                },
+                "required": [
+                  "unresolvable"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "exit_code": {
+            "const": 5
+          }
+        }
+      }
+    }
+  ]
 }
