@@ -5,13 +5,6 @@
       "items": {
         "additionalProperties": false,
         "properties": {
-          "coverage": {
-            "enum": [
-              "whole_document",
-              "partial"
-            ],
-            "type": "string"
-          },
           "note": {
             "minLength": 1,
             "type": "string"
@@ -19,17 +12,11 @@
           "source_id": {
             "minLength": 1,
             "type": "string"
-          },
-          "uninspected": {
-            "minLength": 1,
-            "type": "string"
           }
         },
         "required": [
           "source_id",
-          "note",
-          "coverage",
-          "uninspected"
+          "note"
         ],
         "type": "object"
       },

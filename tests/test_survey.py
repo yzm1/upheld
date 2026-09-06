@@ -35,7 +35,7 @@ class SurveyTests(unittest.TestCase):
     def reply(self):
         sid = self.packet['payload']['sources'][0]['id']
         return {'packet_id': self.packet['packet_id'], 'reviewer': 'test fixture',
-                'assessments': [{'source_id': sid, 'note': 'Synthetic fixture inspected'}],
+                'assessments': [{'source_id': sid, 'note': 'Synthetic fixture inspected', 'coverage': 'whole_document', 'uninspected': 'none'}],
                 'candidates': [{'claim': 'Positive values pass', 'subject': 'values', 'kind': 'behavior',
                                 'qualifiers': 'Only positive values', 'rationale': 'Boundary needs checking',
                                 'uncertainty': 'Not executed', 'next_question': 'What happens at zero?',
@@ -160,10 +160,34 @@ class SurveyTests(unittest.TestCase):
     def test_missing_cli_preserves_queue_and_records_failure(self):
         self.prepare()
         config = self.base / 'codex.json'
-        config.write_text(json.dumps({'executable': str(self.base / 'absent'), 'model': 'fixture', 'timeout_seconds': 1}))
+        config.write_text(json.dumps({'executable': str(self.base / 'absent'), 'model': 'fixture', 'timeout_seconds': 1, 'allow_unverified_agent': True}))
         result = survey.run_codex(self.run, config)
         self.assertEqual(result['status'], 'rejected')
         self.assertEqual(survey.render(self.run)['inspection_reported'], 0)
+
+    def test_partial_inspection_cannot_hide_unread_portions(self):
+        self.prepare()
+        reply = self.reply()
+        reply['assessments'][0].update(coverage='partial', uninspected='none')
+        self.assertEqual(self.submit(reply)['status'], 'rejected')
+        reply['assessments'][0]['uninspected'] = 'The final table was not inspected'
+        self.assertEqual(self.submit(reply)['status'], 'valid_candidate_submission')
+        self.assertIn('final table was not inspected', (self.run / 'review.html').read_text())
+
+    def test_agent_requires_explicit_opt_in_to_unverified_permissions(self):
+        self.prepare()
+        config = self.base / 'config.json'
+        config.write_text(json.dumps({'executable': 'must-not-run', 'model': 'fixture',
+                                      'timeout_seconds': 1, 'allow_unverified_agent': False}))
+        with self.assertRaisesRegex(ValueError, 'unverified'):
+            survey.run_codex(self.run, config)
+
+    def test_subprocess_logs_and_final_file_are_bounded(self):
+        commands = [([sys.executable, '-c', 'import sys; sys.stdout.write("x" * 2097152)'], None),
+                    ([sys.executable, '-c', 'from pathlib import Path; Path("large").write_bytes(b"x" * 2097152)'], self.base / 'large')]
+        for command, output in commands:
+            with self.assertRaisesRegex(ValueError, 'output exceeds'):
+                survey.bounded_process(command, self.base, b'', 2, output)
 
     def test_subprocess_adapter_uses_stdin_and_recovers_from_timeout(self):
         self.prepare()
@@ -180,7 +204,7 @@ Path(sys.argv[sys.argv.index('-o')+1]).write_text(json.dumps(reply))
 ''')
         executable.chmod(0o700)
         config = self.base / 'codex.json'
-        settings = {'executable': str(executable), 'model': 'fixture', 'timeout_seconds': 2}
+        settings = {'executable': str(executable), 'model': 'fixture', 'timeout_seconds': 2, 'allow_unverified_agent': True}
         config.write_text(json.dumps(settings))
         result = survey.run_codex(self.run, config)
         self.assertEqual(result['status'], 'valid_candidate_submission')

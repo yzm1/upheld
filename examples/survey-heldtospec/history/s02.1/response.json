@@ -1,18 +1,14 @@
 {
-  "packet_id": "6cc816b654c8b8e1a1ed8a646c8816cac53a8b8f4da98d706f91509a16e332b9",
-  "reviewer": "Replay of prior external assistant judgments; no fresh or independent review",
+  "packet_id": "e307c9ce6678b01c9d76d2d1925148c2d7059835ff7f958b26b9b7e41b7444a3",
+  "reviewer": "Codex conversation assistant; external packet review, not a local CLI run",
   "assessments": [
     {
       "source_id": "40aa42c6992ee72d77f8f4575f631e5cbeb83146842914e927714796c0de2690",
-      "note": "Read full document and selected contracts-related candidates. This demonstration is not an exhaustive claim inventory or independent evaluation.",
-      "coverage": "whole_document",
-      "uninspected": "No source portions were reported unread in the original review; candidate discovery was selective, not exhaustive."
+      "note": "Read full document and selected contracts-related candidates. This demonstration is not an exhaustive claim inventory or independent evaluation."
     },
     {
       "source_id": "b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0",
-      "note": "Read full document and selected contracts-related candidates. This demonstration is not an exhaustive claim inventory or independent evaluation.",
-      "coverage": "whole_document",
-      "uninspected": "No source portions were reported unread in the original review; candidate discovery was selective, not exhaustive."
+      "note": "Read full document and selected contracts-related candidates. This demonstration is not an exhaustive claim inventory or independent evaluation."
     }
   ],
   "candidates": [

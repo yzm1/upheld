@@ -1,0 +1,251 @@
+{
+  "cost": null,
+  "created_unix": 1788722443.4603455,
+  "elapsed_seconds": null,
+  "error": null,
+  "packet_id": "6cc816b654c8b8e1a1ed8a646c8816cac53a8b8f4da98d706f91509a16e332b9",
+  "provenance": {
+    "backend": "external",
+    "submitted_by": "red-team-replay"
+  },
+  "raw_response": "{\n  \"packet_id\": \"6cc816b654c8b8e1a1ed8a646c8816cac53a8b8f4da98d706f91509a16e332b9\",\n  \"reviewer\": \"Replay of prior external assistant judgments; no fresh or independent review\",\n  \"assessments\": [\n    {\n      \"source_id\": \"40aa42c6992ee72d77f8f4575f631e5cbeb83146842914e927714796c0de2690\",\n      \"note\": \"Read full document and selected contracts-related candidates. This demonstration is not an exhaustive claim inventory or independent evaluation.\",\n      \"coverage\": \"whole_document\",\n      \"uninspected\": \"No source portions were reported unread in the original review; candidate discovery was selective, not exhaustive.\"\n    },\n    {\n      \"source_id\": \"b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0\",\n      \"note\": \"Read full document and selected contracts-related candidates. This demonstration is not an exhaustive claim inventory or independent evaluation.\",\n      \"coverage\": \"whole_document\",\n      \"uninspected\": \"No source portions were reported unread in the original review; candidate discovery was selective, not exhaustive.\"\n    }\n  ],\n  \"candidates\": [\n    {\n      \"claim\": \"Generated contracts require review before publication.\",\n      \"subject\": \"heldtospec public contracts interface at the pinned revision\",\n      \"kind\": \"obligation\",\n      \"qualifiers\": \"Schema inference supplies a starting point; review includes constraints, ownership, and service levels.\",\n      \"rationale\": \"Publishing inferred settings without review could adopt unintended promises.\",\n      \"uncertainty\": \"Source reading only; intended meaning and executable behavior still need independent review.\",\n      \"next_question\": \"Which fields can inference establish and which need an owner decision?\",\n      \"faithfulness_review\": \"Compared the proposed claim with the quoted passage and full document. Schema inference supplies a starting point; review includes constraints, ownership, and service levels.\",\n      \"references\": [\n        {\n          \"source_id\": \"b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0\",\n          \"start_line\": 16,\n          \"end_line\": 17,\n          \"quote\": \"\\nThe generated schema is a starting point; review nullability, uniqueness,\"\n        }\n      ]\n    },\n    {\n      \"claim\": \"The null limit uses fractions, and contract freshness accepts s, m, h, and d units.\",\n      \"subject\": \"heldtospec public contracts interface at the pinned revision\",\n      \"kind\": \"behavior\",\n      \"qualifiers\": \"The documented null-limit example is 0.01 for one percent; units concern max_age.\",\n      \"rationale\": \"Wrong scale or duration units could change which datasets pass.\",\n      \"uncertainty\": \"Source reading only; intended meaning and executable behavior still need independent review.\",\n      \"next_question\": \"Do parser and boundary checks preserve these meanings?\",\n      \"faithfulness_review\": \"Compared the proposed claim with the quoted passage and full document. The documented null-limit example is 0.01 for one percent; units concern max_age.\",\n      \"references\": [\n        {\n          \"source_id\": \"b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0\",\n          \"start_line\": 58,\n          \"end_line\": 59,\n          \"quote\": \"`max_null_percentage` is a fraction: `0.01` means one percent. Duration units\\nfor `max_age` are `s`, `m`, `h`, and `d`.\"\n        }\n      ]\n    },\n    {\n      \"claim\": \"Contract lint rejects unknown keys without loading the dataset.\",\n      \"subject\": \"heldtospec public contracts interface at the pinned revision\",\n      \"kind\": \"behavior\",\n      \"qualifiers\": \"Applies to contract lint, not every validation command.\",\n      \"rationale\": \"Offline lint users need syntax errors without dataset access.\",\n      \"uncertainty\": \"Source reading only; intended meaning and executable behavior still need independent review.\",\n      \"next_question\": \"Can lint reject a misspelled key while the dataset is unavailable?\",\n      \"faithfulness_review\": \"Compared the proposed claim with the quoted passage and full document. Applies to contract lint, not every validation command.\",\n      \"references\": [\n        {\n          \"source_id\": \"b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0\",\n          \"start_line\": 67,\n          \"end_line\": 68,\n          \"quote\": \"Linting validates the contract model and rejects unknown or misspelled keys.\\nIt does not load the dataset.\"\n        }\n      ]\n    },\n    {\n      \"claim\": \"Each declared column must exist with its declared Polars dtype.\",\n      \"subject\": \"heldtospec public contracts interface at the pinned revision\",\n      \"kind\": \"behavior\",\n      \"qualifiers\": \"Only declared columns; the passage does not forbid extra columns.\",\n      \"rationale\": \"A rewrite forbidding additional columns would strengthen the stated contract.\",\n      \"uncertainty\": \"Source reading only; intended meaning and executable behavior still need independent review.\",\n      \"next_question\": \"Does verification allow extra columns while rejecting missing or wrongly typed declared columns?\",\n      \"faithfulness_review\": \"Compared the proposed claim with the quoted passage and full document. Only declared columns; the passage does not forbid extra columns.\",\n      \"references\": [\n        {\n          \"source_id\": \"b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0\",\n          \"start_line\": 80,\n          \"end_line\": 80,\n          \"quote\": \"| `schema.columns[].name` / `.type` | Every declared column must exist with the declared Polars dtype. |\"\n        }\n      ]\n    },\n    {\n      \"claim\": \"Nonnullable and unique declarations require zero null percentage and full uniqueness.\",\n      \"subject\": \"heldtospec public contracts interface at the pinned revision\",\n      \"kind\": \"behavior\",\n      \"qualifiers\": \"These are two related column constraints with different failure conditions.\",\n      \"rationale\": \"Both directions require observable boundary checks.\",\n      \"uncertainty\": \"Source reading only; intended meaning and executable behavior still need independent review.\",\n      \"next_question\": \"How do empty datasets and duplicate null values affect each check?\",\n      \"faithfulness_review\": \"Compared the proposed claim with the quoted passage and full document. These are two related column constraints with different failure conditions.\",\n      \"references\": [\n        {\n          \"source_id\": \"b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0\",\n          \"start_line\": 81,\n          \"end_line\": 82,\n          \"quote\": \"| `nullable: false` | Null percentage must be zero for that column. |\\n| `unique: true` | Uniqueness percentage must be 100 for that column. |\"\n        }\n      ]\n    },\n    {\n      \"claim\": \"Allowed-set, range, and regex declarations map to executable column checks.\",\n      \"subject\": \"heldtospec public contracts interface at the pinned revision\",\n      \"kind\": \"behavior\",\n      \"qualifiers\": \"The table specifies zero outside values for sets and ranges, and 100 percent matches for regex.\",\n      \"rationale\": \"A declaration with no executable check would weaken the published promise.\",\n      \"uncertainty\": \"Source reading only; intended meaning and executable behavior still need independent review.\",\n      \"next_question\": \"What happens at numeric boundaries and for null or nonmatching values?\",\n      \"faithfulness_review\": \"Compared the proposed claim with the quoted passage and full document. The table specifies zero outside values for sets and ranges, and 100 percent matches for regex.\",\n      \"references\": [\n        {\n          \"source_id\": \"b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0\",\n          \"start_line\": 83,\n          \"end_line\": 85,\n          \"quote\": \"| `allowed_values` | Count outside the allowed set must be zero. |\\n| `constraints.min` / `.max` | Count outside the numeric range must be zero. |\\n| `constraints.regex` | Regex-match percentage must be 100. |\"\n        }\n      ]\n    },\n    {\n      \"claim\": \"A contract expression must hold for every row.\",\n      \"subject\": \"heldtospec public contracts interface at the pinned revision\",\n      \"kind\": \"behavior\",\n      \"qualifiers\": \"Applies to checks[].expr; null semantics are not specified here.\",\n      \"rationale\": \"Some or all row failures may otherwise escape enforcement.\",\n      \"uncertainty\": \"Source reading only; intended meaning and executable behavior still need independent review.\",\n      \"next_question\": \"How are null expression results and empty inputs handled?\",\n      \"faithfulness_review\": \"Compared the proposed claim with the quoted passage and full document. Applies to checks[].expr; null semantics are not specified here.\",\n      \"references\": [\n        {\n          \"source_id\": \"b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0\",\n          \"start_line\": 89,\n          \"end_line\": 89,\n          \"quote\": \"| `checks[].expr` | The expression must be true for every row. |\"\n        }\n      ]\n    },\n    {\n      \"claim\": \"Foreign-key references are metadata, and a bare metric lacks a pass condition.\",\n      \"subject\": \"heldtospec public contracts interface at the pinned revision\",\n      \"kind\": \"behavior\",\n      \"qualifiers\": \"The source limits the statement to the current verifier; it distinguishes expressions and concrete constraints.\",\n      \"rationale\": \"Users could assume declarations enforce referential integrity or metric thresholds.\",\n      \"uncertainty\": \"Source reading only; intended meaning and executable behavior still need independent review.\",\n      \"next_question\": \"Does the implementation match these documented limits at this revision?\",\n      \"faithfulness_review\": \"Compared the proposed claim with the quoted passage and full document. The source limits the statement to the current verifier; it distinguishes expressions and concrete constraints.\",\n      \"references\": [\n        {\n          \"source_id\": \"b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0\",\n          \"start_line\": 91,\n          \"end_line\": 94,\n          \"quote\": \"Ownership, consumers, descriptions, and foreign-key `references` are contract\\nmetadata in the current verifier. A bare\\n`checks[].metric` also has no pass condition; use `expr` or a concrete column\\nconstraint for a check that must gate the run.\"\n        }\n      ]\n    },\n    {\n      \"claim\": \"Contract verification propagates pipeline failure and fails when there are no executable checks.\",\n      \"subject\": \"heldtospec public contracts interface at the pinned revision\",\n      \"kind\": \"behavior\",\n      \"qualifiers\": \"Code 3 denotes constraint violation; the exact no-checks exit code is unstated.\",\n      \"rationale\": \"A no-op contract must not produce a misleading success.\",\n      \"uncertainty\": \"Source reading only; intended meaning and executable behavior still need independent review.\",\n      \"next_question\": \"Which output and exit code distinguish a no-checks contract from a satisfied one?\",\n      \"faithfulness_review\": \"Compared the proposed claim with the quoted passage and full document. Code 3 denotes constraint violation; the exact no-checks exit code is unstated.\",\n      \"references\": [\n        {\n          \"source_id\": \"b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0\",\n          \"start_line\": 96,\n          \"end_line\": 98,\n          \"quote\": \"The verification command returns the underlying pipeline exit code, including\\ncode 3 for a constraint violation. It fails rather than reporting success if\\nthe contract produces no executable checks.\"\n        }\n      ]\n    },\n    {\n      \"claim\": \"Contract docs writes Markdown to stdout when output is omitted.\",\n      \"subject\": \"heldtospec public contracts interface at the pinned revision\",\n      \"kind\": \"behavior\",\n      \"qualifiers\": \"Applies to the contract docs subcommand.\",\n      \"rationale\": \"Callers depend on predictable output routing.\",\n      \"uncertainty\": \"Source reading only; intended meaning and executable behavior still need independent review.\",\n      \"next_question\": \"Does stdout contain only the intended document when no output path is supplied?\",\n      \"faithfulness_review\": \"Compared the proposed claim with the quoted passage and full document. Applies to the contract docs subcommand.\",\n      \"references\": [\n        {\n          \"source_id\": \"b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0\",\n          \"start_line\": 108,\n          \"end_line\": 108,\n          \"quote\": \"Omit `--output` to write Markdown to stdout.\"\n        }\n      ]\n    },\n    {\n      \"claim\": \"Exit code 2 requires context to distinguish usage errors from data-loading failures.\",\n      \"subject\": \"heldtospec public contracts interface at the pinned revision\",\n      \"kind\": \"behavior\",\n      \"qualifiers\": \"The reference describes stderr and run-log differences and recommends validating the invocation first.\",\n      \"rationale\": \"Routing every code-2 failure to a data owner can misattribute user errors.\",\n      \"uncertainty\": \"Source reading only; intended meaning and executable behavior still need independent review.\",\n      \"next_question\": \"Do contract subcommands retain the documented distinction?\",\n      \"faithfulness_review\": \"Compared the proposed claim with the quoted passage and full document. The reference describes stderr and run-log differences and recommends validating the invocation first.\",\n      \"references\": [\n        {\n          \"source_id\": \"40aa42c6992ee72d77f8f4575f631e5cbeb83146842914e927714796c0de2690\",\n          \"start_line\": 140,\n          \"end_line\": 158,\n          \"quote\": \"Treat every nonzero value as a failed quality gate unless a caller explicitly\\nhandles partial success (`6`).\\n\\n**`2` is not unambiguous.** `argparse` exits `2` for an invalid invocation, which\\nis the long-standing convention for a usage error, so an unknown flag, an unknown\\nsubcommand or a bad flag value all exit `2` — the same code as a data-loading\\nfailure:\\n\\n| Invocation | Exit | Why |\\n|---|---:|---|\\n| `quivra --no-such-flag` | `2` | usage — unknown flag |\\n| `quivra --timeout notanumber` | `2` | usage — bad flag value |\\n| `quivra -c config.yaml` with a missing source file | `2` | data loading |\\n\\nA caller that routes `2` to whoever owns the data will misattribute a typo in the\\ncommand line. The two are distinguishable on stderr: a usage error is a single\\n`quivra: error: ...` line from the argument parser and produces no run log,\\nwhile a data error is logged and reported through the normal result path. A\\npipeline that needs to tell them apart reliably should validate its own\"\n        }\n      ]\n    },\n    {\n      \"claim\": \"A failed required output can change the overall exit code after validation passes.\",\n      \"subject\": \"heldtospec public contracts interface at the pinned revision\",\n      \"kind\": \"behavior\",\n      \"qualifiers\": \"The source keeps validation_exit_code separate; optional output failures do not change overall exit.\",\n      \"rationale\": \"A caller relying only on validation status could overlook failed delivery.\",\n      \"uncertainty\": \"Source reading only; intended meaning and executable behavior still need independent review.\",\n      \"next_question\": \"Does contract verification propagate the final output-related exit code?\",\n      \"faithfulness_review\": \"Compared the proposed claim with the quoted passage and full document. The source keeps validation_exit_code separate; optional output failures do not change overall exit.\",\n      \"references\": [\n        {\n          \"source_id\": \"40aa42c6992ee72d77f8f4575f631e5cbeb83146842914e927714796c0de2690\",\n          \"start_line\": 165,\n          \"end_line\": 169,\n          \"quote\": \"\\nThe result also preserves the pre-action decision as `validation_exit_code`.\\nFor example, checks may pass with `validation_exit_code == 0` while a failed\\nconfigured output marked `required: true` makes the overall process exit with\\nplugin error (`7`). Optional output failures are recorded without changing the\"\n        }\n      ]\n    }\n  ]\n}\n",
+  "reply": {
+    "assessments": [
+      {
+        "coverage": "whole_document",
+        "note": "Read full document and selected contracts-related candidates. This demonstration is not an exhaustive claim inventory or independent evaluation.",
+        "source_id": "40aa42c6992ee72d77f8f4575f631e5cbeb83146842914e927714796c0de2690",
+        "uninspected": "No source portions were reported unread in the original review; candidate discovery was selective, not exhaustive."
+      },
+      {
+        "coverage": "whole_document",
+        "note": "Read full document and selected contracts-related candidates. This demonstration is not an exhaustive claim inventory or independent evaluation.",
+        "source_id": "b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0",
+        "uninspected": "No source portions were reported unread in the original review; candidate discovery was selective, not exhaustive."
+      }
+    ],
+    "candidates": [
+      {
+        "claim": "Generated contracts require review before publication.",
+        "faithfulness_review": "Compared the proposed claim with the quoted passage and full document. Schema inference supplies a starting point; review includes constraints, ownership, and service levels.",
+        "kind": "obligation",
+        "next_question": "Which fields can inference establish and which need an owner decision?",
+        "qualifiers": "Schema inference supplies a starting point; review includes constraints, ownership, and service levels.",
+        "rationale": "Publishing inferred settings without review could adopt unintended promises.",
+        "references": [
+          {
+            "end_line": 17,
+            "quote": "\nThe generated schema is a starting point; review nullability, uniqueness,",
+            "source_id": "b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0",
+            "start_line": 16
+          }
+        ],
+        "subject": "heldtospec public contracts interface at the pinned revision",
+        "uncertainty": "Source reading only; intended meaning and executable behavior still need independent review."
+      },
+      {
+        "claim": "The null limit uses fractions, and contract freshness accepts s, m, h, and d units.",
+        "faithfulness_review": "Compared the proposed claim with the quoted passage and full document. The documented null-limit example is 0.01 for one percent; units concern max_age.",
+        "kind": "behavior",
+        "next_question": "Do parser and boundary checks preserve these meanings?",
+        "qualifiers": "The documented null-limit example is 0.01 for one percent; units concern max_age.",
+        "rationale": "Wrong scale or duration units could change which datasets pass.",
+        "references": [
+          {
+            "end_line": 59,
+            "quote": "`max_null_percentage` is a fraction: `0.01` means one percent. Duration units\nfor `max_age` are `s`, `m`, `h`, and `d`.",
+            "source_id": "b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0",
+            "start_line": 58
+          }
+        ],
+        "subject": "heldtospec public contracts interface at the pinned revision",
+        "uncertainty": "Source reading only; intended meaning and executable behavior still need independent review."
+      },
+      {
+        "claim": "Contract lint rejects unknown keys without loading the dataset.",
+        "faithfulness_review": "Compared the proposed claim with the quoted passage and full document. Applies to contract lint, not every validation command.",
+        "kind": "behavior",
+        "next_question": "Can lint reject a misspelled key while the dataset is unavailable?",
+        "qualifiers": "Applies to contract lint, not every validation command.",
+        "rationale": "Offline lint users need syntax errors without dataset access.",
+        "references": [
+          {
+            "end_line": 68,
+            "quote": "Linting validates the contract model and rejects unknown or misspelled keys.\nIt does not load the dataset.",
+            "source_id": "b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0",
+            "start_line": 67
+          }
+        ],
+        "subject": "heldtospec public contracts interface at the pinned revision",
+        "uncertainty": "Source reading only; intended meaning and executable behavior still need independent review."
+      },
+      {
+        "claim": "Each declared column must exist with its declared Polars dtype.",
+        "faithfulness_review": "Compared the proposed claim with the quoted passage and full document. Only declared columns; the passage does not forbid extra columns.",
+        "kind": "behavior",
+        "next_question": "Does verification allow extra columns while rejecting missing or wrongly typed declared columns?",
+        "qualifiers": "Only declared columns; the passage does not forbid extra columns.",
+        "rationale": "A rewrite forbidding additional columns would strengthen the stated contract.",
+        "references": [
+          {
+            "end_line": 80,
+            "quote": "| `schema.columns[].name` / `.type` | Every declared column must exist with the declared Polars dtype. |",
+            "source_id": "b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0",
+            "start_line": 80
+          }
+        ],
+        "subject": "heldtospec public contracts interface at the pinned revision",
+        "uncertainty": "Source reading only; intended meaning and executable behavior still need independent review."
+      },
+      {
+        "claim": "Nonnullable and unique declarations require zero null percentage and full uniqueness.",
+        "faithfulness_review": "Compared the proposed claim with the quoted passage and full document. These are two related column constraints with different failure conditions.",
+        "kind": "behavior",
+        "next_question": "How do empty datasets and duplicate null values affect each check?",
+        "qualifiers": "These are two related column constraints with different failure conditions.",
+        "rationale": "Both directions require observable boundary checks.",
+        "references": [
+          {
+            "end_line": 82,
+            "quote": "| `nullable: false` | Null percentage must be zero for that column. |\n| `unique: true` | Uniqueness percentage must be 100 for that column. |",
+            "source_id": "b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0",
+            "start_line": 81
+          }
+        ],
+        "subject": "heldtospec public contracts interface at the pinned revision",
+        "uncertainty": "Source reading only; intended meaning and executable behavior still need independent review."
+      },
+      {
+        "claim": "Allowed-set, range, and regex declarations map to executable column checks.",
+        "faithfulness_review": "Compared the proposed claim with the quoted passage and full document. The table specifies zero outside values for sets and ranges, and 100 percent matches for regex.",
+        "kind": "behavior",
+        "next_question": "What happens at numeric boundaries and for null or nonmatching values?",
+        "qualifiers": "The table specifies zero outside values for sets and ranges, and 100 percent matches for regex.",
+        "rationale": "A declaration with no executable check would weaken the published promise.",
+        "references": [
+          {
+            "end_line": 85,
+            "quote": "| `allowed_values` | Count outside the allowed set must be zero. |\n| `constraints.min` / `.max` | Count outside the numeric range must be zero. |\n| `constraints.regex` | Regex-match percentage must be 100. |",
+            "source_id": "b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0",
+            "start_line": 83
+          }
+        ],
+        "subject": "heldtospec public contracts interface at the pinned revision",
+        "uncertainty": "Source reading only; intended meaning and executable behavior still need independent review."
+      },
+      {
+        "claim": "A contract expression must hold for every row.",
+        "faithfulness_review": "Compared the proposed claim with the quoted passage and full document. Applies to checks[].expr; null semantics are not specified here.",
+        "kind": "behavior",
+        "next_question": "How are null expression results and empty inputs handled?",
+        "qualifiers": "Applies to checks[].expr; null semantics are not specified here.",
+        "rationale": "Some or all row failures may otherwise escape enforcement.",
+        "references": [
+          {
+            "end_line": 89,
+            "quote": "| `checks[].expr` | The expression must be true for every row. |",
+            "source_id": "b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0",
+            "start_line": 89
+          }
+        ],
+        "subject": "heldtospec public contracts interface at the pinned revision",
+        "uncertainty": "Source reading only; intended meaning and executable behavior still need independent review."
+      },
+      {
+        "claim": "Foreign-key references are metadata, and a bare metric lacks a pass condition.",
+        "faithfulness_review": "Compared the proposed claim with the quoted passage and full document. The source limits the statement to the current verifier; it distinguishes expressions and concrete constraints.",
+        "kind": "behavior",
+        "next_question": "Does the implementation match these documented limits at this revision?",
+        "qualifiers": "The source limits the statement to the current verifier; it distinguishes expressions and concrete constraints.",
+        "rationale": "Users could assume declarations enforce referential integrity or metric thresholds.",
+        "references": [
+          {
+            "end_line": 94,
+            "quote": "Ownership, consumers, descriptions, and foreign-key `references` are contract\nmetadata in the current verifier. A bare\n`checks[].metric` also has no pass condition; use `expr` or a concrete column\nconstraint for a check that must gate the run.",
+            "source_id": "b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0",
+            "start_line": 91
+          }
+        ],
+        "subject": "heldtospec public contracts interface at the pinned revision",
+        "uncertainty": "Source reading only; intended meaning and executable behavior still need independent review."
+      },
+      {
+        "claim": "Contract verification propagates pipeline failure and fails when there are no executable checks.",
+        "faithfulness_review": "Compared the proposed claim with the quoted passage and full document. Code 3 denotes constraint violation; the exact no-checks exit code is unstated.",
+        "kind": "behavior",
+        "next_question": "Which output and exit code distinguish a no-checks contract from a satisfied one?",
+        "qualifiers": "Code 3 denotes constraint violation; the exact no-checks exit code is unstated.",
+        "rationale": "A no-op contract must not produce a misleading success.",
+        "references": [
+          {
+            "end_line": 98,
+            "quote": "The verification command returns the underlying pipeline exit code, including\ncode 3 for a constraint violation. It fails rather than reporting success if\nthe contract produces no executable checks.",
+            "source_id": "b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0",
+            "start_line": 96
+          }
+        ],
+        "subject": "heldtospec public contracts interface at the pinned revision",
+        "uncertainty": "Source reading only; intended meaning and executable behavior still need independent review."
+      },
+      {
+        "claim": "Contract docs writes Markdown to stdout when output is omitted.",
+        "faithfulness_review": "Compared the proposed claim with the quoted passage and full document. Applies to the contract docs subcommand.",
+        "kind": "behavior",
+        "next_question": "Does stdout contain only the intended document when no output path is supplied?",
+        "qualifiers": "Applies to the contract docs subcommand.",
+        "rationale": "Callers depend on predictable output routing.",
+        "references": [
+          {
+            "end_line": 108,
+            "quote": "Omit `--output` to write Markdown to stdout.",
+            "source_id": "b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0",
+            "start_line": 108
+          }
+        ],
+        "subject": "heldtospec public contracts interface at the pinned revision",
+        "uncertainty": "Source reading only; intended meaning and executable behavior still need independent review."
+      },
+      {
+        "claim": "Exit code 2 requires context to distinguish usage errors from data-loading failures.",
+        "faithfulness_review": "Compared the proposed claim with the quoted passage and full document. The reference describes stderr and run-log differences and recommends validating the invocation first.",
+        "kind": "behavior",
+        "next_question": "Do contract subcommands retain the documented distinction?",
+        "qualifiers": "The reference describes stderr and run-log differences and recommends validating the invocation first.",
+        "rationale": "Routing every code-2 failure to a data owner can misattribute user errors.",
+        "references": [
+          {
+            "end_line": 158,
+            "quote": "Treat every nonzero value as a failed quality gate unless a caller explicitly\nhandles partial success (`6`).\n\n**`2` is not unambiguous.** `argparse` exits `2` for an invalid invocation, which\nis the long-standing convention for a usage error, so an unknown flag, an unknown\nsubcommand or a bad flag value all exit `2` — the same code as a data-loading\nfailure:\n\n| Invocation | Exit | Why |\n|---|---:|---|\n| `quivra --no-such-flag` | `2` | usage — unknown flag |\n| `quivra --timeout notanumber` | `2` | usage — bad flag value |\n| `quivra -c config.yaml` with a missing source file | `2` | data loading |\n\nA caller that routes `2` to whoever owns the data will misattribute a typo in the\ncommand line. The two are distinguishable on stderr: a usage error is a single\n`quivra: error: ...` line from the argument parser and produces no run log,\nwhile a data error is logged and reported through the normal result path. A\npipeline that needs to tell them apart reliably should validate its own",
+            "source_id": "40aa42c6992ee72d77f8f4575f631e5cbeb83146842914e927714796c0de2690",
+            "start_line": 140
+          }
+        ],
+        "subject": "heldtospec public contracts interface at the pinned revision",
+        "uncertainty": "Source reading only; intended meaning and executable behavior still need independent review."
+      },
+      {
+        "claim": "A failed required output can change the overall exit code after validation passes.",
+        "faithfulness_review": "Compared the proposed claim with the quoted passage and full document. The source keeps validation_exit_code separate; optional output failures do not change overall exit.",
+        "kind": "behavior",
+        "next_question": "Does contract verification propagate the final output-related exit code?",
+        "qualifiers": "The source keeps validation_exit_code separate; optional output failures do not change overall exit.",
+        "rationale": "A caller relying only on validation status could overlook failed delivery.",
+        "references": [
+          {
+            "end_line": 169,
+            "quote": "\nThe result also preserves the pre-action decision as `validation_exit_code`.\nFor example, checks may pass with `validation_exit_code == 0` while a failed\nconfigured output marked `required: true` makes the overall process exit with\nplugin error (`7`). Optional output failures are recorded without changing the",
+            "source_id": "40aa42c6992ee72d77f8f4575f631e5cbeb83146842914e927714796c0de2690",
+            "start_line": 165
+          }
+        ],
+        "subject": "heldtospec public contracts interface at the pinned revision",
+        "uncertainty": "Source reading only; intended meaning and executable behavior still need independent review."
+      }
+    ],
+    "packet_id": "6cc816b654c8b8e1a1ed8a646c8816cac53a8b8f4da98d706f91509a16e332b9",
+    "reviewer": "Replay of prior external assistant judgments; no fresh or independent review"
+  },
+  "response_sha256": "755c39c4aeb358c09fb61916a702f6438192e766fdf9a694f4a8ff290e55f952",
+  "status": "valid_candidate_submission",
+  "version": "s02.2"
+}

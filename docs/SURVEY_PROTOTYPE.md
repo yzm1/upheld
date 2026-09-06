@@ -27,7 +27,7 @@ Open `/tmp/upheld-survey-replay/review.html`. The page shows original quotations
 
 ## Make a new survey boundary explicit
 
-Copy the example manifest and name the repository, revision, component boundary, and selected files. Each included file needs its SHA-256 digest. Excluded entries need a reason. The script checks file bytes against the manifest; repository and revision labels remain declarations by the person preparing it.
+Copy the example manifest and name the repository, revision, component boundary, and selected files. An optional `source_notice` marks historical names or commands in the review page. Each included file needs its SHA-256 digest. Excluded entries need a reason. The script checks file bytes against the manifest; repository and revision labels remain declarations by the person preparing it.
 
 The manifest defines the entire source boundary. Files outside that list remain outside the survey. Include known exclusions explicitly when readers need to see them. Missing files, changed hashes, unsupported formats, and oversized documents remain visible in the inventory.
 
@@ -37,7 +37,7 @@ Preparation saves the source text, source hashes, collector hash, instructions, 
 
 ## Supply judgments through the same response format
 
-Give `packet.json` to a reviewer or existing agent session. Request a JSON response matching `response-schema.json`. The committed response demonstrates the format. State which sources the reviewer inspected and explain a zero-candidate result.
+Give `packet.json` to a reviewer or existing agent session. Request a JSON response matching `response-schema.json`. The committed response demonstrates the format. State which sources the reviewer inspected and explain a zero-candidate result. Each reviewer declares whole-document or partial reading and describes unread portions. These are reviewer assertions; the tool cannot prove their completeness.
 
 For each candidate, retain its claim, subject, conditions, kind, rationale, uncertainty, and next question. Include a separate check of whether the proposed meaning preserves the source. References must quote complete source lines exactly. Related passages can supply additional references.
 
@@ -47,7 +47,7 @@ Each import creates a new attempt record. Rejected attempts retain diagnostics; 
 
 ## Configure Codex explicitly before requesting judgments
 
-Create a private JSON config with `executable`, `model`, and `timeout_seconds`. Use your installed executable and chosen model. No model account or credentials belong in the repository.
+Create a private JSON config with `executable`, `model`, `timeout_seconds`, and `allow_unverified_agent`. Use your installed executable and chosen model. The adapter requires `allow_unverified_agent: true` after you review its limits. Otherwise use external import. No model account or credentials belong in the repository.
 
 ```bash
 python tools/survey.py codex \
@@ -59,7 +59,7 @@ The adapter uses the documented [Codex non-interactive interface](https://develo
 
 It requests a read-only sandbox in a temporary working directory and preserves existing user policies and login. It does not certify the installed agent's permissions or disable every configured external connection. Review that setup before use. A local CLI can send source material to a remote model.
 
-This adapter is experimental. Tests exercise its process interface with a fake executable; a real Codex run and permission checks remain pending. Automated cancellation currently requires a Unix-compatible host. Timeout or failure leaves unfinished sources open. Raw agent logs are not retained because they can contain private details.
+This adapter is experimental. Tests exercise its process interface with a fake executable; a real Codex run and permission checks remain pending. Automated cancellation currently requires a Unix-compatible host. Setup and extraction share the time budget. The process monitor stops output that exceeds 1 MiB; polling can overshoot that threshold. Timeout or failure leaves unfinished sources open. Raw agent logs are not retained because they can contain private details.
 
 ## Compare runs without merging human decisions
 

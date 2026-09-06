@@ -1,8 +1,8 @@
-# D01–D08, S01, and the S02 prototype are complete
+# D01–D08 and S01 are complete; S02 needs further checks
 
 Readers are engineers choosing the next Upheld task. This list tracks the supplied discussion against the repository, updated 6 September 2026.
 
-Ten tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXES.md), plus S01's research and S02's source-review prototype. D04, D06, and D08 were reopened and repaired; the original completion claim overstated their checks. The other 55 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
+Nine tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXES.md), plus S01's research. S02 has a working prototype but remains open after its red-team review. D04, D06, and D08 were reopened and repaired; the original completion claim overstated their checks. The other 56 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
 
 [The completion record](docs/COMPLETED_D01_D08.md) links the changes and checks. [The original derived list](docs/history/2026-09-06/DERIVED_TODO.md) preserves the full reasoning, dependencies, and sources for the original 64 items. S11 adds research requested on 6 September 2026, bringing the total to 65.
 
@@ -20,7 +20,6 @@ Ten tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXES
 | D08 | Complete | Recorded README drift, added a status defense, and exercised seeded failures. | [Artifact](examples/upheld-status/README.md) |
 | S01 | Complete | Defined useful, new, confirmed, and decision-required outcomes; specified attention and omission measures; compared cross-domain methods and user-configured backends. E01 trial registration remains open. | [Objective](docs/SURVEY_TOOL.md), [research](docs/SURVEY_RESEARCH.md), [backend proposal](docs/SURVEY_BACKENDS.md) |
 
-| S02 | Complete | Implemented bounded source packets, external judgment import, exact quote checks, replay comparison, and an experimental Codex adapter. Live provider checks and independent quality evaluation remain open. | [Guide](docs/SURVEY_PROTOTYPE.md), [run and tests](examples/survey-heldtospec/README.md) |
 
 ## Build the survey and small checker together
 
@@ -30,6 +29,7 @@ Priority P0 means a trust blocker. P1 means the next learning milestone. P2 mean
 
 | ID | Priority | Task | Completion condition |
 |---|---|---|---|
+| S02 | P1 | Finish live adapter checks and independently assess the implemented source-review prototype | Demonstrate the configured real CLI and effective permissions; independently review source passages for missed or distorted claims. The source/import path and replay work, but those results do not complete the agreed assessment. See [red-team findings](docs/S02_RED_TEAM.md). |
 | S11 | P1 | Research how existing agents can use Upheld to make judgments | A source-backed comparison, interface recommendation, and registered-test proposal meet the research brief below. Research completion does not imply a shipped skill or measured benefit. |
 | S03 | P1 | Add test/code sources and audit source-selection bias | the survey records what each source adds and checks the documented undercount of shape/type-related promises. |
 | S04 | P1 | Build skeptical triage with explicit uncertainty | the example queue has an auditable disposition per item and unknowns cannot be converted into verified coverage by a default. |

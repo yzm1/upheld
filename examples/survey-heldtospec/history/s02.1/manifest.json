@@ -15,6 +15,5 @@
       "path": "docs/CONFIG_REFERENCE.md",
       "exclude_reason": "General configuration reference outside this bounded first pass"
     }
-  ],
-  "source_notice": "Historical heldtospec source snapshot. Original quotations contain an obsolete project name and command spellings. Use heldtospec in current prose; quoted commands are not verified current instructions."
+  ]
 }

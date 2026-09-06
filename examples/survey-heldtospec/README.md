@@ -2,7 +2,7 @@
 
 Readers can reproduce a survey packet and inspect candidate claims from heldtospec's public contracts interface. **This run demonstrates the external-agent path and local quote checks.** It establishes no new confirmed defect or discovery-quality score.
 
-The sources come from heldtospec commit `9ccd2766580e83b21f5d7717c7cee222f8fc6c2d`, retrieved on 6 September 2026. GitHub could not resolve the historical survey's `c8c9362` commit. This run therefore remains separate from the earlier 44-promise study. The pinned guides still use the project's Quivra name.
+The sources come from heldtospec commit `9ccd2766580e83b21f5d7717c7cee222f8fc6c2d`, retrieved on 6 September 2026. GitHub could not resolve the historical survey's `c8c9362` commit. This run therefore remains separate from the earlier 44-promise study. The pinned guides contain an obsolete project name and obsolete command spellings. Current prose uses heldtospec. Source quotations remain verbatim and do not prescribe current commands.
 
 ## Pinned sources keep the input inspectable
 
@@ -32,8 +32,12 @@ Open the [review page](run/review.html) or inspect the [packet](run/packet.json)
 
 ## Failure tests establish narrow mechanical behavior
 
-The repository suite passed 35 tests on 6 September 2026, including 14 survey tests. They exercise fabricated quotations, bad ranges, changed inputs, path escape, unsupported size, unsafe page content, duplicate submissions, and interrupted adapter recovery. A fake executable tests the Codex process interface.
+The repository suite passed 38 tests on 6 September 2026, including 17 survey tests. They exercise fabricated quotations, bad ranges, changed inputs, path escape, unsupported size, unsafe page content, duplicate submissions, and interrupted adapter recovery. A fake executable tests the Codex process interface.
 
 No Codex executable was installed in this workspace. Live model behavior, effective tool access, missed claims, and total human review time remain unmeasured. Those limits block claims of a working live provider or better survey results.
 
 The sources retain their upstream Apache-2.0 license; see [source credits](../../NOTICE). The source snapshot is evidence input and remains verbatim.
+
+## The red-team replay preserves the original record
+
+The original [packet and attempts](history/s02.1/run/packet.json) remain unchanged in the historical folder. The current packet adds numbered source lines, an obsolete-name notice, and explicit reading extent. Its response reuses the original candidate judgments after matching source bytes; it makes no fresh-review claim. [The red-team report](../../docs/S02_RED_TEAM.md) records the repairs and remaining checks.
