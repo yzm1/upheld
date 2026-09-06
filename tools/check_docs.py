@@ -90,7 +90,7 @@ def main():
         if run.returncode:
             failures.append(str(file.relative_to(ROOT)));print(run.stdout);print(run.stderr)
     if failures: raise AssertionError('Prose check failed: '+', '.join(failures))
-    print(f'Prose checks passed for all {len(CURRENT)} current documents; supplied checker unchanged.')
+    print(f'Prose checks passed for all {len(CURRENT)} current documents.')
     run=subprocess.run([sys.executable,str(ROOT/'.claude/skills/writing-shared-docs/test_check_prose.py')],capture_output=True,text=True)
     if run.returncode:raise AssertionError(run.stdout+run.stderr)
     print(run.stdout.strip().splitlines()[-1]+' supplied prose-check tests')
