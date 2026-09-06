@@ -2,16 +2,24 @@
 import argparse
 import copy
 import json
+import fastjsonschema
 from pathlib import Path
 
 
-def convert(source):
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def convert(source, source_path):
+    if not isinstance(source, dict) or source.get('schema_version') != '0.1-probe':
+        raise ValueError('Unsupported source format; expected 0.1-probe')
+    schema = json.loads((ROOT / 'schemas/0.1/probe-register.schema.json').read_text())
+    fastjsonschema.compile(schema)(source)
     result = copy.deepcopy(source)
     result['schema_version'] = '0.1'
     old = result['producer']
     result['producer'] = {
         'name': 'tools/prepare_probe_review.py',
-        'inputs': ['examples/heldtospec-contracts/obligations.register.json',
+        'inputs': [str(source_path),
                    'tools/prepare_probe_review.py'],
         'source_repo': old['source_repo'], 'source_rev': old['source_rev'],
         'surveyed_on': old['surveyed_on'], 'metadata': {'original_producer': old}}
@@ -41,6 +49,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if args.source.resolve() == args.output.resolve() or args.output.exists():
         parser.error('Output must be a new path; original records remain unchanged.')
-    converted = convert(json.loads(args.source.read_text()))
+    try:
+        converted = convert(json.loads(args.source.read_text()), args.source)
+    except (OSError, ValueError, fastjsonschema.JsonSchemaException) as exc:
+        parser.error(str(exc))
     args.output.write_text(json.dumps(converted, indent=2, ensure_ascii=False) + '\n')
     print(json.dumps({'review_only': True, 'diagnostics': diagnostics(converted)}, indent=2))

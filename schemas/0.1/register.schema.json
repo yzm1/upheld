@@ -179,7 +179,8 @@
                   "type": [
                     "string",
                     "null"
-                  ]
+                  ],
+                  "format": "date-time"
                 },
                 "run_reference": {
                   "type": [

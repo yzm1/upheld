@@ -44,7 +44,7 @@ class DocumentationChecks(unittest.TestCase):
     def test_probe_copy_preserves_original_and_diagnostics(self):
         src = json.loads((ROOT / 'examples/heldtospec-contracts/obligations.register.json').read_text())
         before = copy.deepcopy(src)
-        converted = convert(src)
+        converted = convert(src, 'examples/heldtospec-contracts/obligations.register.json')
         self.assertEqual(src, before)
         validator('register')(converted)
         self.assertEqual([x['subject'] for x in diagnostics(converted)], ['CTR-003','CTR-005','CTR-037','CTR-044'])

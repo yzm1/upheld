@@ -2,7 +2,7 @@
 
 Readers are engineers choosing the next Upheld task. This list tracks the supplied discussion against the repository, updated 6 September 2026.
 
-Eight document and schema tasks are complete. The other 56 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
+Eight document and schema tasks are complete after the [review repairs](docs/RED_TEAM_FIXES.md). D04, D06, and D08 were reopened and repaired; the original completion claim overstated their checks. The other 56 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
 
 [The completion record](docs/COMPLETED_D01_D08.md) links the changes and checks. [The original derived list](docs/history/2026-09-06/DERIVED_TODO.md) preserves the full reasoning, dependencies, and sources for all 64 items.
 
@@ -13,9 +13,9 @@ Eight document and schema tasks are complete. The other 56 tasks remain open or 
 | D01 | Complete | Current status pages distinguish survey, scripts, and unbuilt CLI. | [Artifact](README.md) |
 | D02 | Complete | Adopted evidence-check wording and documented its limit. | [Artifact](docs/DECISIONS.md) |
 | D03 | Complete | Set deliverables, trial rules, scope, and effort split. | [Artifact](docs/MILESTONE.md) |
-| D04 | Complete | Made Upheld the current source; mapped old fields and retained all method IDs. | [Artifact](docs/METHOD.md) |
+| D04 | Complete | Restored omitted rules and reviewed every original ID; recorded deliberate changes. | [Rule review](docs/RULE_REVIEW.md) |
 | D05 | Complete | Defined six built-in kinds, separate gaps, and an explicit extension route. | [Artifact](docs/SCHEMA.md) |
-| D06 | Complete | Published nine schemas, a review-copy mapping, and checked real inputs. | [Artifact](schemas/0.1/) |
+| D06 | Complete | Checked nine schemas, source versions, timestamp and exit rules, and required fixtures. | [Artifact](schemas/0.1/) |
 | D07 | Complete | Recounted 19 finding bullets; assigned record IDs and preserved unknown probe totals. | [Artifact](examples/heldtospec-contracts/reconciliation.md) |
 | D08 | Complete | Recorded README drift, added a status defense, and exercised seeded failures. | [Artifact](examples/upheld-status/README.md) |
 

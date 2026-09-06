@@ -1,0 +1,59 @@
+{
+  "observed_on": "2026-09-06",
+  "base_commit": "185ed61dc78221d193a6058583077c3226a1c043",
+  "scope": "Local disposable copies of the repair tree; synthetic review probes, not product evidence",
+  "commands": [
+    "python tools/check_docs.py",
+    "python -m unittest discover -s tests -p 'test_*.py'"
+  ],
+  "cases": [
+    {
+      "case": "baseline",
+      "doc_exit": 0,
+      "tests_exit": 0
+    },
+    {
+      "case": "library_test_count_149_to_999",
+      "doc_exit": 1,
+      "tests_exit": 1
+    },
+    {
+      "case": "checker_T2_MUST_to_SHOULD",
+      "doc_exit": 1,
+      "tests_exit": 1
+    },
+    {
+      "case": "checker_T20_reversed",
+      "doc_exit": 1,
+      "tests_exit": 1
+    },
+    {
+      "case": "reopen_D06_truthfully",
+      "doc_exit": 0,
+      "tests_exit": 0
+    },
+    {
+      "case": "missing_declared_self_evidence_file",
+      "doc_exit": 1,
+      "tests_exit": 1
+    },
+    {
+      "case": "self_binding_to_nonexistent_record",
+      "doc_exit": 1,
+      "tests_exit": 1
+    },
+    {
+      "case": "optimized_wrong_count",
+      "doc_exit": 1,
+      "tests_exit": 1
+    },
+    {
+      "case": "invalid_last_actually_ran_string",
+      "schema_accepts": false
+    },
+    {
+      "case": "verify_exit_zero_with_unresolvable",
+      "schema_accepts": false
+    }
+  ]
+}

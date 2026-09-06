@@ -2,7 +2,7 @@
 
 Readers are engineers surveying a codebase. Upheld records falsifiable software promises and the mechanisms intended to defend them.
 
-This is method version 1.1, dated 6 September 2026. It keeps all 27 rule IDs from version 1.0. The [original snapshot](history/2026-09-06/METHOD.md) keeps each defect, reason, and historical self-score. The tables below govern new records. MUST marks a rule earned by an observed defect. SHOULD marks a reasoned rule that still needs stronger support.
+This is method version 1.2, dated 6 September 2026. It keeps all 27 rule IDs from version 1.0. The [original snapshot](history/2026-09-06/METHOD.md) keeps each defect, reason, and historical self-score. The tables below govern new records. MUST marks a rule earned by an observed defect. SHOULD marks a reasoned rule that still needs stronger support.
 
 **Reading a test can establish a candidate link. A run that detects a stated fault can grade that defense.** Neither observation proves the whole promise.
 
@@ -17,7 +17,7 @@ Read public documents, specifications, configuration formats, source, and tests.
 | P1 | SHOULD | Finish reading before writing unless an independent oracle controls the pass. Inspect the run sequence. |
 | P2 | MUST | Label name-matched links `not_yet_read`. They never establish adequate coverage. Sample links and read the named artifacts. |
 | P3 | MUST | Run an available cheap probe before recording a claim about external behavior as evidence. Link its observation. |
-| S1 | SHOULD | Enumerate promises published outside source and map them to the relevant code. Inspect public surfaces for omissions. |
+| S1 | SHOULD | Enumerate promises published outside source and map them to the relevant code. Record published clauses with no implementation as promises. Inspect public surfaces for omissions. |
 
 ## Record claims and decisions separately
 
@@ -36,7 +36,7 @@ An answered defense has a binding. The checker compares current files with that 
 | O7 | SHOULD | Record the artifact on its defense and the observed revision and basis on its evidence. An artifact name alone is insufficient. |
 | O8 | SHOULD | Reassess a bound defense when relevant grounds change. The checker derives this result; no promise status changes. |
 | O9 | MUST | Record environment needs separately from the defense kind, in `needs_environment`. |
-| O10 | MUST | Record reachability as live, latent, impossible, or unknown. A latent promise carries `armed_by`, the condition that makes it reachable. |
+| O10 | MUST | Record reachability as live, latent, impossible, or unknown. A latent promise carries `armed_by`, the condition that makes it reachable. Its defense guards that condition and fails when it becomes true. Split mixed live and latent claims. |
 
 O7 and O8 remain proposed mechanisms without product execution evidence. Their wire fields replace the old promise-level `satisfied_by` and `status`. [The schema mapping](SCHEMA.md) preserves legacy survey notes.
 
@@ -55,6 +55,10 @@ The six built-in kinds are test, property, checker, ratchet, type, and runtime i
 | V5 | MUST | Bind a checker only after a seeded violation differs from both a clean input and failure to inspect. |
 | V6 | SHOULD | Bind a runtime invariant only after fault injection exercises it. No supporting run was present in the source survey. |
 
+Fault discrimination needs a justified fault model. Replayed defects, corrupted artifacts, and injected faults can qualify; mutation is the default. A timeout, build failure, or unscheduled check cannot count as detection. Record an unscheduled check as absent.
+
+A compiler's own acceptance cannot establish its soundness. Type defenses need an independent authority, such as a checked proof or a reference implementation. No type-defense oracle was exercised in the source survey.
+
 Read or probe library behavior before calling two cases equivalent. A small probe can settle a library behavior that reading alone leaves uncertain. Fuzzy links remain candidates until an independent check supports them.
 
 ## Measure useful findings and the work to review them
@@ -71,10 +75,12 @@ The survey aims to discover useful new promises and defects within the time peop
 | Rp2 | MUST | Label single observations and unrun claims where they occur. |
 | Rp3 | MUST | Read the whole report before sharing it. A diff can hide contradictions elsewhere. |
 
-Requirements describe the instrument. Meeting the rules alone establishes neither useful findings nor safe software. Write down expected results before trials. State how source choice and different category rules limit the findings. Matching category totals does not establish correct labels.
+Requirements describe the instrument. Meeting the rules alone establishes neither useful findings nor safe software. Write down expected results before trials. Write expectations and models from the contract before running the implementation. A static screen selects work to inspect and cannot grade it. State how source choice and different category rules limit the findings. Matching category totals does not establish correct labels. Open-thread counts measure unresolved work; movement requires dated comparisons. Rp3 requires human review and has no mechanical proof.
 
 ## Current evidence covers one hand survey
 
 The [heldtospec example](../examples/heldtospec-contracts/README.md) has 44 promises and zero accepted evidence records. Its historical library run reports 149 passing tests. The CLI run did not complete. Those runs do not establish that the survey meets every rule.
 
 The [Upheld status case](../examples/upheld-status/README.md) has a repeatable README check and an unbound defense. The product still needs hash rules and a way to create evidence records. Historical self-scores in the snapshot refer to heldtospec at their recorded revision.
+
+[The rule review](RULE_REVIEW.md) maps each original requirement to the current rules and records deliberate changes.

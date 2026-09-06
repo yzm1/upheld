@@ -23,7 +23,7 @@ An open defense has no binding. An answered defense names one supporting record.
 
 No changed ground permits `still_valid`. Undetected relocation looks like a missing artifact. The checker checks whether targets exist, which targets they are, and their bytes; it does not decide whether a change matters semantically.
 
-A gap records a choice to leave a promise undefended. It has no evidence grade. Promise reports give counts; they do not infer whole-promise adequacy from separate defenses.
+A gap records a choice to leave a promise undefended. It has no evidence grade. Promise reports give counts; they do not infer whole-promise adequacy from separate defenses. Version 0.1 defers the original composition-semantics exception until explicit composition rules exist.
 
 ## Scope describes what the oracle assessed
 
@@ -93,7 +93,7 @@ The earlier T7, T10, and T11 numbers remain retired. The fourth column says how 
 | T3 | SHOULD | Consequences depend on the changed ground and resolution, never semantic interpretation. | A consequence rule that reads artifact bytes beyond identity, presence and hash. |
 | T4 | SHOULD | Fingerprint claim, artifacts, subject, and declared environment separately with the named profile. Check lineage in the evidence log. | A stale report that cannot name the ground; an environment ground from outside the tree; an unknown profile. |
 | T5 | SHOULD | Defense scope lies within its promise and claims no finer precision than validated scope. Locator is separate. | A defense scoped outside its promise, or finer than its evidence, passing `validate`. |
-| T6 | MUST | Checker never edits register or bindings. Regenerating a clean-tree lock reproduces its bytes. | `generate` on a clean tree changes the lock; any command writes the register or bindings. |
+| T6 | MUST | Checker never edits register or bindings. Regenerating a clean-tree lock reproduces its bytes. Never hand-edit the lock. | `generate` on a clean tree changes the lock; any command writes the register or bindings. |
 | T8 | MUST | Every defense supplies guarded_by with no default. | An entry without `guarded_by` passing `validate`. |
 | T9 | SHOULD | Validate lists all structural defects before exit. Verify requires valid inputs. Only ack writes a baseline. | `validate` stops at the first defect; a baseline appears after any command except `ack`. |
 | T12 | MUST | Uninspectable targets never yield a clean exit, even after acknowledgment. Whole-run failure stays distinct. | A register naming a missing file exits 0, before or after `ack`. |

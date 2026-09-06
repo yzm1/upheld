@@ -49,6 +49,8 @@ A gap requires a reason. Actor and time may be unknown in imported records. Unkn
 | type | Static guarantee makes the violation unrepresentable | compiler |
 | runtime_invariant | Check or alarm during execution | fault_injection |
 
+The `compiler` family names the type-defense adapter; compiler acceptance alone never supports a binding. Its oracle needs an independent authority. The `mutation` family also permits a replayed defect or injected fault under a justified model. Family names do not establish that an oracle is adequate.
+
 A ratchet's seeded transition must show a forbidden change, an allowed change, and a failure to inspect. A runtime model check cannot use the compiler family merely because a model declares types.
 
 An unfamiliar mechanism uses `x-` followed by its name and supplies `mechanism`. Configuration may declare its oracle and adapter. Naming an adapter does not install it. Before binding, the checker must confirm that it supports the declared pair. Otherwise it reports `unsupported_oracle`. Never fall back to test.
@@ -65,7 +67,7 @@ Supporting records must match the bound defense and oracle. The checker also che
 
 The heldtospec input uses `0.1-probe`, nested defenses, and an empty binding map. [Its compatibility schema](../schemas/0.1/probe-register.schema.json) validates that historical shape. It is distinct from the new format.
 
-The [review-copy tool](../tools/prepare_probe_review.py) writes a version 0.1 candidate to a chosen new path. It retains IDs, claims, locators, gaps, and notes. It adds explicit unknown context. It never changes the original or creates evidence. The generated [review copy](../examples/heldtospec-contracts/review-register.json) remains unaccepted.
+The [review-copy tool](../tools/prepare_probe_review.py) writes a version 0.1 candidate to a chosen new path. It rejects unsupported source versions and validates the source shape before writing. Producer inputs name the supplied source path. It retains IDs, claims, locators, gaps, and notes. It adds explicit unknown context. It never changes the original or creates evidence. The generated [review copy](../examples/heldtospec-contracts/review-register.json) remains unaccepted.
 
 | Expected diagnostic | Count | Meaning |
 |---|---:|---|
@@ -75,3 +77,9 @@ The [review-copy tool](../tools/prepare_probe_review.py) writes a version 0.1 ca
 | supporting_evidence_absent | 78 | All defenses remain open |
 
 The repository checks compare shape and counts against this table. They do not implement the full `validate` command. Migration from other older schemas remains T19 work.
+
+## Schema checks reject two previously accepted contradictions
+
+Timestamp fields require date-time strings or their already supported unknown state. A verify result with an unresolvable finding or positive unresolvable count requires exit 5. These corrections enforce the documented version 0.1 contract; they add no new record fields. Producers relying on the earlier permissive schemas must correct invalid records.
+
+The example checks require the two current evidence files and empty bindings. Future examples may hold evidence. Full cross-record and output-count consistency checks remain C02 work.

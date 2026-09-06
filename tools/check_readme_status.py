@@ -17,6 +17,11 @@ def check(root=ROOT, readme=None):
     expected = {'Promises': len(ps), 'Candidate defenses': sum(len(p['defenses']) for p in ps),
                 'Promises awaiting a defense or gap decision': sum(not p['defenses'] and 'gap' not in p for p in ps),
                 'Accepted gaps': sum('gap' in p for p in ps), 'Bound evidence records': len(set(bindings.values()))}
+    observations = json.loads((root / 'examples/heldtospec-contracts/observations.json').read_text())
+    runs = [x for x in observations['observations'] if x['id'] == 'RUN-002']
+    if len(runs) != 1:
+        raise ValueError('Expected exactly one historical RUN-002 observation')
+    expected['Library tests reported passing'] = runs[0]['result']['passed']
     findings = []
     for label, number in expected.items():
         match = re.search(r'^\| ' + re.escape(label) + r' \| (\d+) \|', readme, re.M)

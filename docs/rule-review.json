@@ -1,0 +1,62 @@
+{
+  "docs/METHOD.md": {
+    "strengths": {
+      "P1": "SHOULD",
+      "P2": "MUST",
+      "P3": "MUST",
+      "S1": "SHOULD",
+      "O1": "SHOULD",
+      "O2": "MUST",
+      "O3": "MUST",
+      "O4": "SHOULD",
+      "O5": "SHOULD",
+      "O6": "SHOULD",
+      "O7": "SHOULD",
+      "O8": "SHOULD",
+      "O9": "MUST",
+      "O10": "MUST",
+      "V1": "MUST",
+      "V2": "MUST",
+      "V3": "MUST",
+      "V4": "MUST",
+      "V5": "MUST",
+      "V6": "SHOULD",
+      "H1": "SHOULD",
+      "X1": "MUST",
+      "X2": "MUST",
+      "D1": "SHOULD",
+      "Rp1": "MUST",
+      "Rp2": "MUST",
+      "Rp3": "MUST"
+    },
+    "sha256": "1e777d42a3ff92bb321a6593e79177eeee59f6e1c49c2c298623ee6dffd62fd4"
+  },
+  "docs/CHECKER.md": {
+    "strengths": {
+      "T1": "SHOULD",
+      "T2": "MUST",
+      "T3": "SHOULD",
+      "T4": "SHOULD",
+      "T5": "SHOULD",
+      "T6": "MUST",
+      "T8": "MUST",
+      "T9": "SHOULD",
+      "T12": "MUST",
+      "T13": "SHOULD",
+      "T14": "SHOULD",
+      "T15": "MUST",
+      "T16": "SHOULD",
+      "T17": "SHOULD",
+      "T18": "SHOULD",
+      "T19": "SHOULD",
+      "T20": "MUST",
+      "T21": "SHOULD",
+      "T22": "SHOULD",
+      "R1": "MUST",
+      "R2": "SHOULD",
+      "R3": "SHOULD",
+      "R4": "SHOULD"
+    },
+    "sha256": "aa700ebb93234ca0adbb5613eb901721c20ca01f814a6a1b07ca4b9719391253"
+  }
+}
