@@ -1,0 +1,156 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/yzm1/upheld/schemas/0.1/verify-output.schema.json",
+  "title": "Upheld 0.1 verify-output",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "command": {
+      "const": "verify"
+    },
+    "exit_code": {
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "pattern": "^(defense:.+|register)$"
+          },
+          "facet": {
+            "enum": [
+              "defense",
+              "link",
+              "subject",
+              "promise",
+              "evidence",
+              "environment",
+              "provenance",
+              "unresolvable"
+            ]
+          },
+          "consequence": {
+            "enum": [
+              "review_required",
+              "invalid",
+              "unresolvable"
+            ]
+          },
+          "acknowledgement": {
+            "enum": [
+              "new",
+              "acknowledged"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fingerprint": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "subject",
+          "facet",
+          "consequence",
+          "acknowledgement",
+          "message",
+          "fingerprint"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "subject": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "code",
+          "subject",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "counts": {
+      "type": "object",
+      "properties": {
+        "promises": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "open_defenses": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "gaps": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "still_valid": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_required": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "invalid": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unresolvable": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "promises",
+        "open_defenses",
+        "gaps",
+        "still_valid",
+        "review_required",
+        "invalid",
+        "unresolvable"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "command",
+    "exit_code",
+    "findings",
+    "diagnostics",
+    "counts"
+  ],
+  "additionalProperties": false
+}

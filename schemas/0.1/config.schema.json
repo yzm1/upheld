@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/yzm1/upheld/schemas/0.1/config.schema.json",
+  "title": "Upheld 0.1 config",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "hashing_profile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resolver_versions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "gated_facets": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "defense",
+          "link",
+          "subject",
+          "promise",
+          "evidence",
+          "environment",
+          "provenance",
+          "unresolvable"
+        ]
+      },
+      "uniqueItems": true,
+      "contains": {
+        "const": "unresolvable"
+      }
+    },
+    "extensions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "pattern": "^x-[a-z][a-z0-9_-]*$"
+          },
+          "oracle": {
+            "type": "string",
+            "minLength": 1
+          },
+          "adapter": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "kind",
+          "oracle",
+          "adapter"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "hashing_profile",
+    "resolver_versions",
+    "gated_facets"
+  ],
+  "additionalProperties": false
+}

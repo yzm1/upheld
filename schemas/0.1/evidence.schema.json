@@ -1,0 +1,226 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/yzm1/upheld/schemas/0.1/evidence.schema.json",
+  "title": "Upheld 0.1 evidence",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "evidence_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "defense_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "oracle": {
+      "type": "string",
+      "minLength": 1
+    },
+    "oracle_result": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verdict": {
+      "enum": [
+        "supports",
+        "contradicts",
+        "could_not_establish"
+      ]
+    },
+    "validated_subject_scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "basis": {
+      "type": "object",
+      "properties": {
+        "hashing_profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "promise": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "defense_assertion": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "artifacts": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "subject_scope": {
+          "type": "object",
+          "properties": {
+            "scope": {
+              "type": "string",
+              "minLength": 1
+            },
+            "hash": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "scope",
+            "hash"
+          ],
+          "additionalProperties": false
+        },
+        "environment": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        }
+      },
+      "required": [
+        "hashing_profile",
+        "promise",
+        "defense_assertion",
+        "artifacts",
+        "subject_scope",
+        "environment"
+      ],
+      "additionalProperties": false
+    },
+    "source_rev": {
+      "type": "string",
+      "minLength": 1
+    },
+    "producer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "execution": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "unknown"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "status",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "recorded"
+            },
+            "command": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            },
+            "started_at": {
+              "type": "string",
+              "minLength": 1
+            },
+            "duration_seconds": {
+              "type": "number",
+              "minimum": 0
+            },
+            "toolchain": {
+              "type": "object"
+            },
+            "target": {
+              "type": "string",
+              "minLength": 1
+            },
+            "configuration": {
+              "type": "object"
+            },
+            "dirty_tree": {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "enum": [
+                    "clean",
+                    "dirty",
+                    "unknown"
+                  ]
+                },
+                "snapshot": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "state",
+                "snapshot"
+              ],
+              "additionalProperties": false
+            },
+            "omissions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "status",
+            "command",
+            "started_at",
+            "duration_seconds",
+            "toolchain",
+            "target",
+            "configuration",
+            "dirty_tree",
+            "omissions"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "defense_id",
+    "oracle",
+    "oracle_result",
+    "verdict",
+    "validated_subject_scope",
+    "basis",
+    "source_rev",
+    "producer",
+    "supersedes",
+    "execution"
+  ],
+  "additionalProperties": false
+}

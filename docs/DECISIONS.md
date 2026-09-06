@@ -1,95 +1,43 @@
-# Decisions
+# Upheld owns the method and the tools
 
-Recorded so that a later reader can tell a decision from an oversight, with the
-condition that would change each one where there is one.
+Readers are engineers deciding how to build or adopt Upheld. This record states the current choices and when to revisit them.
 
-## Where the method lives
+## The product tracks evidence for software promises
 
-The question, as asked:
+Use this sentence: “Upheld records what code promises, what evidence defends each promise, and when that evidence needs another check.”
 
-> should the methodology (once it is shareable) be:
-> a. hand rolled per repo?
-> b. put in a dedicated tool?
-> c. be part of boundver's offerings?
-> d. be part of heldtospec's offerings?
-> e. other
+The earlier tagline ended with “whether it still does.” Readers could take that to mean proof of the promise itself. The new sentence names the narrower result. The trade is a longer opening sentence.
 
-**Decision: its own repository, holding the method and the tools.** Reached in
-three steps, kept because each corrected the last.
+“Continuous assurance” can describe the category after that sentence. It is not a claim that the current repository provides a running service.
 
-The first answer was (e): the document now, a versioned register schema next,
-extract only what had been built twice. It collapsed under one question -- a
-schema nothing enforces is a document with braces -- so (e) was (a) with a
-reading order.
+## The survey and checker belong in a dedicated repository
 
-The second answer was (a), read as "nothing shared but the idea," which the
-evidence supports: three repositories derived compatible taxonomies from prose
-alone. But (a) as phrased was "hand rolled per repo," set against (b) "a
-dedicated tool." That contrast is each-builds-its-own versus one-shared-tool,
-and a shared document is compatible with (a).
+The survey produces candidate promises and useful findings. Evidence producers assess defenses. The checker compares the current tree with recorded evidence. These pieces share a record format.
 
-The third answer followed from an observation: every finding in the exercise
-came from the survey, and the checker only stops findings from rotting. The
-survey is the tool worth building, and all four surveys were already performed
-by a tool -- an agent with a shared taxonomy prompt -- that nobody had
-packaged. That is (b), and it needs a home that is neither of the two
-repositories it grew out of.
+Boundver checks changes to declared contracts. Heldtospec checks data against contracts. Upheld keeps its broader software-promise scope here. Revisit this choice if adopters consistently find copying the design easier than using the tool.
 
-**Not (c).** boundver ratchets declared contracts; this ratchets the defense of
-declared contracts. It is the same architecture one level down, and widening
-boundver's subject from "did the contract move" to "is the contract defended"
-would cost it its focus. The architecture is copied instead; see
-`reference/boundver.md`.
+Python remains the intended language. Apache-2.0 remains the license for code and documents. These choices do not require publishing a package now.
 
-**Not (d).** heldtospec's translation of the idea into its own domain is real
-and is a different product: a contract clause can be given the oracle a test
-gets from mutation -- a datum that must pass and one that must fail -- and that
-belongs in heldtospec. This tool checks registers; heldtospec validates data.
+## This repository is the source for new method changes
 
-Would change it: a second repository wanting the checker and finding this one
-harder to adopt than copying the design.
+From 6 September 2026, the [method](METHOD.md) governs new surveys. The [checker rules](CHECKER.md) govern comparisons with evidence. The [record schema](SCHEMA.md) defines fields. The machine schemas define allowed JSON shapes. A conflict between them is a defect to fix, never permission to manufacture evidence.
 
-## What was earned by duplication
+The original copied documents remain [dated snapshots](history/README.md). This revision preserves all 27 method requirement IDs and all 23 checker/producer IDs. Field changes appear in the schema mapping.
 
-The rule applied throughout: a shared mechanism is extracted when it has been
-built independently more than once, never when it is anticipated.
+The earlier plan waited for a heldtospec draft before moving authority. New work here no longer waits for that draft. An authenticated read of heldtospec's main tree on 6 September 2026 found no obligation-survey document at the previously named path. The inspected tree was `9ccd2766580e83b21f5d7717c7cee222f8fc6c2d`.
 
-- **Mutant catalogue running.** Built by B as a catalogue with
-  `expected: survives`; run by A as an audit that counted red as caught; run by
-  heldtospec through a driver over mutmut. Three repositories, three shapes,
-  one job. Extracted, as the companion runner.
-- **Freshness checking.** Built by A for a seven-minute generator. B's
-  generator is sub-second and regenerates instead. Earned once, and folded into
-  the checker as a register-provenance finding rather than a command.
-- **The register format.** Built compatibly nowhere. Not extracted; specified.
+Upheld can establish its own authority now. This task leaves heldtospec files unchanged. Unpushed branch contents remain unknown. If that project restores a copy, it should link here or carry an explicit version. The cost of proceeding now is that a later upstream revision will need a side-by-side review.
 
-## The name
+## Six defense kinds preserve the observed distinctions
 
-`upheld`. A promise is upheld; the register records what upholds each one; the
-checker asks whether it still is. Free on GitHub and PyPI when chosen.
-Rejected: `stillheld`, too close to a word nobody wants near a tool;
-`steelhead`, a long-standing Riverbed product.
+Use test, property, checker, ratchet, type, and runtime invariant. An accepted gap records a separate decision. [The schema table](SCHEMA.md) defines their evidence checks.
 
-## The license
+An unfamiliar mechanism uses an extension name and a plain description. Until an installed adapter declares support, it cannot receive a binding. This preserves the observation while exposing unsupported work.
 
-Apache-2.0, matching heldtospec, from which `docs/METHOD.md` and
-`docs/CHECKER.md` were copied. The patent grant matters for a tool meant to
-gate CI in repositories the author does not own. One license for code and
-documents; no separate documentation license.
+The old sketch's five-way vocabulary omitted distinctions already present in the method. A fixed distribution is not a classifier target. Different projects and input sources can have different mixes.
 
-## Language
+## Product learning sets the next scope
 
-Python, unless a reason appears. Three of the four source repositories are
-Python, boundver is Python 3.10+, and the checker reads JSON and git.
+The [milestone](MILESTONE.md) sets the next deliverables and evaluation rules. The working effort split is 60% survey and trials, 30% checker demonstration, and 10% document repair. These are planning choices; review them after the first trials.
 
-## Deliberately not here yet
-
-- **No package scaffold.** "Nothing is built" is meant literally.
-- **No hashing profile.** It is the first artifact, and writing it before an
-  implementation exists to test it against would be the confident deduction
-  the method warns about.
-- **No register for this repository.** It will be the first thing the survey
-  tool is run against, after heldtospec.
-- **No move of `METHOD.md` out of heldtospec.** The copy here is a snapshot;
-  the original is mid-revision there. Once that lands, this repository becomes
-  the home and heldtospec keeps a pointer.
+Advanced history, rename handling, indexes, and review acknowledgments wait for an observed need. Hashing remains an explicit blocker before trustworthy product evidence.

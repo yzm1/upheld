@@ -1,0 +1,47 @@
+{
+  "schema_version": "0.1",
+  "producer": {
+    "name": "maintainer-directed survey",
+    "inputs": [
+      "README.md",
+      "examples/heldtospec-contracts/obligations.register.json",
+      "tools/check_readme_status.py"
+    ],
+    "source_repo": "https://github.com/yzm1/upheld",
+    "source_rev": "3cc993edf7810901ce285b013e18fc670e18919a",
+    "surveyed_on": "2026-09-06",
+    "metadata": {
+      "working_tree": "D01-D08 edits; no evidence basis captured"
+    }
+  },
+  "promises": [
+    {
+      "id": "UPH-001",
+      "text": "The README status counts match the committed example and do not claim the example is absent.",
+      "subject_scope": "README.md",
+      "source": "README.md",
+      "confidence": "verified",
+      "detail": "The README states that the survey has a real example and the Upheld CLI remains unbuilt.",
+      "evidence_tier": "read",
+      "why": "An obsolete status claim prevents readers from assessing the available work.",
+      "the_test_that_would_catch_it": "Compare the status table with the example records and reintroduce the historical absence claim.",
+      "reachability": "live",
+      "defenses": [
+        {
+          "id": "UPH-001:d0",
+          "promise_id": "UPH-001",
+          "guarded_by": "checker",
+          "artifact_locator": "tools/check_readme_status.py::check",
+          "subject_scope": "README.md",
+          "why_this_kind": "Compares declared README counts to current artifacts and reports known stale status claims.",
+          "needs_environment": [],
+          "last_actually_ran": null,
+          "metadata": {
+            "limit": "Checks explicit table rows and known claims; arbitrary prose still needs review."
+          }
+        }
+      ],
+      "next_step": "Use the product basis and seeded-violation producer once available, then have a person bind a matching record."
+    }
+  ]
+}

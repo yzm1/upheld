@@ -1,0 +1,47 @@
+# Words a reader of heldtospec and upheld already owns: an engineer working in
+# one of the repositories that adopt the method, or someone arriving from GitHub.
+# Anything here stops being flagged, as insider jargon and as a banned word. Add
+# a term only when the whole audience knows it without help. Declaring one is a
+# claim about your audience.
+
+# --- tools and places ---
+CI
+CLI
+API
+PR
+PyPI
+README
+MIT
+dbt      # the SQL transformation tool; the adapter's readers run it
+
+# --- formats and protocols ---
+JSON
+YAML
+SQL
+CSV
+URL
+HTTP
+HTTPS
+UUID
+UTC
+SHA
+CRLF
+LF
+ASCII
+UTF
+
+# --- shell ---
+PATH
+
+# --- operations ---
+SLA
+
+# --- specification keywords ---
+MUST     # RFC 2119; the strength a requirement carries in the method
+SHOULD
+MAY
+
+# --- deliberately absent ---
+# ODCS, LICM, CSE, GC, DDL: define each at first use. The reader does not own
+# them. The register's own words (promise, defense, binding, basis, facet) are
+# defined where they appear and never declared here.
