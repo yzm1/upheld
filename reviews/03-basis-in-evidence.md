@@ -1,27 +1,25 @@
-<!--
-Source: an external LLM review (ChatGPT), obtained by the maintainer on partial
-context, 2026-09-05. Reproduced verbatim.
-Reviewed: the third draft of CHECKER.md (733 lines; T15-T19 and R1-R3 present;
-`ack`; grounds recorded in the lock).
+# Regenerating the lock could launder a stale grade, so the basis moved into the evidence
 
-Accepted: all six changes and the five smaller repairs. The basis moved out of
-the lock and into the evidence record, with the lock demoted to a cache (T20;
-the first test an implementation runs is "delete the lock, regenerate, no
-validity changes"); binding admissibility and the normalised verdict
-`supports | contradicts | could_not_establish` (T16); acknowledged
-`unresolvable` still exits 5 (T12, T13); evidence lineage via `supersedes`
-(T21); bindings in a separate file no producer writes (T22); containment
-folded into T5; migration never manufacturing evidence (T19); `Finding` given
-a `subject`; the per-status-count residue removed; the traversal wording
-corrected; the chain-of-truth diagram adopted.
+An outside review from a language model, obtained by the maintainer on partial context on 2026-09-05 and reproduced verbatim below. It reviewed the third draft of `CHECKER.md`: 733 lines, T15 to T19 and R1 to R3 present, `ack` in place, grounds recorded in the lock.
 
-Extended: a `basis` command so producers do not reimplement hashing, and R4
-requiring runners to use it; a contradicting record as an event alongside a
-superseding one, or a `did_not_fire` could sit unread beside a bound
-`supports`; the hashing profile promoted to the first artifact in the open
-problems, since runner and checker hashing differently now disagree about
-every defense from the first run.
--->
+## Taken
+
+- All six changes and the five smaller repairs. The basis moved out of the lock and into the evidence record, with the lock demoted to a cache (T20). The first test an implementation runs is: delete the lock, regenerate, and confirm no validity changed.
+- Binding admissibility and the normalised verdict `supports`, `contradicts` or `could_not_establish` (T16).
+- An acknowledged `unresolvable` still exits 5 (T12, T13).
+- Evidence lineage through `supersedes` (T21).
+- Bindings in a separate file no producer writes (T22).
+- Containment folded into T5; migration never invents evidence (T19); `Finding` given a `subject`; the per-status-count remnant removed; the traversal wording corrected; the chain-of-truth diagram adopted.
+
+## Pushed back on, or extended
+
+- A `basis` command, so producers do not reimplement hashing, and R4 requiring runners to use it.
+- A contradicting record as an event beside a superseding one; otherwise a `did_not_fire` could sit unread beside a bound `supports`.
+- The hashing profile promoted to the first artifact in the open problems, since a runner and a checker that hash differently disagree about every defense from the first run.
+
+---
+
+<!-- prose-gate:ignore -->
 
 This revision resolves almost all of the previous pass. The architecture is now coherent enough that the remaining defects are **specific loopholes**, not a need to rethink the tool.
 
@@ -661,3 +659,5 @@ So I would do **one more revision before coding**, centered on:
 6. clean the five smaller schema remnants above.
 
 After that, I think continuing to design instead of shipping the fleet V1 would start becoming the error the document itself warns against.
+
+<!-- /prose-gate:ignore -->

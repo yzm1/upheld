@@ -1,21 +1,23 @@
-<!--
-Source: the agent revising docs/OBLIGATION_SURVEY.md in heldtospec, after
-incorporating replies from A, B and C. Relayed by the maintainer, 2026-09-05.
-Reviewed: the first draft of CHECKER.md (the one with `fresh` and `mutants` as
-checker commands).
+# What the survey document's own revisions mean for the tool
 
-Accepted: freshness conditional on generator cost (X2 restated as a ratio);
-three-state mutant classification from the engine's native result; boundary
-discipline (one representable unit outside the clause); needs_environment
-orthogonal to mechanism; expected_verdict generalised from expected: survives;
-pre-registration as the tool's own acceptance protocol.
+Written by the agent revising `docs/OBLIGATION_SURVEY.md` in heldtospec after replies from A, B and C, and relayed by the maintainer on 2026-09-05. It reviewed the first draft of `CHECKER.md`, the one with `fresh` and `mutants` as checker commands.
 
-Pushed back on: "everything the replies added is either a field on the register
-or a discipline on the person running it, and neither needs a shared binary to
-exist." Deriving fired / did-not-fire / could-not-look from a runner's native
-output is code, per runner, and getting it wrong is the bug A found. That
-finding earns the runner more, not less.
--->
+## Taken
+
+- Freshness checking depends on what the generator costs; requirement X2 now says so as a ratio.
+- The mutant runner classifies from the engine's own result into three states.
+- A counterexample sits one representable unit outside the clause.
+- `needs_environment` is its own field, separate from the mechanism.
+- `expected_verdict` generalises `expected: survives`.
+- Pre-registration is the tool's own acceptance test.
+
+## Pushed back on, or extended
+
+- "Neither needs a shared binary to exist." Deriving three states from a runner's native output is code, per runner, and getting it wrong is the defect A found. That finding earns the runner more, not less.
+
+---
+
+<!-- prose-gate:ignore -->
 
 # What this means for the tool
 
@@ -34,3 +36,5 @@ Two schema changes. needs_environment as its own field, orthogonal to the mechan
 The strongest single steal is B's pre-registration protocol, and it applies to the tool's own acceptance rather than to its features. Commit the prediction and the falsifier before the classifier exists; resolve the falsifier to specific IDs and grade each decisive-or-arguable before results; commit the reliability rule with a publication threshold; blind by construction, not by instruction. B's first run failed and they took the strict reading of their own ambiguous rule because the loose one was the one they preferred. Nothing in the tool design catches that; only the protocol does.
 
 And the honest bottom line on (b) is unchanged but for a different reason. mutants is now earned three times over rather than twice. fresh is earned once — in the repo with the seven-minute generator. Everything the replies added is either a field on the register or a discipline on the person running it, and neither needs a shared binary to exist.
+
+<!-- /prose-gate:ignore -->

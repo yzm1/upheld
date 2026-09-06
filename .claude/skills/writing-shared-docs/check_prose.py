@@ -28,9 +28,10 @@ Sentence-length rules apply to prose only. Headings, table cells and list items
 voice and vocabulary but not for length. HTML comments are skipped entirely: a
 reader never sees them.
 
-  * The sentence splitter needs a capital letter after a full stop. A sentence
-    that opens with an inline code term, which the gate strips, merges into
-    the one before it, so code-dense prose reads longer than it is.
+  * The sentence splitter needs a capital letter after a full stop, with at
+    most a closing quotation mark between them. A sentence that opens with an
+    inline code term, which the gate strips, merges into the one before it,
+    so code-dense prose reads longer than it is.
 """
 import os
 import re
@@ -158,6 +159,11 @@ def to_text(markup, is_md):
         markup = re.sub(r"&[a-z]+;|&#\d+;", " ", markup)
     else:
         markup = re.sub(r"^#{1,6}\s+.*$", " ", markup, flags=re.M)    # headings
+        # A list marker is not part of the item's first sentence. Left in place
+        # it sits between one item's full stop and the next item's capital, so
+        # a whole list read as one sentence and a single passive item counted
+        # as a quarter of the page.
+        markup = re.sub(r"^[ \t]*(?:[-*]|\d+\.)[ \t]+", "", markup, flags=re.M)
         markup = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", markup)
         # Emphasis markers sit at a word's edge. An underscore inside a word is
         # part of it: stripping it turned OBLIGATION_SURVEY.md into a name that
@@ -182,7 +188,10 @@ def prose_blocks(markup, is_md):
 
 def sentences(text):
     text = re.sub(r"\s+", " ", text or "")
-    parts = re.split(r"(?<=[.!?:])\s+(?=[A-Z“\"])", text)
+    # A closing quotation mark may sit between the full stop and the space.
+    # Without allowing for it, a sentence ending inside a quote merged with
+    # the next one and a two-sentence line measured as forty-four words.
+    parts = re.split(r"(?<=[.!?:])[\"”’]?\s+(?=[A-Z“\"])", text)
     return [p.strip() for p in parts if len(p.split()) >= 4]
 
 

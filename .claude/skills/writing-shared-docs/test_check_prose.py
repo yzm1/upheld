@@ -224,6 +224,25 @@ def test_html_comments_are_invisible_to_the_gate():
     assert passed(rows, "banned words"), rows["_raw"]
 
 
+def test_a_sentence_ending_inside_a_quotation_still_splits():
+    """`components." It runs` is two sentences. The splitter looked for the
+    full stop immediately before the space, so the closing quote hid the
+    boundary and a two-sentence line measured as one long one."""
+    assert len(cp.sentences('The README calls it "a lockfile for contracts." It runs on Python.')) == 2
+    assert len(cp.sentences("The README calls it a lockfile for contracts. It runs on Python.")) == 2
+
+
+def test_each_list_item_is_its_own_sentence_for_the_voice_rate():
+    """Three items, one of them passive, is a one-in-three rate. With the
+    markers left in the text the three items read as one sentence and the
+    rate was reported as one in one."""
+    body = ("- The worker writes the record.\n"
+            "- The record was written by the worker.\n"
+            "- The reader checks the record.\n")
+    text = cp.to_text(cp.drop_quoted(body, True), True)
+    assert len(cp.sentences(text)) == 3
+
+
 # --- the other detectors, pinned so a later edit cannot quietly drop one ---
 
 def test_machine_tells_are_caught():

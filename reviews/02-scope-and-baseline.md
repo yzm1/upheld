@@ -1,30 +1,29 @@
-<!--
-Source: an external LLM review (ChatGPT), obtained by the maintainer on partial
-context, 2026-09-05. Reproduced verbatim.
-Reviewed: the second draft of CHECKER.md (489 lines; T1-T14; `mutants` and
-`accept` as checker commands; five per-facet exit codes).
+# The mutant runner is a second tool, and the baseline could hide invalid evidence
 
-Accepted: all eight blockers. `mutants` moved to a companion (T7, T10, T11
-retired to R1-R3); acknowledgement made orthogonal to validity and `accept`
-renamed `ack` (T15); T5's operands changed from artifact locator to subject
-scope versus validated subject scope; promise-level adequacy withdrawn from V1
-(T1 rewritten); evidence given immutable identity and an explicit binding
-(T16); a config file added, evidence made line-delimited, hashing made a
-requirement (T17); environment made declarative; T6 changed from "the register
-is never generated" to "the checker never generates it" (T18); validate /
-verify / ack given phase separation and migration made an adoption requirement
-(T9, T19); the history contradiction resolved; the ontology frozen; the
-three-way non-impersonation principle adopted as the section heading.
+An outside review from a language model, obtained by the maintainer on partial context on 2026-09-05 and reproduced verbatim below. It reviewed the second draft of `CHECKER.md`: 489 lines, requirements T1 to T14, `mutants` and `accept` as checker commands, five per-facet exit codes.
 
-Pushed back on, or extended: the review does not say what the exit code does
-with an acknowledged gated finding, and a reader could take "never changes
-validity" to mean "does not affect the gate" -- boundver's model resolves it
-(exit code over the unacknowledged gated subset, report always shows
-validity), and CHECKER.md says so; a structured runner protocol reintroduces
-per-language adapters, which is stated as the runner's cost rather than left
-implicit; per-facet exit codes were collapsed to consequence codes with the
-facet in structured output.
--->
+## Taken
+
+- All eight blockers. `mutants` moved to a companion, and T7, T10 and T11 retired to R1 to R3.
+- Acknowledgement made orthogonal to validity, and `accept` renamed `ack` (T15).
+- T5's operands changed from the artifact locator to subject scope against validated subject scope.
+- Promise-level adequacy withdrawn from version one; T1 rewritten.
+- Evidence given immutable identity and an explicit binding (T16).
+- A config file added, evidence made line-delimited, hashing made a requirement (T17).
+- Environment made declarative.
+- T6 changed from "the register is never generated" to "the checker never generates it" (T18).
+- `validate`, `verify` and `ack` given separate phases, and migration made an adoption requirement (T9, T19).
+- The history contradiction resolved; the ontology frozen; the three-way non-impersonation principle adopted.
+
+## Pushed back on, or extended
+
+- The review does not say what the exit code does with an acknowledged gated finding. boundver's model resolves it: the exit code covers the unacknowledged gated subset, and the report always shows validity. `CHECKER.md` says so.
+- A structured runner protocol brings back per-language adapters. That is stated as the runner's cost rather than left implicit.
+- Per-facet exit codes were collapsed to consequence codes, with the facet in the structured output.
+
+---
+
+<!-- prose-gate:ignore -->
 
 This revision has the right center now. I would **not implement it exactly as written yet**, though: the remaining problems are no longer philosophical; they are a handful of schema/lifecycle contradictions that would otherwise get baked into V1.
 
@@ -755,3 +754,5 @@ I would make these changes **before writing implementation code**:
 After those, I would consider the design **ready for a deliberately simple fleet V1**. The remaining questions about cardinality, churn, reverse-index persistence, symbol granularity, and agent throughput genuinely should then be learned by deployment rather than designed in advance—as the document itself argues.
 
 The architecture has converged substantially; the main danger now is no longer under-design. It is accidentally letting **acknowledgement, evidence production, or promise-level inference** creep across the very boundary the tool was created to enforce.
+
+<!-- /prose-gate:ignore -->
