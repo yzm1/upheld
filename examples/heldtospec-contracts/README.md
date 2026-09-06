@@ -94,9 +94,11 @@ A local run of `tests/contracts` and the six `tests/cli/test_contract_*` files o
 The repository is 468 commits ahead of `origin/main`, whose last commit is
 2026-08-27. The workflow that would run `pytest tests/` has not fired on any
 of them. The pre-commit hook is not installed. Every `guarded_by: test` and
-`guarded_by: checker` here therefore has one known execution, the one above,
-and by the method's V3 the honest `last_actually_ran` for the component is
-that timestamp and nothing earlier that anyone can point to.
+`guarded_by: checker` here therefore has **no execution anyone can point to**:
+the workflow has not fired, the hook is not installed, and the one attempt made
+for this survey did not finish. By the method's V3 the honest
+`last_actually_ran` for the component is unknown, and a register that wrote a
+timestamp here would be guessing.
 
 `prove` itself is wired to no contract in its own repository: there is no
 committed `soundness.json` and no example contract under `examples/`. The
