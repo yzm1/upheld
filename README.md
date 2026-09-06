@@ -2,7 +2,7 @@
 
 Upheld is a software assurance tool in development. It records what code promises, what evidence defends each promise, and when that evidence needs another check.
 
-**The survey has a real example. The Upheld CLI remains unbuilt.** Documentation checks run separately from the planned product commands.
+**The survey has a runnable repository prototype. The Upheld CLI remains unbuilt.** The prototype prepares sources and imports candidate judgments. Documentation checks run separately from the planned product commands.
 
 A promise is a claim that can be false. A defense is a test, rule, type guarantee, or other mechanism intended to uphold it. An evidence record describes a run that assessed a defense. A binding records a person's choice to rely on that evidence.
 
@@ -29,7 +29,7 @@ The [milestone](docs/MILESTONE.md) pairs a survey and cheap-probe workflow with 
 
 | Piece | Current state | Read next |
 |---|---|---|
-| Survey | Hand survey and repeatable serializer | [Survey workflow](docs/SURVEY_TOOL.md) |
+| Survey | Source-packet prototype, external judgment import, and experimental Codex adapter | [Run the prototype](docs/SURVEY_PROTOTYPE.md) |
 | Evidence producers | Specified; no product producer | [Checker and producer rules](docs/CHECKER.md) |
 | Checker CLI | Specified; no product commands | [Schemas and compatibility](docs/SCHEMA.md) |
 | Documentation checks | Executable repository tools | [Contribution checks](CONTRIBUTING.md) |

@@ -11,3 +11,7 @@ header and relative-link redirection.
 
 reviews/ contains external reviews obtained by the maintainer and reproduced
 verbatim; each file's header states its source.
+
+examples/survey-heldtospec/sources/docs/ contains verbatim CONTRACTS.md and
+CLI.md from https://github.com/yzm1/heldtospec at revision
+9ccd2766580e83b21f5d7717c7cee222f8fc6c2d, Apache-2.0, same author.

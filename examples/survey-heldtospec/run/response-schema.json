@@ -1,0 +1,143 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "assessments": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "coverage": {
+            "enum": [
+              "whole_document",
+              "partial"
+            ],
+            "type": "string"
+          },
+          "note": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "source_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "uninspected": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_id",
+          "note",
+          "coverage",
+          "uninspected"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "candidates": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "claim": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "faithfulness_review": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "behavior",
+              "obligation",
+              "inferred",
+              "ambiguity"
+            ],
+            "type": "string"
+          },
+          "next_question": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "qualifiers": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "rationale": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "references": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "end_line": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "quote": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "source_id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "start_line": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "source_id",
+                "start_line",
+                "end_line",
+                "quote"
+              ],
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "subject": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "uncertainty": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "claim",
+          "subject",
+          "kind",
+          "qualifiers",
+          "rationale",
+          "uncertainty",
+          "next_question",
+          "faithfulness_review",
+          "references"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "packet_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reviewer": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "packet_id",
+    "reviewer",
+    "assessments",
+    "candidates"
+  ],
+  "type": "object"
+}

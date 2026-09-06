@@ -72,3 +72,9 @@ The old artifact/revision and stored-status fields now split across defenses, ev
 The [review manifest](rule-review.json) fixes the reviewed document bytes and each rule's strength. Editing a rule document requires a new comparison and an explicit manifest update in the same change. Update this review when meaning changes. Hashes cannot establish that the replacement wording is correct.
 
 The tests downgrade T2 and reverse T20 without updating the manifest; both must fail. A reviewer can still approve a bad rule and update its hash. That remaining risk requires human review, including Rp3. The manifest makes an unreviewed edit visible; it never grades semantic equivalence.
+
+## Method 1.3 clarifies the source and judgment boundaries
+
+The S02 review on 6 September 2026 keeps all 27 method rule IDs and their strengths. P1's reading pass now has an explicit source boundary and visible omissions. O4's quoted reading remains distinct from faithful meaning and established behavior. The oracle explanation requires a separately justified criterion; a second answer from the same model cannot count as independent evidence.
+
+The prose on measured results now links S01's outcome definitions and includes omitted sources and total review effort. The evidence section adds the S02 replay and states what it cannot establish. These edits clarify scope and reporting; they do not relax V4, V5, type-defense authority, or human acceptance.

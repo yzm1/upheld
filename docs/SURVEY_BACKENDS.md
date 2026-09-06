@@ -2,7 +2,7 @@
 
 Readers are engineers designing the survey's model interface. **Require an explicit backend choice before sending survey material to a model.** Offer a local path without a generative model and optional adapters for user-configured agent CLIs.
 
-This proposal dates from 6 September 2026. The interface remains unbuilt. Official documentation supports the capabilities below. Codex, Claude, and Copilot executables were unavailable in this workspace; no adapter or paid model call ran.
+This proposal dates from 6 September 2026. The [S02 prototype](SURVEY_PROTOTYPE.md) implements external response import and an experimental Codex adapter. Its tests use a fake executable. Official documentation supports the capabilities below. No real agent CLI or paid model call ran in this workspace.
 
 ## Keep interpretation optional and evidence handling local
 
@@ -51,4 +51,4 @@ Explain which material leaves the machine before enabling a backend. A local CLI
 
 Use separate permissions for reading evidence and executing probes. Require bounded execution and an actual run record for any probe. Neither successful model output nor a completed survey creates accepted evidence. The existing checker consumes reviewed records and never reruns the model.
 
-S02 owns the repeatable scan and capability fixtures; S04 owns uncertain review outcomes; S08 owns preserved choices; S09 owns setup and first use. These tasks remain open. [S01's research](SURVEY_RESEARCH.md) supplies the rationale and comparison plan.
+S02 supplies a bounded source scan and adapter process tests. S04 owns uncertain review outcomes; S08 owns preserved choices; S09 owns setup, live capability checks, and first use. These later tasks remain open. [S01's research](SURVEY_RESEARCH.md) supplies the rationale and comparison plan.

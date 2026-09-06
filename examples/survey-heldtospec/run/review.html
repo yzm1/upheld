@@ -1,0 +1,613 @@
+<!doctype html><meta charset="utf-8"><title>Survey review</title>
+<style>body{max-width:65rem;margin:2rem auto;padding:0 1rem;font:17px/1.5 system-ui}pre{white-space:pre-wrap;background:#f3f4f6;padding:1rem}article{border-top:1px solid #bbb;margin-top:2rem}td,th{text-align:left;padding:.4rem;vertical-align:top}</style>
+<h1>Review proposed claims against their sources</h1>
+<p>These are unaccepted candidates. Exact quotations passed local checks; meaning and completeness still need review. No probes or defenses were graded.</p>
+<p>Packet: <code>6cc816b654c8b8e1a1ed8a646c8816cac53a8b8f4da98d706f91509a16e332b9</code></p>
+<p>Boundary: Public contracts guide and CLI reference only; no live help execution, implementation, tests, or external links.</p>
+<p>Historical heldtospec source snapshot. Original quotations contain an obsolete project name and command spellings. Use heldtospec in current prose; quoted commands are not verified current instructions.</p>
+<h2>Source coverage remains explicit</h2><table><tr><th>Source</th><th>State</th><th>Reason</th></tr>
+<tr><td>docs/CLI.md</td><td>inspection reported; extent is in notes</td><td></td></tr>
+<tr><td>docs/CONTRACTS.md</td><td>inspection reported; extent is in notes</td><td></td></tr>
+<tr><td>docs/CONFIG_REFERENCE.md</td><td>excluded</td><td>General configuration reference outside this bounded first pass</td></tr>
+</table><h2>Submitted inspection notes</h2>
+<p>valid_candidate_submission: {&#x27;backend&#x27;: &#x27;external&#x27;, &#x27;submitted_by&#x27;: &#x27;red-team-replay&#x27;}</p>
+<p>40aa42c6992ee72d77f8f4575f631e5cbeb83146842914e927714796c0de2690: Read full document and selected contracts-related candidates. This demonstration is not an exhaustive claim inventory or independent evaluation. Coverage: whole_document; uninspected: No source portions were reported unread in the original review; candidate discovery was selective, not exhaustive.</p>
+<p>b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0: Read full document and selected contracts-related candidates. This demonstration is not an exhaustive claim inventory or independent evaluation. Coverage: whole_document; uninspected: No source portions were reported unread in the original review; candidate discovery was selective, not exhaustive.</p>
+<h2>Candidate count: 12</h2><p>Exact duplicates are grouped. Related claims and conflicting rewrites still need human review.</p>
+<article><h3>Generated contracts require review before publication.</h3><p>Candidate 067a090c2cf5; submitted by Replay of prior external assistant judgments; no fresh or independent review</p>
+<p><strong>subject:</strong> heldtospec public contracts interface at the pinned revision</p>
+<p><strong>kind:</strong> obligation</p>
+<p><strong>qualifiers:</strong> Schema inference supplies a starting point; review includes constraints, ownership, and service levels.</p>
+<p><strong>rationale:</strong> Publishing inferred settings without review could adopt unintended promises.</p>
+<p><strong>uncertainty:</strong> Source reading only; intended meaning and executable behavior still need independent review.</p>
+<p><strong>next question:</strong> Which fields can inference establish and which need an owner decision?</p>
+<p><strong>faithfulness review:</strong> Compared the proposed claim with the quoted passage and full document. Schema inference supplies a starting point; review includes constraints, ownership, and service levels.</p>
+<p>docs/CONTRACTS.md:16–17</p><p>Verbatim source quotation:</p><pre>
+The generated schema is a starting point; review nullability, uniqueness,</pre>
+<p><a href="#source-b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0">Read full source context</a></p>
+</article>
+<article><h3>The null limit uses fractions, and contract freshness accepts s, m, h, and d units.</h3><p>Candidate 44ac8951c528; submitted by Replay of prior external assistant judgments; no fresh or independent review</p>
+<p><strong>subject:</strong> heldtospec public contracts interface at the pinned revision</p>
+<p><strong>kind:</strong> behavior</p>
+<p><strong>qualifiers:</strong> The documented null-limit example is 0.01 for one percent; units concern max_age.</p>
+<p><strong>rationale:</strong> Wrong scale or duration units could change which datasets pass.</p>
+<p><strong>uncertainty:</strong> Source reading only; intended meaning and executable behavior still need independent review.</p>
+<p><strong>next question:</strong> Do parser and boundary checks preserve these meanings?</p>
+<p><strong>faithfulness review:</strong> Compared the proposed claim with the quoted passage and full document. The documented null-limit example is 0.01 for one percent; units concern max_age.</p>
+<p>docs/CONTRACTS.md:58–59</p><p>Verbatim source quotation:</p><pre>`max_null_percentage` is a fraction: `0.01` means one percent. Duration units
+for `max_age` are `s`, `m`, `h`, and `d`.</pre>
+<p><a href="#source-b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0">Read full source context</a></p>
+</article>
+<article><h3>Contract lint rejects unknown keys without loading the dataset.</h3><p>Candidate 45476ec4c9bd; submitted by Replay of prior external assistant judgments; no fresh or independent review</p>
+<p><strong>subject:</strong> heldtospec public contracts interface at the pinned revision</p>
+<p><strong>kind:</strong> behavior</p>
+<p><strong>qualifiers:</strong> Applies to contract lint, not every validation command.</p>
+<p><strong>rationale:</strong> Offline lint users need syntax errors without dataset access.</p>
+<p><strong>uncertainty:</strong> Source reading only; intended meaning and executable behavior still need independent review.</p>
+<p><strong>next question:</strong> Can lint reject a misspelled key while the dataset is unavailable?</p>
+<p><strong>faithfulness review:</strong> Compared the proposed claim with the quoted passage and full document. Applies to contract lint, not every validation command.</p>
+<p>docs/CONTRACTS.md:67–68</p><p>Verbatim source quotation:</p><pre>Linting validates the contract model and rejects unknown or misspelled keys.
+It does not load the dataset.</pre>
+<p><a href="#source-b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0">Read full source context</a></p>
+</article>
+<article><h3>Each declared column must exist with its declared Polars dtype.</h3><p>Candidate f03b00410e76; submitted by Replay of prior external assistant judgments; no fresh or independent review</p>
+<p><strong>subject:</strong> heldtospec public contracts interface at the pinned revision</p>
+<p><strong>kind:</strong> behavior</p>
+<p><strong>qualifiers:</strong> Only declared columns; the passage does not forbid extra columns.</p>
+<p><strong>rationale:</strong> A rewrite forbidding additional columns would strengthen the stated contract.</p>
+<p><strong>uncertainty:</strong> Source reading only; intended meaning and executable behavior still need independent review.</p>
+<p><strong>next question:</strong> Does verification allow extra columns while rejecting missing or wrongly typed declared columns?</p>
+<p><strong>faithfulness review:</strong> Compared the proposed claim with the quoted passage and full document. Only declared columns; the passage does not forbid extra columns.</p>
+<p>docs/CONTRACTS.md:80–80</p><p>Verbatim source quotation:</p><pre>| `schema.columns[].name` / `.type` | Every declared column must exist with the declared Polars dtype. |</pre>
+<p><a href="#source-b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0">Read full source context</a></p>
+</article>
+<article><h3>Nonnullable and unique declarations require zero null percentage and full uniqueness.</h3><p>Candidate 9eacfb936b81; submitted by Replay of prior external assistant judgments; no fresh or independent review</p>
+<p><strong>subject:</strong> heldtospec public contracts interface at the pinned revision</p>
+<p><strong>kind:</strong> behavior</p>
+<p><strong>qualifiers:</strong> These are two related column constraints with different failure conditions.</p>
+<p><strong>rationale:</strong> Both directions require observable boundary checks.</p>
+<p><strong>uncertainty:</strong> Source reading only; intended meaning and executable behavior still need independent review.</p>
+<p><strong>next question:</strong> How do empty datasets and duplicate null values affect each check?</p>
+<p><strong>faithfulness review:</strong> Compared the proposed claim with the quoted passage and full document. These are two related column constraints with different failure conditions.</p>
+<p>docs/CONTRACTS.md:81–82</p><p>Verbatim source quotation:</p><pre>| `nullable: false` | Null percentage must be zero for that column. |
+| `unique: true` | Uniqueness percentage must be 100 for that column. |</pre>
+<p><a href="#source-b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0">Read full source context</a></p>
+</article>
+<article><h3>Allowed-set, range, and regex declarations map to executable column checks.</h3><p>Candidate bd3b2c912d20; submitted by Replay of prior external assistant judgments; no fresh or independent review</p>
+<p><strong>subject:</strong> heldtospec public contracts interface at the pinned revision</p>
+<p><strong>kind:</strong> behavior</p>
+<p><strong>qualifiers:</strong> The table specifies zero outside values for sets and ranges, and 100 percent matches for regex.</p>
+<p><strong>rationale:</strong> A declaration with no executable check would weaken the published promise.</p>
+<p><strong>uncertainty:</strong> Source reading only; intended meaning and executable behavior still need independent review.</p>
+<p><strong>next question:</strong> What happens at numeric boundaries and for null or nonmatching values?</p>
+<p><strong>faithfulness review:</strong> Compared the proposed claim with the quoted passage and full document. The table specifies zero outside values for sets and ranges, and 100 percent matches for regex.</p>
+<p>docs/CONTRACTS.md:83–85</p><p>Verbatim source quotation:</p><pre>| `allowed_values` | Count outside the allowed set must be zero. |
+| `constraints.min` / `.max` | Count outside the numeric range must be zero. |
+| `constraints.regex` | Regex-match percentage must be 100. |</pre>
+<p><a href="#source-b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0">Read full source context</a></p>
+</article>
+<article><h3>A contract expression must hold for every row.</h3><p>Candidate 301d9a4ffb6a; submitted by Replay of prior external assistant judgments; no fresh or independent review</p>
+<p><strong>subject:</strong> heldtospec public contracts interface at the pinned revision</p>
+<p><strong>kind:</strong> behavior</p>
+<p><strong>qualifiers:</strong> Applies to checks[].expr; null semantics are not specified here.</p>
+<p><strong>rationale:</strong> Some or all row failures may otherwise escape enforcement.</p>
+<p><strong>uncertainty:</strong> Source reading only; intended meaning and executable behavior still need independent review.</p>
+<p><strong>next question:</strong> How are null expression results and empty inputs handled?</p>
+<p><strong>faithfulness review:</strong> Compared the proposed claim with the quoted passage and full document. Applies to checks[].expr; null semantics are not specified here.</p>
+<p>docs/CONTRACTS.md:89–89</p><p>Verbatim source quotation:</p><pre>| `checks[].expr` | The expression must be true for every row. |</pre>
+<p><a href="#source-b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0">Read full source context</a></p>
+</article>
+<article><h3>Foreign-key references are metadata, and a bare metric lacks a pass condition.</h3><p>Candidate fe41dadf1284; submitted by Replay of prior external assistant judgments; no fresh or independent review</p>
+<p><strong>subject:</strong> heldtospec public contracts interface at the pinned revision</p>
+<p><strong>kind:</strong> behavior</p>
+<p><strong>qualifiers:</strong> The source limits the statement to the current verifier; it distinguishes expressions and concrete constraints.</p>
+<p><strong>rationale:</strong> Users could assume declarations enforce referential integrity or metric thresholds.</p>
+<p><strong>uncertainty:</strong> Source reading only; intended meaning and executable behavior still need independent review.</p>
+<p><strong>next question:</strong> Does the implementation match these documented limits at this revision?</p>
+<p><strong>faithfulness review:</strong> Compared the proposed claim with the quoted passage and full document. The source limits the statement to the current verifier; it distinguishes expressions and concrete constraints.</p>
+<p>docs/CONTRACTS.md:91–94</p><p>Verbatim source quotation:</p><pre>Ownership, consumers, descriptions, and foreign-key `references` are contract
+metadata in the current verifier. A bare
+`checks[].metric` also has no pass condition; use `expr` or a concrete column
+constraint for a check that must gate the run.</pre>
+<p><a href="#source-b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0">Read full source context</a></p>
+</article>
+<article><h3>Contract verification propagates pipeline failure and fails when there are no executable checks.</h3><p>Candidate 6dd6099398ff; submitted by Replay of prior external assistant judgments; no fresh or independent review</p>
+<p><strong>subject:</strong> heldtospec public contracts interface at the pinned revision</p>
+<p><strong>kind:</strong> behavior</p>
+<p><strong>qualifiers:</strong> Code 3 denotes constraint violation; the exact no-checks exit code is unstated.</p>
+<p><strong>rationale:</strong> A no-op contract must not produce a misleading success.</p>
+<p><strong>uncertainty:</strong> Source reading only; intended meaning and executable behavior still need independent review.</p>
+<p><strong>next question:</strong> Which output and exit code distinguish a no-checks contract from a satisfied one?</p>
+<p><strong>faithfulness review:</strong> Compared the proposed claim with the quoted passage and full document. Code 3 denotes constraint violation; the exact no-checks exit code is unstated.</p>
+<p>docs/CONTRACTS.md:96–98</p><p>Verbatim source quotation:</p><pre>The verification command returns the underlying pipeline exit code, including
+code 3 for a constraint violation. It fails rather than reporting success if
+the contract produces no executable checks.</pre>
+<p><a href="#source-b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0">Read full source context</a></p>
+</article>
+<article><h3>Contract docs writes Markdown to stdout when output is omitted.</h3><p>Candidate 4c8c429b58c5; submitted by Replay of prior external assistant judgments; no fresh or independent review</p>
+<p><strong>subject:</strong> heldtospec public contracts interface at the pinned revision</p>
+<p><strong>kind:</strong> behavior</p>
+<p><strong>qualifiers:</strong> Applies to the contract docs subcommand.</p>
+<p><strong>rationale:</strong> Callers depend on predictable output routing.</p>
+<p><strong>uncertainty:</strong> Source reading only; intended meaning and executable behavior still need independent review.</p>
+<p><strong>next question:</strong> Does stdout contain only the intended document when no output path is supplied?</p>
+<p><strong>faithfulness review:</strong> Compared the proposed claim with the quoted passage and full document. Applies to the contract docs subcommand.</p>
+<p>docs/CONTRACTS.md:108–108</p><p>Verbatim source quotation:</p><pre>Omit `--output` to write Markdown to stdout.</pre>
+<p><a href="#source-b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0">Read full source context</a></p>
+</article>
+<article><h3>Exit code 2 requires context to distinguish usage errors from data-loading failures.</h3><p>Candidate f04fdf2ae19d; submitted by Replay of prior external assistant judgments; no fresh or independent review</p>
+<p><strong>subject:</strong> heldtospec public contracts interface at the pinned revision</p>
+<p><strong>kind:</strong> behavior</p>
+<p><strong>qualifiers:</strong> The reference describes stderr and run-log differences and recommends validating the invocation first.</p>
+<p><strong>rationale:</strong> Routing every code-2 failure to a data owner can misattribute user errors.</p>
+<p><strong>uncertainty:</strong> Source reading only; intended meaning and executable behavior still need independent review.</p>
+<p><strong>next question:</strong> Do contract subcommands retain the documented distinction?</p>
+<p><strong>faithfulness review:</strong> Compared the proposed claim with the quoted passage and full document. The reference describes stderr and run-log differences and recommends validating the invocation first.</p>
+<p>docs/CLI.md:140–158</p><p>Verbatim source quotation:</p><pre>Treat every nonzero value as a failed quality gate unless a caller explicitly
+handles partial success (`6`).
+
+**`2` is not unambiguous.** `argparse` exits `2` for an invalid invocation, which
+is the long-standing convention for a usage error, so an unknown flag, an unknown
+subcommand or a bad flag value all exit `2` — the same code as a data-loading
+failure:
+
+| Invocation | Exit | Why |
+|---|---:|---|
+| `quivra --no-such-flag` | `2` | usage — unknown flag |
+| `quivra --timeout notanumber` | `2` | usage — bad flag value |
+| `quivra -c config.yaml` with a missing source file | `2` | data loading |
+
+A caller that routes `2` to whoever owns the data will misattribute a typo in the
+command line. The two are distinguishable on stderr: a usage error is a single
+`quivra: error: ...` line from the argument parser and produces no run log,
+while a data error is logged and reported through the normal result path. A
+pipeline that needs to tell them apart reliably should validate its own</pre>
+<p><a href="#source-40aa42c6992ee72d77f8f4575f631e5cbeb83146842914e927714796c0de2690">Read full source context</a></p>
+</article>
+<article><h3>A failed required output can change the overall exit code after validation passes.</h3><p>Candidate b244412a60f3; submitted by Replay of prior external assistant judgments; no fresh or independent review</p>
+<p><strong>subject:</strong> heldtospec public contracts interface at the pinned revision</p>
+<p><strong>kind:</strong> behavior</p>
+<p><strong>qualifiers:</strong> The source keeps validation_exit_code separate; optional output failures do not change overall exit.</p>
+<p><strong>rationale:</strong> A caller relying only on validation status could overlook failed delivery.</p>
+<p><strong>uncertainty:</strong> Source reading only; intended meaning and executable behavior still need independent review.</p>
+<p><strong>next question:</strong> Does contract verification propagate the final output-related exit code?</p>
+<p><strong>faithfulness review:</strong> Compared the proposed claim with the quoted passage and full document. The source keeps validation_exit_code separate; optional output failures do not change overall exit.</p>
+<p>docs/CLI.md:165–169</p><p>Verbatim source quotation:</p><pre>
+The result also preserves the pre-action decision as `validation_exit_code`.
+For example, checks may pass with `validation_exit_code == 0` while a failed
+configured output marked `required: true` makes the overall process exit with
+plugin error (`7`). Optional output failures are recorded without changing the</pre>
+<p><a href="#source-40aa42c6992ee72d77f8f4575f631e5cbeb83146842914e927714796c0de2690">Read full source context</a></p>
+</article>
+<h2>Sources available for inspection</h2>
+<details id="source-40aa42c6992ee72d77f8f4575f631e5cbeb83146842914e927714796c0de2690"><summary>docs/CLI.md</summary><pre># Quivra CLI Reference
+
+Quivra provides a robust command-line interface (CLI) to run validation pipelines, manage data contracts, and analyze data quality.
+
+## Usage
+
+```bash
+quivra [command] [options]
+```
+
+## Global Options
+
+These options apply to the default pipeline execution mode. Subcommands define
+their own options; use `quivra &lt;command&gt; --help` for those.
+
+### Execution Control
+
+| Option | Description |
+|--------|-------------|
+| `-c, --config &lt;file&gt;` | Path to a YAML config. Repeat the option to merge configs in order. |
+| `--out &lt;path&gt;` | Output file path; output goes to stdout when omitted. |
+| `--stream &lt;path&gt;` | Stream execution results to a Parquet file. |
+| `--format &lt;fmt&gt;` | `table` (default), `markdown`, `json`, `csv`, `parquet`, `yaml`, or `junit`. Parquet requires `--out`. |
+| `--validate`, `--dry-run` | Validate the resolved config and its data references without executing metrics. |
+| `--validate-config` | Validate syntax and schema only, without loading data. |
+| `--show-resolved` | Print the merged config after inheritance/includes and exit. |
+| `--plan` | Build and print an execution plan without running analysis. |
+| `--no-cache` | Disable file caching for this process. |
+| `--timeout &lt;sec&gt;` | Global pipeline timeout in seconds. Cooperative: checked between tasks, slices and columns, so a run can overshoot by the duration of one such unit. Exits `8`. |
+| `--profile-execution` | Record Python `cProfile` data for the run. |
+| `--schema-cache-path &lt;dir&gt;` | Use a specific directory for inferred-schema caching. |
+| `--parallel` | Enable process-based parallel analysis work. |
+| `-j, --workers &lt;n&gt;` | Worker count; defaults to 1. |
+| `--degradation-mode &lt;mode&gt;` | `strict` or `allow_partial`; overrides the config policy. |
+| `--retry-attempts &lt;n&gt;` | Enable remote-source retries with this many attempts. |
+| `--retry-delay &lt;sec&gt;` | Enable retries with this initial delay. |
+| `--health-port &lt;port&gt;` | Start the health server on this port. |
+| `--explain` | Print each source&#x27;s logical Polars plan. |
+| `--explain-optimized` | Print each source&#x27;s optimized Polars plan. |
+| `--polars-threads &lt;n&gt;` | Set `POLARS_MAX_THREADS` before execution. |
+| `--streaming` | Request Polars streaming execution where supported. Results can differ from in-memory execution in the last bits of a float; see PERFORMANCE.md. |
+| `--profile-timing` | Include task and source timing details. |
+| `--progress` | Display slice-evaluation progress on stderr. Suppressed by `--quiet`. |
+| `--no-batch-metrics` | Disable metric batching/vertical fusion. |
+
+### Data Sampling
+
+| Option | Description |
+|--------|-------------|
+| `--sample` | Enable sampling. |
+| `--sample-strategy &lt;strategy&gt;` | `head` (default), `tail`, `random`, `stratified`, or `auto`. |
+| `--sample-size &lt;n&gt;` | Rows to sample; defaults to 1000. |
+| `--sample-seed &lt;n&gt;` | Random seed; defaults to 42. |
+
+### Logging
+
+| Option | Description |
+|--------|-------------|
+| `-v`, `--verbose` | Increase verbosity; repeat up to `-vvv`. |
+| `-q`, `--quiet` | Suppress non-error console output. |
+| `--log-level &lt;level&gt;` | `DEBUG`, `INFO`, `WARNING`, `ERROR`, or `CRITICAL`. |
+| `--log-format &lt;format&gt;` | `text` or structured `json`. |
+| `--redact-secrets` / `--no-redact-secrets` | Enable or disable log redaction; enabled by default. |
+
+### History and Trends
+
+| Option | Description |
+|--------|-------------|
+| `--store-results` | Store this run in the local history database. |
+| `--db-path &lt;path&gt;` | Override the history database path. |
+| `--compare-to-baseline` | Report values against previous runs. |
+| `--baseline-runs &lt;n&gt;` | Number of previous runs in the baseline. |
+| `--baseline-tolerance &lt;pct&gt;` | Fail when deviation exceeds this percentage. |
+
+## Utility Options
+
+| Option | Description |
+|--------|-------------|
+| `--list-metrics` | List all built-in and registered metrics, including parameters, input shape, and capabilities. |
+| `--build-config [path]` | Launch the interactive config builder. |
+| `--migrate-config &lt;path&gt;` | Legacy spelling for `quivra migrate config &lt;path&gt;`. |
+| `--version` | Print the installed version. |
+| `--install-completion` | Install completion for the selected/current shell. |
+| `--show-completion` | Print a completion script. |
+| `--completion-shell &lt;shell&gt;` | Select `bash`, `zsh`, or `fish`. |
+
+## Subcommands
+
+| Command | Purpose | Representative usage |
+|---------|---------|----------------------|
+| `init` | Create a config interactively or from a template. | `quivra init --non-interactive --template basic -o quivra.yaml` |
+| `contract` | Lint, initialize, verify, or document data contracts. | `quivra contract verify contract.yaml data.parquet` |
+| `watch` | Learn baselines, inspect status, or detect anomalies. | `quivra watch learn --history-dir .quivra/runs` |
+| `lineage` | Render lineage, calculate impact/dependencies, or validate the graph. | `quivra lineage show -c config.yaml --format mermaid` |
+| `generate` | Generate synthetic data from one or more configs. | `quivra generate -c config.yaml --rows 1000` |
+| `diff` | Compare schema and aggregate statistics. With `--exit-code`: `0` identical, `1` differences found, `2` a dataset could not be read. | `quivra diff old.parquet new.parquet --exit-code` |
+| `profile` | Profile a dataset. | `quivra profile data.parquet --format json` |
+| `infer` | Infer a validation config from a dataset. | `quivra infer data.csv -o config.yaml` |
+| `migrate` | Upgrade Quivra configs or convert Great Expectations suites. | `quivra migrate config old.yaml --dry-run` |
+| `plugins` | List loaded plugins or raw entry points. | `quivra plugins list` |
+| `create-plugin` | Scaffold an external plugin project. | `quivra create-plugin quivra-example` |
+| `export-dbt` | Convert Quivra checks to dbt `schema.yml`. | `quivra export-dbt -c config.yaml -o schema.yml` |
+| `doctor` | Diagnose the environment and optionally a config. | `quivra doctor -c config.yaml` |
+
+The `contract` command provides `lint`, `init`, `verify`, and `docs`; `watch`
+provides `learn`, `status`, and `run`; `lineage` provides `show`, `impact`,
+`deps`, and `validate`; and `migrate` provides `config` and `gx`.
+
+## Output Formats
+
+- **Table** (default): Rich terminal table.
+- **Markdown**: GitHub-flavored Markdown table.
+- **JSON, CSV, and Parquet**: Machine-readable tabular results.
+- **YAML**: Structured validation report.
+- **JUnit**: XML for CI test-report consumers.
+
+### Example: CI Integration
+
+To generate a JUnit report for your CI pipeline:
+
+```bash
+quivra -c config.yaml --format junit --out test-results.xml
+```
+
+## Exit Codes
+
+| Code | Meaning |
+|---:|---|
+| `0` | All checks passed. |
+| `1` | Configuration error. |
+| `2` | Data loading error — **or** an argument-parsing error (see below). |
+| `3` | Quality threshold or enforced baseline-tolerance violation. |
+| `4` | Metric execution error. |
+| `5` | Unexpected internal error. |
+| `6` | Partial success under degradation mode. |
+| `7` | Plugin loading or registration error. |
+| `8` | Timeout. |
+| `9` | Cancellation by the user or a signal. |
+
+Treat every nonzero value as a failed quality gate unless a caller explicitly
+handles partial success (`6`).
+
+**`2` is not unambiguous.** `argparse` exits `2` for an invalid invocation, which
+is the long-standing convention for a usage error, so an unknown flag, an unknown
+subcommand or a bad flag value all exit `2` — the same code as a data-loading
+failure:
+
+| Invocation | Exit | Why |
+|---|---:|---|
+| `quivra --no-such-flag` | `2` | usage — unknown flag |
+| `quivra --timeout notanumber` | `2` | usage — bad flag value |
+| `quivra -c config.yaml` with a missing source file | `2` | data loading |
+
+A caller that routes `2` to whoever owns the data will misattribute a typo in the
+command line. The two are distinguishable on stderr: a usage error is a single
+`quivra: error: ...` line from the argument parser and produces no run log,
+while a data error is logged and reported through the normal result path. A
+pipeline that needs to tell them apart reliably should validate its own
+invocation before calling `quivra`.
+
+Quivra keeps `2` for usage errors rather than remapping them onto
+`1` (Configuration error), because deviating from the convention would surprise
+every caller that already relies on it. Remapping is a defensible alternative and
+is recorded as a maintainer decision in the audit log rather than taken here.
+
+The result also preserves the pre-action decision as `validation_exit_code`.
+For example, checks may pass with `validation_exit_code == 0` while a failed
+configured output marked `required: true` makes the overall process exit with
+plugin error (`7`). Optional output failures are recorded without changing the
+overall exit.
+
+---
+
+## Environment Variable Integration
+
+Some CLI flags set process-wide execution controls. See
+[ENV_REFERENCE.md](ENV_REFERENCE.md) for the environment variables that can
+also be configured before startup.
+
+| CLI Flag | Environment Variable | Effect |
+|----------|---------------------|--------|
+| `--no-cache` | Runtime flag and `QUIVRA_FILE_CACHE_SIZE=0` | Clears and bypasses caches in this process; child processes inherit the zero cache size |
+| `--polars-threads &lt;n&gt;` | `POLARS_MAX_THREADS=&lt;n&gt;` | Limits Polars thread pool |
+| `--streaming` | (internal) | Enables streaming execution mode |
+
+### Setting Variables via CLI
+
+For environment variables without dedicated CLI flags, use shell syntax:
+
+```bash
+# Set streaming batch size for this run only
+QUIVRA_JSON_STREAMING_BATCH_SIZE=50000 quivra -c config.yaml
+
+# Or export for the session
+export QUIVRA_FILE_CACHE_SIZE=0
+quivra -c config.yaml
+```
+
+---
+
+## Shell Completion
+
+Quivra provides command-line completion for bash, zsh, and fish shells to speed up your workflow.
+
+### Installation
+
+**Automatic (Recommended):**
+```bash
+quivra --install-completion
+```
+
+This will:
+- Detect your current shell (bash, zsh, or fish)
+- Install the completion script to the appropriate location
+- Provide instructions for activating completion
+
+**Manual Installation:**
+
+1. Generate the completion script for your shell:
+   ```bash
+   quivra --show-completion
+   ```
+
+2. Save it to the appropriate location:
+
+   **Bash:**
+   ```bash
+   quivra --show-completion &gt; ~/.local/share/bash-completion/completions/quivra
+   source ~/.local/share/bash-completion/completions/quivra
+   ```
+   
+   **Zsh:**
+   ```bash
+   quivra --show-completion &gt; ~/.zsh/completions/_quivra
+   # Add to ~/.zshrc:
+   fpath=(~/.zsh/completions $fpath)
+   autoload -Uz compinit &amp;&amp; compinit
+   ```
+   
+   **Fish:**
+   ```bash
+   quivra --show-completion &gt; ~/.config/fish/completions/quivra.fish
+   ```
+
+3. Restart your shell or source your configuration file.
+
+### Features
+
+Once enabled, shell completion provides:
+
+- **Command completion**: Press `Tab` after `quivra ` to see available commands
+  ```bash
+  quivra &lt;Tab&gt;
+  # Suggests: init, contract, watch, lineage, generate, diff, profile, ...
+  ```
+
+- **Option completion**: Press `Tab` after `--` to see available flags
+  ```bash
+  quivra --&lt;Tab&gt;
+  # Suggests: --config, --format, --out, --verbose, --help, ...
+  ```
+
+- **Subcommand completion**: Works with all subcommands
+  ```bash
+  quivra contract &lt;Tab&gt;
+  # Suggests: docs, init, lint, verify
+  ```
+
+### Troubleshooting
+
+**Completion not working after installation:**
+
+1. Make sure you&#x27;ve restarted your shell or sourced your rc file:
+   ```bash
+   # Bash
+   source ~/.bashrc
+   
+   # Zsh
+   source ~/.zshrc
+   
+   # Fish (automatic)
+   ```
+
+2. Verify the completion script was installed:
+   ```bash
+   # Bash
+   ls ~/.local/share/bash-completion/completions/quivra
+   
+   # Zsh
+   ls ~/.zsh/completions/_quivra
+   
+   # Fish
+   ls ~/.config/fish/completions/quivra.fish
+   ```
+
+3. For zsh, ensure completion is enabled in your `~/.zshrc`:
+   ```bash
+   autoload -Uz compinit &amp;&amp; compinit
+   ```
+
+**Permission errors during installation:**
+
+If `--install-completion` fails due to permission errors, use manual installation or create the directory first:
+```bash
+mkdir -p ~/.local/share/bash-completion/completions  # Bash
+mkdir -p ~/.zsh/completions                           # Zsh
+mkdir -p ~/.config/fish/completions                   # Fish
+```
+
+---
+
+## See Also
+
+- [Environment Variables Reference](ENV_REFERENCE.md) - All environment variables
+- [Configuration Reference](CONFIG_REFERENCE.md) - YAML configuration options
+- [Performance Guide](PERFORMANCE.md) - Performance tuning tips
+</pre></details>
+<details id="source-b9a57124a1c8e5256123b3a882aee8f32f7af0b19d85c8f7002a12466bab25f0"><summary>docs/CONTRACTS.md</summary><pre># Data Contracts
+
+A Quivra contract records dataset ownership, consumers, schema declarations,
+column constraints, and selected service-level checks in a standalone YAML
+file.
+
+## Create a contract
+
+Generate a starting contract from a local dataset:
+
+```bash
+quivra contract init data/orders.parquet \
+  --name orders \
+  --output contracts/orders.yaml
+```
+
+The generated schema is a starting point; review nullability, uniqueness,
+constraints, ownership, and SLAs before publishing it.
+
+## Contract structure
+
+```yaml
+contract:
+  name: orders
+  version: 1.0.0
+  owner:
+    team: checkout
+    slack: &quot;#checkout-data&quot;
+  consumers:
+    - team: finance
+      use_case: revenue reporting
+  schema:
+    columns:
+      - name: order_id
+        type: Int64
+        nullable: false
+        unique: true
+      - name: amount
+        type: Float64
+        nullable: false
+        constraints:
+          min: 0
+      - name: status
+        type: String
+        allowed_values: [pending, paid, failed]
+  sla:
+    freshness:
+      max_age: 24h
+      timestamp_column: created_at
+    completeness:
+      min_rows: 100
+      max_null_percentage: 0.01
+  checks:
+    - name: nonnegative_amount
+      expr: amount &gt;= 0
+```
+
+`max_null_percentage` is a fraction: `0.01` means one percent. Duration units
+for `max_age` are `s`, `m`, `h`, and `d`.
+
+## Validate contract syntax
+
+```bash
+quivra contract lint contracts/orders.yaml
+```
+
+Linting validates the contract model and rejects unknown or misspelled keys.
+It does not load the dataset.
+
+## Verify a dataset
+
+```bash
+quivra contract verify contracts/orders.yaml data/orders.parquet
+```
+
+Verification maps the following declarations to executable Quivra checks:
+
+| Declaration | Enforced check |
+|---|---|
+| `schema.columns[].name` / `.type` | Every declared column must exist with the declared Polars dtype. |
+| `nullable: false` | Null percentage must be zero for that column. |
+| `unique: true` | Uniqueness percentage must be 100 for that column. |
+| `allowed_values` | Count outside the allowed set must be zero. |
+| `constraints.min` / `.max` | Count outside the numeric range must be zero. |
+| `constraints.regex` | Regex-match percentage must be 100. |
+| `sla.freshness` | `freshness_check` must pass for the timestamp column. |
+| `sla.completeness.min_rows` | Row count must meet the minimum. |
+| `sla.completeness.max_null_percentage` | Every declared column must meet the null limit. |
+| `checks[].expr` | The expression must be true for every row. |
+
+Ownership, consumers, descriptions, and foreign-key `references` are contract
+metadata in the current verifier. A bare
+`checks[].metric` also has no pass condition; use `expr` or a concrete column
+constraint for a check that must gate the run.
+
+The verification command returns the underlying pipeline exit code, including
+code 3 for a constraint violation. It fails rather than reporting success if
+the contract produces no executable checks.
+
+## Generate documentation
+
+Render a contract for a catalog or wiki:
+
+```bash
+quivra contract docs contracts/orders.yaml --output orders-contract.md
+```
+
+Omit `--output` to write Markdown to stdout.
+
+## See also
+
+- [CLI Reference](CLI.md#subcommands)
+- [Configuration Reference](CONFIG_REFERENCE.md)
+</pre></details>

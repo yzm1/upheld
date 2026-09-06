@@ -1,0 +1,19 @@
+{
+  "repository": "https://github.com/yzm1/heldtospec",
+  "revision": "9ccd2766580e83b21f5d7717c7cee222f8fc6c2d",
+  "boundary": "Public contracts guide and CLI reference only; no live help execution, implementation, tests, or external links.",
+  "files": [
+    {
+      "path": "docs/CLI.md",
+      "sha256": "ab29316a26f495da7d867594705be213e97ef9ea4d0190fb090329086f0ac5ab"
+    },
+    {
+      "path": "docs/CONTRACTS.md",
+      "sha256": "270ba4f568a4a323cd090b23b43b93a99f7f5945c4631c4fc19897d20b599725"
+    },
+    {
+      "path": "docs/CONFIG_REFERENCE.md",
+      "exclude_reason": "General configuration reference outside this bounded first pass"
+    }
+  ]
+}

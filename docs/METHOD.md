@@ -2,13 +2,13 @@
 
 Readers are engineers surveying a codebase. Upheld records falsifiable software promises and the mechanisms intended to defend them.
 
-This is method version 1.2, dated 6 September 2026. It keeps all 27 rule IDs from version 1.0. The [original snapshot](history/2026-09-06/METHOD.md) keeps each defect, reason, and historical self-score. The tables below govern new records. MUST marks a rule earned by an observed defect. SHOULD marks a reasoned rule that still needs stronger support.
+This is method version 1.3, dated 6 September 2026. It keeps all 27 rule IDs from version 1.0. The [original snapshot](history/2026-09-06/METHOD.md) keeps each defect, reason, and historical self-score. The tables below govern new records. MUST marks a rule earned by an observed defect. SHOULD marks a reasoned rule that still needs stronger support.
 
 **Reading a test can establish a candidate link. A run that detects a stated fault can grade that defense.** Neither observation proves the whole promise.
 
 ## Separate discovery from the choice of defense
 
-Complete the reading pass before writing tests. A run with an independent oracle, such as a seeded fault or a complete artifact list, can combine discovery and repair. An oracle is the check that decides the observed result independently of the author's judgment.
+Declare the source and component boundary, then complete that reading pass before writing tests. Record skipped sources and unread portions; a bounded pass cannot establish whole-project coverage. A run with an independent oracle, such as a seeded fault or a complete artifact list, can combine discovery and repair. An oracle decides whether the expected result holds using a separately justified criterion. Repeating the same model's answer does not supply an independent oracle.
 
 Read public documents, specifications, configuration formats, source, and tests. Record where a promise is made separately from the code it concerns. Check cross-file claims as carefully as local claims.
 
@@ -20,6 +20,8 @@ Read public documents, specifications, configuration formats, source, and tests.
 | S1 | SHOULD | Enumerate promises published outside source and map them to the relevant code. Record published clauses with no implementation as promises. Inspect public surfaces for omissions. |
 
 ## Record claims and decisions separately
+
+The survey first holds unaccepted candidates. Exact source quotes establish what text was read; they cannot establish that a rewrite preserves meaning or that the claim is true. Keep each condition, exception, release, and ambiguous phrase visible. Record descriptive behavior separately from an obligation or a decision about intended behavior.
 
 A promise holds the claim and survey notes. A defense assertion links a mechanism to that promise. A gap holds a reason to leave it undefended. An evidence record holds what a run observed. A binding names the evidence a person accepts for one defense.
 
@@ -63,7 +65,7 @@ Read or probe library behavior before calling two cases equivalent. A small prob
 
 ## Measure useful findings and the work to review them
 
-The survey aims to discover useful new promises and defects within the time people can spend reviewing them. The checker aims to minimize silently stale assertions within that capacity. [The milestone](MILESTONE.md) defines the first measurements.
+The survey aims to discover useful new promises and defects within the time people can spend reviewing them. The checker aims to minimize silently stale assertions within that capacity. [The survey objective](SURVEY_TOOL.md) defines useful, new, confirmed, and decision-required outcomes. Count distinct findings and all human review work; audit omitted sources and low-ranked candidates. [The milestone](MILESTONE.md) defines the first measurements.
 
 | ID | Strength | Rule and check |
 |---|---|---|
@@ -77,9 +79,11 @@ The survey aims to discover useful new promises and defects within the time peop
 
 Requirements describe the instrument. Meeting the rules alone establishes neither useful findings nor safe software. Write down expected results before trials. Write expectations and models from the contract before running the implementation. A static screen selects work to inspect and cannot grade it. State how source choice and different category rules limit the findings. Matching category totals does not establish correct labels. Open-thread counts measure unresolved work; movement requires dated comparisons. Rp3 requires human review and has no mechanical proof.
 
-## Current evidence covers one hand survey
+## Current evidence includes a hand survey and a prototype replay
 
 The [heldtospec example](../examples/heldtospec-contracts/README.md) has 44 promises and zero accepted evidence records. Its historical library run reports 149 passing tests. The CLI run did not complete. Those runs do not establish that the survey meets every rule.
+
+The [S02 prototype replay](../examples/survey-heldtospec/README.md) checks saved candidate imports against pinned source text. Replaying the same judgments cannot measure fresh discovery quality, independent agreement, or live agent behavior.
 
 The [Upheld status case](../examples/upheld-status/README.md) has a repeatable README check and an unbound defense. The product still needs hash rules and a way to create evidence records. Historical self-scores in the snapshot refer to heldtospec at their recorded revision.
 
