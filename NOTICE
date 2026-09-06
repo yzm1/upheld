@@ -1,0 +1,13 @@
+upheld
+Copyright 2026 Yali Zak-Malkin
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+docs/METHOD.md and docs/CHECKER.md originated as docs/OBLIGATION_SURVEY.md and
+docs/OBLIGATION_CHECKER.md in the heldtospec repository
+(https://github.com/yzm1/heldtospec),
+Apache-2.0, same author, and are carried here unchanged except for a snapshot
+header and relative-link redirection.
+
+reviews/ contains external reviews obtained by the maintainer and reproduced
+verbatim; each file's header states its source.
