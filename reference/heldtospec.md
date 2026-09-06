@@ -1,55 +1,57 @@
 # heldtospec
 
-<https://github.com/yzm1/heldtospec> -- the repository the method and the
-checker design were written in. "This repository" in both documents means this
-one. Apache-2.0. Read at commit `830a1ea` and after.
+<https://github.com/yzm1/heldtospec>. The method and the checker design come
+from here, so "this repository" in both means heldtospec. Apache-2.0. Read at
+commit `830a1ea` and later.
 
-## The three-tier example
+## Its contract compiler handled promises in three tiers and named one
 
-`src/heldtospec/contracts/mapper.py`, `contract_to_checks()`, line 89:
+`contract_to_checks` in `src/heldtospec/contracts/mapper.py`, line 89:
 "Translate enforceable schema, SLA, and expression promises into checks." The
-word *enforceable* concedes a remainder. Reading the whole function:
+word *enforceable* admits a remainder. The whole function shows three tiers.
 
-| Tier | What happens | Where |
+| Tier | What happens | Examples |
 |---|---|---|
-| Enforced, becomes a check | nullable, unique, allowed_values, min/max, regex, schema, freshness, min_rows, max_null_percentage, `checks[].expr` | the loop body |
-| Known unenforceable, `logger.warning` | `sla.quality.min_validity` ("NOT enforced"); a check naming a metric with no expected value ("so it cannot fail"); a check with neither | lines 229, 251, 260 |
-| Silently dropped, nothing | `ColumnDefinition.references` (`# FK: dataset.column`), `models.py:48`, read by no code anywhere in the package | -- |
+| Enforced: the promise becomes a check | `nullable`, `unique`, `allowed_values`, `min`, `max`, `regex`, the schema, freshness, `min_rows`, `max_null_percentage`, `checks[].expr` | The loop body |
+| Known unenforceable: a `logger.warning` | `sla.quality.min_validity`, with the message "NOT enforced"; a check naming a metric with no expected value, "so it cannot fail"; a check with neither | Lines 229, 251 and 260 |
+| Silently dropped: nothing | `ColumnDefinition.references`, the foreign key, at `models.py:48`. No code in the package read it | None |
 
-The middle tier is `accepted` discovered and reported through a channel that
-scrolls past. The bottom tier is `accepted` with nobody accepting it. Line 251
-is a vacuity detector nobody called one.
+The middle tier is a gap the code found and then reported to a log that
+scrolls past. The bottom tier is a gap nobody decided on. Line 251 was already
+a vacuity detector, and nobody had called it one. On 6 September 2026 the
+repository shipped `contract prove`, which grades every clause by seeding a
+fault. `../examples/heldtospec-contracts/README.md` records the survey of that
+component.
 
-## Boundary discipline
+## Its temporal tests show the boundary discipline
 
-`tests/metrics/test_what_a_temporal_setting_actually_means.py`, lines 74-90:
-for every unit the parser accepts, two rows one unit apart with a two-unit
-frequency must find no gap, and three units apart with a one-unit frequency
-must find one. Both directions, per unit. The docstring names the shape it
-replaces: "the control flow is held and the amounts are free." This is R3 in
-the checker design.
+`tests/metrics/test_what_a_temporal_setting_actually_means.py`, lines 74 to
+90. For every unit the parser accepts, two rows one unit apart under a two-unit
+frequency must find no gap. Three units apart under a one-unit frequency must
+find one. Both directions, every unit. The docstring names the shape the test
+replaces: "the control flow is held and the amounts are free." This is rule R3
+in the checker design.
 
-## The instrument, undefended
+## Its own mutation tool runs nowhere
 
 `tools/mutate.py` produces the 38-module mutation table in
-`docs/TESTING_STRATEGY.md` and is named by no workflow and no hook.
-`[tool.mutmut]` in `pyproject.toml` is scoped to `redaction.py` alone. The
-pre-commit hook is not installed. The repository was 410 commits ahead of
-`origin/main` when the method document first said so and 424 when the document
-was next read whole.
+`docs/TESTING_STRATEGY.md`. No workflow and no hook names it. `[tool.mutmut]`
+in `pyproject.toml` covers `redaction.py` alone. Nobody has installed the
+pre-commit hook. The repository was 410 commits ahead of `origin/main` when
+the method first counted, 424 on the next whole read, and 468 on 6 September
+2026.
 
-## The method's output
+## It has no register, so it is the survey tool's first target
 
-`docs/TESTING_STRATEGY.md` is what the method produced when run here. It is
-prose. heldtospec has no register, and the method document's self-score marks
-every register requirement unreachable for that reason. It is the first
-repository the survey tool should be run against; sources in order of expected
-yield are the contract format, CLI help, docstrings on the public surface, and
-5,127 test functions across 543 files.
+`docs/TESTING_STRATEGY.md` is what the method produced here, and it is prose.
+The method's self-score, kept in `../docs/history/2026-09-06/METHOD.md`, marks
+every register rule unreachable for that reason. The sources to scan, in
+expected order of yield: the contract format, CLI help, docstrings on the
+public surface, and 5,127 test functions across 543 files.
 
-## The seeded-violation measurement
+## It ran the seeded-violation measurement
 
-The method document reports V5 met here: ten datasets, one afternoon, and a
-published guarantee the repository defends with nothing. It is the one branch
-oracle that has actually been run anywhere in the set, and the seeded-violation
-runner is the companion whose specification is owed.
+The method reports rule V5 met here: ten datasets in one afternoon, and a
+published guarantee the repository defended with nothing. It is the only
+branch oracle anyone in the set has run. The seeded-violation runner is the
+companion that still needs a spec.

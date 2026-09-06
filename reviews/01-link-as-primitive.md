@@ -1,28 +1,32 @@
-<!--
-Source: an external LLM review (ChatGPT), obtained by the maintainer on partial
-context from the conversation, 2026-09-05. Reproduced verbatim.
-Reviewed: the checker design as described in conversation -- the problem map
-and the "precisely how it will work" answer -- before the first draft of
-CHECKER.md existed.
+# The unit of state is the link between a promise and its evidence
 
-Accepted: the defense assertion as the unit of state; observed event separated
-from validity consequence, with consequence conservative; the baseline records
-what was relied upon (later renamed "grounds", then moved into the evidence
-record's basis); two traversals; cardinality measured rather than fixed, and
-review load = churn x fanout x sensitivity; the governing objective; triage
-capacity distinct from validation capacity; history never in the hot path;
-`fresh` as a projection rather than a mechanism; the semantic rather than
-physical boundary; the fleet as measurement apparatus.
+An outside review from a language model. The maintainer obtained it on partial context on 2026-09-05, and the text below is verbatim. It reviewed the checker as the conversation had described it, before anyone drafted `CHECKER.md`.
 
-Pushed back on: the accepted gap had no place in the ontology (later resolved
-as a GapAssertion outside the validity model); section 2's "declared
-granularity <= validated granularity" and section 7's capacity constraint are
-in tension, and the resolution -- the fix belongs to the oracle, not the
-tracker -- is stated in CHECKER.md; the four-hash baseline lacked an
-environment component (later added, then made declarative); "exact rename
-detected -> identity probably preserved" smuggles the judgment section 3
-forbids. The naming discussion was set aside.
--->
+## Taken
+
+- The link between a promise and its evidence as the unit of state.
+- Observed events kept apart from what they mean for a grade, with the grade decided conservatively.
+- A record of what a grade relied on. The design renamed it grounds and later moved it into the evidence record.
+- Two ways to traverse: from a promise, and from a diff.
+- Counting links rather than capping them, and review load as churn times fan-out times how easily a grade is undone.
+- The governing aim: keep silent stale grades to a minimum, within the time people have to review.
+- Time to triage kept separate from time to re-check.
+- History never on the routine path.
+- `fresh` as a view over other checks rather than a mechanism of its own.
+- A boundary drawn on meaning rather than on bytes.
+- The fleet as the instrument that measures the design.
+
+## Pushed back on, or extended
+
+- The accepted gap had no place in the model. It is now a `GapAssertion` outside the grade states.
+- Section 2's rule that a declared scope cannot be finer than the evidence, and section 7's limit on review time, pull against each other. `CHECKER.md` resolves it: the fix belongs to the oracle rather than the tracker.
+- The four-hash record of grounds had no environment part. The design later gained one, then made it declarative.
+- "Exact rename detected, identity probably preserved" smuggles in the judgment section 3 forbids.
+- The naming discussion was set aside.
+
+---
+
+<!-- prose-gate:ignore -->
 
 Yes. This is the point where the design becomes much sharper.
 
@@ -602,3 +606,5 @@ Still no testing framework.
 But the internal model is now substantially more rigorous than **"hash the files and see what moved."**
 
 Also: this makes **Promisebook** somewhat less attractive to me than it was one turn ago. The central object is not really a book *of promises*; it is a **register of claims about their defenses**. Before settling the name, I would now search the vocabulary around **register / attestation / warrant / assurance / evidence / defense**, because the ontology you've just exposed gives us a much better naming target.
+
+<!-- /prose-gate:ignore -->

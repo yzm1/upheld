@@ -1,46 +1,46 @@
 # ConnectLang
 
-<https://github.com/yzm1/ConnectLang> -- branch `research-consolidation`, read
-2026-09-05 (`master` at `391b52d1`). A dependently-typed language and compiler
-in Rust. C in the method document.
+<https://github.com/yzm1/ConnectLang>, branch `research-consolidation`, read
+2026-09-05 (`master` at `391b52d1`). A dependently-typed language and its
+compiler, written in Rust. It is C in the method.
 
-C ran no survey. It contributes three things.
+C never ran a survey. It contributes three things.
 
-## An obligation table with an artifact column, seven months early
+## Its spec had the artifact column seven months early
 
-`cl/docs/clgc/08_compiler_obligations.md`, first committed 2026-02-12. A
-normative table `| Obligation | Description | Delivered via |` -- stack maps,
-type descriptors, safepoint insertion, barrier insertion, domain-typed pointers,
-root liveness, no stale derived pointers -- each row naming the pass or
-type-system extension that discharges it. A second table constrains LICM, CSE
-and register allocation against stale interior pointers.
+`cl/docs/clgc/08_compiler_obligations.md` was first committed on 2026-02-12.
+It is a table with the columns `Obligation`, `Description` and `Delivered via`.
+Each row is a promise the compiler makes, and each names the pass or the
+type-system feature that delivers it. A second table constrains three
+optimisations against stale interior pointers: hoisting code out of loops,
+reusing repeated calculations, and assigning registers.
 
-"Delivered via" is not `guarded_by`: it records what implements an obligation,
-not what would catch it breaking. It is one column away, and it predates the
-three surveys by seven months.
+"Delivered via" is close to `guarded_by` and is a different thing. It says what
+implements a promise. `guarded_by` says what would catch the promise breaking.
+The column is one step short, and it predates the three surveys by seven
+months.
 
-## A test-only audit framework in the same repository
+## Its testing guide is the shape every survey had to unlearn
 
-`cl/docs/development/TESTING_METHODOLOGY.md`, v1.1, 2026-05-01. Nine audit
-categories, eight of them kinds of test. Targets: test file count per crate
-(3+ for mature crates), test-to-code ratio (1:1 for critical components),
-assertion density. Quarterly execution. No category for a checker, a type, a
-runtime invariant, or an accepted gap -- in a compiler whose README promises
-"the compiler fences every choice, so no guarantee is ever silently lost."
+`cl/docs/development/TESTING_METHODOLOGY.md`, version 1.1, dated 2026-05-01,
+has nine audit categories. Eight are kinds of test. Its targets are test files
+per crate (three or more for a mature crate), a test-to-code ratio of 1:1 for
+critical components, and assertion density. It runs quarterly. It has no
+category for a checker, a type, a runtime invariant or an accepted gap. The
+README in the same repository promises that "the compiler fences every choice,
+so no guarantee is ever silently lost."
 
-Section 6, "Language Specification Alignment," reconciles specification,
-implementation and tests three ways. None of the other repositories has it. It
-is S1 in the method.
+Section 6 of that guide, "Language Specification Alignment", reconciles the
+spec, the code and the tests three ways. No other repository in the set does
+that. It became rule S1 in the method.
 
-## The type oracle, running
+## Its compiler runs the type oracle
 
 `cl_air/src/check/proof_obligations.rs`, `cl_air/tests/proof_obligations.rs`,
 `cl_termination/tests/spec_annotation_obligations.rs`, and the website
 components `CompilerAirMultiObligationTrace.astro` and
-`CompilerAirObligationEvidence.astro`. The compiler generates proof
-obligations, discharges them, and renders the discharge as evidence. That is
-the `type` row of the method's oracle table, observed rather than proposed.
+`CompilerAirObligationEvidence.astro` together generate proof obligations,
+discharge them, and render the discharge as evidence. That is the `type` row
+of the method's oracle table, observed rather than proposed.
 
-## The message drafted for its agent
-
-`../messages/to-c.md`.
+The message drafted for its agent is `../messages/to-c.md`.

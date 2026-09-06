@@ -84,32 +84,32 @@ A mutation catalog entry names file, unique search text, replacement, exercised 
 
 ## All 23 requirements retain their identifiers
 
-The earlier T7, T10, and T11 numbers remain retired. The source snapshot preserves their move to R1–R3 and the defect behind each MUST.
+The earlier T7, T10, and T11 numbers remain retired. The fourth column says how a reader detects a violation, compressed from the [source snapshot](history/2026-09-06/CHECKER.md), which also keeps the defect behind each MUST.
 
-| ID | Strength | Rule |
-|---|---|---|
-| T1 | SHOULD | Derive validity per defense. Promise views count states without inferring adequacy. |
-| T2 | MUST | A changed ground never maps to still_valid. |
-| T3 | SHOULD | Consequences depend on the changed ground and resolution, never semantic interpretation. |
-| T4 | SHOULD | Fingerprint claim, artifacts, subject, and declared environment separately with the named profile. Check lineage in the evidence log. |
-| T5 | SHOULD | Defense scope lies within its promise and claims no finer precision than validated scope. Locator is separate. |
-| T6 | MUST | Checker never edits register or bindings. Regenerating a clean-tree lock reproduces its bytes. |
-| T8 | MUST | Every defense supplies guarded_by with no default. |
-| T9 | SHOULD | Validate lists all structural defects before exit. Verify requires valid inputs. Only ack writes a baseline. |
-| T12 | MUST | Uninspectable targets never yield a clean exit, even after acknowledgment. Whole-run failure stays distinct. |
-| T13 | SHOULD | Gate per facet; always gate unresolvable; report ungated facets. |
-| T14 | SHOULD | Every released command has a published output schema with finding facet and subject. |
-| T15 | MUST | Acknowledgment changes neither consequence nor visibility. It applies only to verify findings. |
-| T16 | SHOULD | Immutable evidence has identity, verdict, scope, producer, and basis. Bind only matching, compatible supports records. |
-| T17 | SHOULD | Specify and version the hashing profile; producers share it. |
-| T18 | SHOULD | Generated registers name producer and inputs. Report input drift without rerunning the producer. |
-| T19 | SHOULD | Emit an unapplied migration patch for old records. Never manufacture evidence. |
-| T20 | MUST | Compare with bound evidence basis. Regeneration never advances it. |
-| T21 | SHOULD | Only explicit supersession or a later same-defense/same-oracle contradiction is an evidence event. |
-| T22 | SHOULD | No producer writes the bindings file. |
-| R1 | MUST | Use structured results for fired, did_not_fire, and could_not_look; normalize them honestly. |
-| R2 | SHOULD | Restore the original tree on every exit path. |
-| R3 | SHOULD | Record and report the fault's distance from the clause boundary. |
-| R4 | SHOULD | Obtain basis from the checker and name superseded evidence on a rerun. |
+| ID | Strength | Rule | Detected by |
+|---|---|---|---|
+| T1 | SHOULD | Derive validity per defense. Promise views count states without inferring adequacy. | A stored status on a promise, or a report that calls a promise defended from a count. |
+| T2 | MUST | A changed ground never maps to still_valid. | Any consequence path that reaches `still_valid` from a non-empty event set. |
+| T3 | SHOULD | Consequences depend on the changed ground and resolution, never semantic interpretation. | A consequence rule that reads artifact bytes beyond identity, presence and hash. |
+| T4 | SHOULD | Fingerprint claim, artifacts, subject, and declared environment separately with the named profile. Check lineage in the evidence log. | A stale report that cannot name the ground; an environment ground from outside the tree; an unknown profile. |
+| T5 | SHOULD | Defense scope lies within its promise and claims no finer precision than validated scope. Locator is separate. | A defense scoped outside its promise, or finer than its evidence, passing `validate`. |
+| T6 | MUST | Checker never edits register or bindings. Regenerating a clean-tree lock reproduces its bytes. | `generate` on a clean tree changes the lock; any command writes the register or bindings. |
+| T8 | MUST | Every defense supplies guarded_by with no default. | An entry without `guarded_by` passing `validate`. |
+| T9 | SHOULD | Validate lists all structural defects before exit. Verify requires valid inputs. Only ack writes a baseline. | `validate` stops at the first defect; a baseline appears after any command except `ack`. |
+| T12 | MUST | Uninspectable targets never yield a clean exit, even after acknowledgment. Whole-run failure stays distinct. | A register naming a missing file exits 0, before or after `ack`. |
+| T13 | SHOULD | Gate per facet; always gate unresolvable; report ungated facets. | Config can silence a facet, or un-gate `unresolvable`. |
+| T14 | SHOULD | Every released command has a published output schema with finding facet and subject. | A released command without a schema, or a finding whose subject the output cannot tell apart. |
+| T15 | MUST | Acknowledgment changes neither consequence nor visibility. It applies only to verify findings. | A finding missing from a report after `ack`, or changing consequence after `ack`. |
+| T16 | SHOULD | Immutable evidence has identity, verdict, scope, producer, and basis. Bind only matching, compatible supports records. | A binding to an absent, foreign, incompatible or `could_not_establish` record passing `validate`. |
+| T17 | SHOULD | Specify and version the hashing profile; producers share it. | Two implementations, or producer and checker, disagreeing on whether one defense drifted. |
+| T18 | SHOULD | Generated registers name producer and inputs. Report input drift without rerunning the producer. | A generated register's inputs change and `verify` stays clean; any command runs a producer. |
+| T19 | SHOULD | Emit an unapplied migration patch for old records. Never manufacture evidence. | An old register yielding a bare failure, a rewritten file, or a binding with no producer. |
+| T20 | MUST | Compare with bound evidence basis. Regeneration never advances it. | Delete the lock, run `generate`, and any grade changes. Run this first. |
+| T21 | SHOULD | Only explicit supersession or a later same-defense/same-oracle contradiction is an evidence event. | An inconclusive record putting a `supports`-bound defense into review. |
+| T22 | SHOULD | No producer writes the bindings file. | Regenerating a register removes a binding. |
+| R1 | MUST | Use structured results for fired, did_not_fire, and could_not_look; normalize them honestly. | A run that cannot start reporting `fired` or `supports`. |
+| R2 | SHOULD | Restore the original tree on every exit path. | A dirty tree after a failed run. |
+| R3 | SHOULD | Record and report the fault's distance from the clause boundary. | An entry with no stated distance running. |
+| R4 | SHOULD | Obtain basis from the checker and name superseded evidence on a rerun. | A record with no basis, or a profile the config does not name. |
 
 The first product test must demonstrate T20. The current documentation tools exercise record shape and a status check; they do not implement these commands.
