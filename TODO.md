@@ -2,9 +2,9 @@
 
 Readers are engineers choosing the next Upheld task. This list tracks the supplied discussion against the repository, updated 6 September 2026.
 
-Nine tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXES.md), plus S01's survey objective and research. D04, D06, and D08 were reopened and repaired; the original completion claim overstated their checks. The other 55 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
+Nine tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXES.md), plus S01's survey objective and research. D04, D06, and D08 were reopened and repaired; the original completion claim overstated their checks. The other 56 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
 
-[The completion record](docs/COMPLETED_D01_D08.md) links the changes and checks. [The original derived list](docs/history/2026-09-06/DERIVED_TODO.md) preserves the full reasoning, dependencies, and sources for all 64 items.
+[The completion record](docs/COMPLETED_D01_D08.md) links the changes and checks. [The original derived list](docs/history/2026-09-06/DERIVED_TODO.md) preserves the full reasoning, dependencies, and sources for the original 64 items. S11 adds research requested on 6 September 2026, bringing the total to 65.
 
 ## Completed work establishes the current rules
 
@@ -28,6 +28,7 @@ Priority P0 means a trust blocker. P1 means the next learning milestone. P2 mean
 
 | ID | Priority | Task | Completion condition |
 |---|---|---|---|
+| S11 | P1 | Research how existing agents can use Upheld to make judgments | A source-backed comparison, interface recommendation, and registered-test proposal meet the research brief below. Research completion does not imply a shipped skill or measured benefit. |
 | S02 | P1 | Turn the hand survey into a repeatable scanner workflow | heldtospec's component can be rescanned by a documented procedure whose judgment and serialization steps are distinguishable. Do not credit `build_register.py` as an automated scanner. |
 | S03 | P1 | Add test/code sources and audit source-selection bias | the survey records what each source adds and checks the documented undercount of shape/type-related promises. |
 | S04 | P1 | Build skeptical triage with explicit uncertainty | the example queue has an auditable disposition per item and unknowns cannot be converted into verified coverage by a default. |
@@ -83,6 +84,26 @@ Priority P0 means a trust blocker. P1 means the next learning milestone. P2 mean
 | L04 | Later decision | `ack` and baseline ergonomics | T12/T13/T15 hold before and after acknowledgment, with fingerprint behavior specified. |
 | L05 | Later | Broader adapters, migration, and the complete companion runner | each added scope has an observed adoption need and meaningful conformance evidence. |
 | L06 | Later | Gap revisit conditions | a concrete observed gap-drift case motivates the trigger and the field does not masquerade as evidence validity. |
+
+## S11 researches agents using Upheld as a method
+
+Give agents knowledge of Upheld so they can judge promises, defenses, and evidence during ordinary work. Treat this direction as a peer to Upheld invoking an agent. The user requested this research on 6 September 2026. Build on [S01's research](docs/SURVEY_RESEARCH.md) and [backend proposal](docs/SURVEY_BACKENDS.md); coordinate experiment design with E01.
+
+Match S01's research quality: inspect primary papers, official interfaces, and working examples. Search across domains, including scientific evidence review, fact-checking, review rubrics, and tools that teach agents a method. State search scope, evidence strength, transfer limits, and unknowns. Separate documented features, research results, and proposed transfers; do not rank systems using incompatible benchmarks.
+
+| Research question | Required result |
+|---|---|
+| How do existing tools apply a supplied method? | Compare skills, project instructions, retrieved reference material, structured workflows, and callable tools across multiple domains |
+| What Upheld knowledge changes judgment? | Define the minimum guidance on promises, defense kinds, evidence, uncertainty, gaps, and acceptance; identify which rules need executable checks |
+| Which tasks benefit? | Cover discovering promises, reviewing changes, challenging defenses, interpreting probe results, and proposing records, including work without an existing register |
+| How should agents access Upheld? | Compare a portable skill and reference pack, local commands and structured files, and a tool protocol such as Model Context Protocol; justify the smallest useful interface |
+| Which claims may an agent make? | Specify inspectable sources, reasoning, uncertainty, and next checks; keep model judgments, actual executions, human acceptance, and verified evidence distinct |
+| What happens when guidance fails? | Examine stale instructions, conflicting project rules, unsupported tools, misleading source instructions, fabricated evidence, and inappropriate certainty |
+| How do we test the added value? | Propose matched comparisons of the same agent without guidance, with an Upheld skill, with executable support, and within the orchestrated survey |
+
+The comparison must measure judgment correctness, missed issues, unsupported conclusions, useful discoveries, human review cost, and operating cost. Use independent outcome review and source-grounded cases beyond software vocabulary. Control source access, model, available tools, and budgets. Distinguish proposed experiments from completed runs.
+
+Close S11 with a dated research report, a supported interface decision, and explicit implementation follow-ups with acceptance criteria. Register concrete trials under E01 before running them. Do not assume a skill, server, or orchestration layer is necessary before comparing the alternatives.
 
 ## Historical target findings need a fresh check
 
