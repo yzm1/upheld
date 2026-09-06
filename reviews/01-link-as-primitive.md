@@ -1,26 +1,26 @@
 # The unit of state is the link between a promise and its evidence
 
-An outside review from a language model, obtained by the maintainer on partial context on 2026-09-05 and reproduced verbatim below. It reviewed the checker as described in conversation, before the first draft of `CHECKER.md`.
+An outside review from a language model. The maintainer obtained it on partial context on 2026-09-05, and the text below is verbatim. It reviewed the checker as the conversation had described it, before anyone drafted `CHECKER.md`.
 
 ## Taken
 
-- The defense assertion as the unit of state.
-- An observed event kept separate from its validity consequence, with the consequence conservative.
-- A baseline recording what was relied on. It was later renamed grounds and then moved into the evidence record.
-- Two traversals, promise-first and diff-first.
-- Cardinality measured rather than capped, and review load as churn times fan-out times sensitivity.
-- The governing objective: minimise silent stale assertions within the capacity that reviews them.
-- Triage capacity kept distinct from validation capacity.
+- The link between a promise and its evidence as the unit of state.
+- Observed events kept apart from what they mean for a grade, with the grade decided conservatively.
+- A record of what a grade relied on. The design renamed it grounds and later moved it into the evidence record.
+- Two ways to traverse: from a promise, and from a diff.
+- Counting links rather than capping them, and review load as churn times fan-out times how easily a grade is undone.
+- The governing aim: keep silent stale grades to a minimum, within the time people have to review.
+- Time to triage kept separate from time to re-check.
 - History never on the routine path.
-- `fresh` as a projection rather than a mechanism.
-- The boundary stated as semantic rather than physical.
-- The fleet as the measurement apparatus.
+- `fresh` as a view over other checks rather than a mechanism of its own.
+- A boundary drawn on meaning rather than on bytes.
+- The fleet as the instrument that measures the design.
 
 ## Pushed back on, or extended
 
-- The accepted gap had no place in the ontology. It is now a `GapAssertion` outside the validity model.
-- Section 2's rule that declared granularity cannot exceed validated granularity and section 7's capacity constraint pull against each other. `CHECKER.md` resolves it: the fix belongs to the oracle, not the tracker.
-- The four-hash baseline had no environment component. One was added, then made declarative.
+- The accepted gap had no place in the model. It is now a `GapAssertion` outside the grade states.
+- Section 2's rule that a declared scope cannot be finer than the evidence, and section 7's limit on review time, pull against each other. `CHECKER.md` resolves it: the fix belongs to the oracle rather than the tracker.
+- The four-hash record of grounds had no environment part. The design later gained one, then made it declarative.
 - "Exact rename detected, identity probably preserved" smuggles in the judgment section 3 forbids.
 - The naming discussion was set aside.
 

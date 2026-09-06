@@ -52,5 +52,6 @@ evidence. It is one of the two migration cases for T19. Whether any of it can
 leave your repository is your call. If it cannot, the evaluation set stays
 where it is and the design says so.
 
-The design is at <https://github.com/yzm1/upheld>. Read `docs/CHECKER.md` from
-the open problems, then the commands.
+The design is at <https://github.com/yzm1/upheld>. Start with `docs/METHOD.md`,
+then `docs/CHECKER.md`. The longer original arguments are under
+`docs/history/`.

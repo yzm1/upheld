@@ -1,11 +1,12 @@
 # boundver
 
 <https://github.com/yzm1/boundver>, read at v0.15.0 (`main` at `9119319`,
-2026-09-05). Its README: "A Git-aware lockfile and CI check for contracts
-shared across components." Python 3.10 and later, MIT licence.
+2026-09-05). Its README describes it as "a Git-aware lockfile and CI check for
+contracts shared across components". It runs on Python 3.10 and later, under
+the MIT licence.
 
 boundver checks whether a declared contract moved. upheld checks whether the
-defense of a declared contract still holds. The two are the same architecture
+defense of a declared contract still holds. The two share one architecture,
 one level apart, so upheld copies boundver's architecture and none of its code.
 
 ## What upheld took, by file
@@ -29,7 +30,7 @@ Its subject. `../docs/DECISIONS.md` says why.
 
 ## boundver also surveyed itself
 
-On branch `audit/testing-obligations`, unpushed when this was written, it
-holds `spec/testing-obligations.json` with 620 obligations and
-`spec/mutants.json` with 119 mutants marked `expected: survives`. That survey
-is B in the method document. `../examples/README.md` says where it stands.
+Branch `audit/testing-obligations`, unpushed at the time of writing, holds
+`spec/testing-obligations.json` with 620 obligations and `spec/mutants.json`
+with 119 mutants marked `expected: survives`. That survey is B in the method.
+`../examples/README.md` says where it stands.

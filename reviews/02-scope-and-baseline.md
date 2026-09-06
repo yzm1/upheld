@@ -1,25 +1,25 @@
 # The mutant runner is a second tool, and the baseline could hide invalid evidence
 
-An outside review from a language model, obtained by the maintainer on partial context on 2026-09-05 and reproduced verbatim below. It reviewed the second draft of `CHECKER.md`: 489 lines, requirements T1 to T14, `mutants` and `accept` as checker commands, five per-facet exit codes.
+An outside review from a language model. The maintainer obtained it on partial context on 2026-09-05, and the text below is verbatim. It reviewed the second draft of `CHECKER.md`: 489 lines, rules T1 to T14, `mutants` and `accept` as checker commands, and five per-facet exit codes.
 
 ## Taken
 
-- All eight blockers. `mutants` moved to a companion, and T7, T10 and T11 retired to R1 to R3.
-- Acknowledgement made orthogonal to validity, and `accept` renamed `ack` (T15).
-- T5's operands changed from the artifact locator to subject scope against validated subject scope.
-- Promise-level adequacy withdrawn from version one; T1 rewritten.
-- Evidence given immutable identity and an explicit binding (T16).
-- A config file added, evidence made line-delimited, hashing made a requirement (T17).
-- Environment made declarative.
-- T6 changed from "the register is never generated" to "the checker never generates it" (T18).
-- `validate`, `verify` and `ack` given separate phases, and migration made an adoption requirement (T9, T19).
-- The history contradiction resolved; the ontology frozen; the three-way non-impersonation principle adopted.
+- All eight blockers. `mutants` moved to a companion, and T7, T10 and T11 retired in favour of R1 to R3.
+- Acknowledging a finding no longer changes its grade, and `accept` became `ack` (T15).
+- T5 now compares subject scope with validated subject scope instead of using the artifact locator.
+- Version one no longer infers whether a whole promise is adequate; T1 rewritten.
+- Every evidence record has an ID that never changes, and a binding names one (T16).
+- A config file added, evidence written one record per line, hashing made a rule (T17).
+- Environment inputs declared by the oracle rather than read from the machine.
+- T6 changed from forbidding a generated register to forbidding the checker from generating one (T18).
+- `validate`, `verify` and `ack` given separate phases, and taking on old registers made a rule (T9, T19).
+- The history contradiction resolved; the model frozen; the three-way non-impersonation principle adopted.
 
 ## Pushed back on, or extended
 
-- The review does not say what the exit code does with an acknowledged gated finding. boundver's model resolves it: the exit code covers the unacknowledged gated subset, and the report always shows validity. `CHECKER.md` says so.
-- A structured runner protocol brings back per-language adapters. That is stated as the runner's cost rather than left implicit.
-- Per-facet exit codes were collapsed to consequence codes, with the facet in the structured output.
+- The review does not say what the exit code does with a gated finding someone has acknowledged. boundver's model resolves it: the exit code covers the unacknowledged gated subset, and the report always shows the grade. `CHECKER.md` says so.
+- A structured runner protocol brings back per-language adapters. The design states that as the runner's cost.
+- Per-facet exit codes collapsed to consequence codes, with the facet in the structured output.
 
 ---
 

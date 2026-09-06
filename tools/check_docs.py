@@ -16,6 +16,9 @@ CURRENT += sorted((ROOT / 'docs').glob('*.md'))
 CURRENT += [ROOT / 'docs/history/README.md', ROOT / 'examples/README.md']
 CURRENT += sorted((ROOT / 'examples').glob('*/*.md'))
 CURRENT += [ROOT / 'measurements/RESULTS.md']
+CURRENT += sorted((ROOT / 'reference').glob('*.md'))
+CURRENT += sorted((ROOT / 'messages').glob('*.md'))
+CURRENT += sorted((ROOT / 'reviews').glob('*.md'))  # verbatim bodies are fenced from the gate
 
 
 def json_file(path): return json.loads((ROOT / path).read_text())

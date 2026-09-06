@@ -2,18 +2,18 @@
 
 <https://github.com/yzm1/ConnectLang>, branch `research-consolidation`, read
 2026-09-05 (`master` at `391b52d1`). A dependently-typed language and its
-compiler, in Rust. It is C in the method document.
+compiler, written in Rust. It is C in the method.
 
 C never ran a survey. It contributes three things.
 
 ## Its spec had the artifact column seven months early
 
-`cl/docs/clgc/08_compiler_obligations.md` was first committed on 2026-02-12. It
-is a table with the columns Obligation, Description and Delivered via. Each row
-is a promise the compiler makes, and each names the pass or type-system
-extension that delivers it. A second table constrains three optimisations
-against stale interior pointers: loop-invariant code motion, common
-subexpression elimination, and register allocation.
+`cl/docs/clgc/08_compiler_obligations.md` was first committed on 2026-02-12.
+It is a table with the columns `Obligation`, `Description` and `Delivered via`.
+Each row is a promise the compiler makes, and each names the pass or the
+type-system feature that delivers it. A second table constrains three
+optimisations against stale interior pointers: hoisting code out of loops,
+reusing repeated calculations, and assigning registers.
 
 "Delivered via" is close to `guarded_by` and is a different thing. It says what
 implements a promise. `guarded_by` says what would catch the promise breaking.
@@ -27,12 +27,12 @@ has nine audit categories. Eight are kinds of test. Its targets are test files
 per crate (three or more for a mature crate), a test-to-code ratio of 1:1 for
 critical components, and assertion density. It runs quarterly. It has no
 category for a checker, a type, a runtime invariant or an accepted gap. The
-same repository's README promises that "the compiler fences every choice, so
-no guarantee is ever silently lost."
+README in the same repository promises that "the compiler fences every choice,
+so no guarantee is ever silently lost."
 
-Its section 6, "Language Specification Alignment", reconciles specification,
-implementation and tests three ways. No other repository in the set does that.
-It became S1 in the method.
+Section 6 of that guide, "Language Specification Alignment", reconciles the
+spec, the code and the tests three ways. No other repository in the set does
+that. It became rule S1 in the method.
 
 ## Its compiler runs the type oracle
 
@@ -40,7 +40,7 @@ It became S1 in the method.
 `cl_termination/tests/spec_annotation_obligations.rs`, and the website
 components `CompilerAirMultiObligationTrace.astro` and
 `CompilerAirObligationEvidence.astro` together generate proof obligations,
-discharge them, and render the discharge as evidence. That is the `type` row of
-the method's oracle table, observed rather than proposed.
+discharge them, and render the discharge as evidence. That is the `type` row
+of the method's oracle table, observed rather than proposed.
 
 The message drafted for its agent is `../messages/to-c.md`.

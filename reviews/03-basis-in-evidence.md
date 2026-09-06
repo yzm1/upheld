@@ -1,11 +1,11 @@
 # Regenerating the lock could launder a stale grade, so the basis moved into the evidence
 
-An outside review from a language model, obtained by the maintainer on partial context on 2026-09-05 and reproduced verbatim below. It reviewed the third draft of `CHECKER.md`: 733 lines, T15 to T19 and R1 to R3 present, `ack` in place, grounds recorded in the lock.
+An outside review from a language model. The maintainer obtained it on partial context on 2026-09-05, and the text below is verbatim. It reviewed the third draft of `CHECKER.md`. That draft had 733 lines, rules T15 to T19 and R1 to R3, `ack` in place, and grounds recorded in the lock.
 
 ## Taken
 
-- All six changes and the five smaller repairs. The basis moved out of the lock and into the evidence record, with the lock demoted to a cache (T20). The first test an implementation runs is: delete the lock, regenerate, and confirm no validity changed.
-- Binding admissibility and the normalised verdict `supports`, `contradicts` or `could_not_establish` (T16).
+- All six changes and the five smaller repairs. The basis moved out of the lock and into the evidence record, with the lock demoted to a cache (T20). The first test an implementation runs: delete the lock, regenerate, and confirm no grade changed.
+- Rules for which record a binding may name, and the verdict `supports`, `contradicts` or `could_not_establish` (T16).
 - An acknowledged `unresolvable` still exits 5 (T12, T13).
 - Evidence lineage through `supersedes` (T21).
 - Bindings in a separate file no producer writes (T22).
@@ -14,8 +14,8 @@ An outside review from a language model, obtained by the maintainer on partial c
 ## Pushed back on, or extended
 
 - A `basis` command, so producers do not reimplement hashing, and R4 requiring runners to use it.
-- A contradicting record as an event beside a superseding one; otherwise a `did_not_fire` could sit unread beside a bound `supports`.
-- The hashing profile promoted to the first artifact in the open problems, since a runner and a checker that hash differently disagree about every defense from the first run.
+- A contradicting record as an event beside a superseding one. Otherwise a `did_not_fire` could sit unread beside a bound `supports`.
+- The hashing profile promoted to the first artifact among the open problems, since a runner and a checker that hash differently disagree about every defense from the first run.
 
 ---
 

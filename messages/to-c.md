@@ -8,8 +8,8 @@ unsourced figure removed and the prose shortened. C is ConnectLang.
 ## You wrote the artifact column, then wrote an audit guide that cannot see it
 
 `cl/docs/clgc/08_compiler_obligations.md` is an obligation register. Each row
-is a promise, and each names what delivers it: StackMap metadata, a CSIR pass
-(your compiler's intermediate representation), a type-system extension. Three
+is a promise, and each names what delivers it: StackMap metadata, a `CSIR` pass
+(your compiler's intermediate form), a type-system extension. Three
 other repositories derived the same shape months later and called the third
 column `answered_by`. Yours was first committed in February 2026.
 
@@ -17,8 +17,8 @@ column `answered_by`. Yours was first committed in February 2026.
 such column. Eight of its nine categories assume the answer is a test: unit,
 integration, property, stress, benchmark. There is no row for "the compiler
 makes this impossible to write", in a language whose README says the compiler
-fences every choice so that no guarantee is silently lost. Your section 8
-obligations are delivered by codegen and the type system. Your audit guide
+fences every choice so that no guarantee is silently lost. Codegen and the
+type system deliver your section 8 obligations. Your audit guide
 cannot record that.
 
 ## Three targets to retire
@@ -31,7 +31,7 @@ counted files. It did not count whether anything could fail.
 ## Quarterly is a cadence, and a cadence is not a gate
 
 Every one of the four surveys met this. An exit criterion that is a measurement
-decays the moment it is taken, and a schedule does not stop that. Yours at
+decays the moment someone takes it, and a schedule does not stop that. Yours at
 least runs: your CI fires, which one of the four cannot say.
 
 ## Two things only you have, and should give away
