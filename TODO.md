@@ -1,8 +1,8 @@
-# D01–D08 are complete; the product work remains open
+# D01–D08 and the S01 survey design are complete
 
 Readers are engineers choosing the next Upheld task. This list tracks the supplied discussion against the repository, updated 6 September 2026.
 
-Eight document and schema tasks are complete after the [review repairs](docs/RED_TEAM_FIXES.md). D04, D06, and D08 were reopened and repaired; the original completion claim overstated their checks. The other 56 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
+Nine tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXES.md), plus S01's survey objective and research. D04, D06, and D08 were reopened and repaired; the original completion claim overstated their checks. The other 55 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
 
 [The completion record](docs/COMPLETED_D01_D08.md) links the changes and checks. [The original derived list](docs/history/2026-09-06/DERIVED_TODO.md) preserves the full reasoning, dependencies, and sources for all 64 items.
 
@@ -18,6 +18,7 @@ Eight document and schema tasks are complete after the [review repairs](docs/RED
 | D06 | Complete | Checked nine schemas, source versions, timestamp and exit rules, and required fixtures. | [Artifact](schemas/0.1/) |
 | D07 | Complete | Recounted 19 finding bullets; assigned record IDs and preserved unknown probe totals. | [Artifact](examples/heldtospec-contracts/reconciliation.md) |
 | D08 | Complete | Recorded README drift, added a status defense, and exercised seeded failures. | [Artifact](examples/upheld-status/README.md) |
+| S01 | Complete | Defined useful, new, confirmed, and decision-required outcomes; specified attention and omission measures; compared cross-domain methods and user-configured backends. E01 trial registration remains open. | [Objective](docs/SURVEY_TOOL.md), [research](docs/SURVEY_RESEARCH.md), [backend proposal](docs/SURVEY_BACKENDS.md) |
 
 ## Build the survey and small checker together
 
@@ -27,7 +28,6 @@ Priority P0 means a trust blocker. P1 means the next learning milestone. P2 mean
 
 | ID | Priority | Task | Completion condition |
 |---|---|---|---|
-| S01 | P1 | Add the survey's governing objective | the survey plan measures findings and attention cost rather than rewarding register size. |
 | S02 | P1 | Turn the hand survey into a repeatable scanner workflow | heldtospec's component can be rescanned by a documented procedure whose judgment and serialization steps are distinguishable. Do not credit `build_register.py` as an automated scanner. |
 | S03 | P1 | Add test/code sources and audit source-selection bias | the survey records what each source adds and checks the documented undercount of shape/type-related promises. |
 | S04 | P1 | Build skeptical triage with explicit uncertainty | the example queue has an auditable disposition per item and unknowns cannot be converted into verified coverage by a default. |
