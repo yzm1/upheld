@@ -1,0 +1,5 @@
+{
+  "schema_version": "0.1-probe",
+  "note": "Empty on purpose. A binding names the evidence record a defense is entitled to its grade by. No evidence record exists: no defense here has been graded by mutation, no checker has been audited by a seeded violation, and a passing test run is not evidence a test can fail. See README.",
+  "bindings": {}
+}

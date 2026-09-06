@@ -1,0 +1,1282 @@
+{
+  "schema_version": "0.1-probe",
+  "producer": {
+    "kind": "hand-authored, script-serialised",
+    "method": "docs/METHOD.md v1.0",
+    "schema": "docs/CHECKER.md ontology, with the survey document's descriptive fields",
+    "source_repo": "https://github.com/yzm1/heldtospec",
+    "source_rev": "c8c9362",
+    "source_rev_date": "2026-09-06T07:09:45Z",
+    "surveyed_on": "2026-09-06",
+    "component": "src/heldtospec/contracts (with cli/contract.py, docs/CONTRACTS.md, docs/CONTRACT_PROVE.md)"
+  },
+  "summary": {
+    "promises": 44,
+    "defenses": 78,
+    "defenses_by_kind": {
+      "checker": 7,
+      "runtime_invariant": 2,
+      "test": 66,
+      "type": 3
+    },
+    "promises_with_no_defense_and_no_gap": [
+      "CTR-003",
+      "CTR-005",
+      "CTR-037",
+      "CTR-044"
+    ],
+    "gaps": [
+      "CTR-010",
+      "CTR-025",
+      "CTR-026",
+      "CTR-027"
+    ],
+    "promises_with_next_step": [
+      "CTR-002",
+      "CTR-003",
+      "CTR-005",
+      "CTR-009",
+      "CTR-010",
+      "CTR-011",
+      "CTR-012",
+      "CTR-014",
+      "CTR-016",
+      "CTR-018",
+      "CTR-019",
+      "CTR-021",
+      "CTR-032",
+      "CTR-037",
+      "CTR-038",
+      "CTR-041",
+      "CTR-044"
+    ],
+    "bindings": 0,
+    "evidence_records": 0,
+    "note": "Every defense is unbound: no evidence record exists for any of them. A test named here is a test that was read, not one that was graded by mutation; a checker named here was read, not audited by a seeded violation. See README."
+  },
+  "promises": [
+    {
+      "id": "CTR-001",
+      "text": "`contract lint` validates the model and rejects unknown or misspelled keys, without loading the dataset.",
+      "subject_scope": "src/heldtospec/contracts/models.py",
+      "source": "docs/CONTRACTS.md:67-68",
+      "published_in": [
+        "docs/CONTRACTS.md"
+      ],
+      "confidence": "verified",
+      "why": "A misspelled key is a promise that silently went missing; the models.py header lists four that once loaded clean.",
+      "defenses": [
+        {
+          "guarded_by": "type",
+          "artifact_locator": "src/heldtospec/contracts/models.py:16",
+          "why_this_kind": "`_STRICT = ConfigDict(extra=\"forbid\")` on every model makes an unknown key unrepresentable rather than ignored.",
+          "id": "CTR-001:d0",
+          "promise_id": "CTR-001",
+          "subject_scope": "src/heldtospec/contracts/models.py"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/cli/test_contract_workflow.py::test_lint_rejects_a_broken_contract",
+          "why_this_kind": "Exercises the CLI path on one broken contract.",
+          "id": "CTR-001:d1",
+          "promise_id": "CTR-001",
+          "subject_scope": "src/heldtospec/contracts/models.py"
+        }
+      ],
+      "the_test_that_would_catch_it": "A contract with `nullible: false` loading without error."
+    },
+    {
+      "id": "CTR-002",
+      "text": "`max_null_percentage` is a fraction in [0, 1]; a value such as 50 is rejected.",
+      "subject_scope": "src/heldtospec/contracts/models.py::CompletenessSLA",
+      "source": "docs/CONTRACTS.md:58; models.py:86-89",
+      "published_in": [
+        "docs/CONTRACTS.md"
+      ],
+      "confidence": "verified",
+      "why": "Unbounded, `50` became a limit of 5000 against a 0-100 metric and the SLA could never fail.",
+      "defenses": [
+        {
+          "guarded_by": "type",
+          "artifact_locator": "src/heldtospec/contracts/models.py:89",
+          "why_this_kind": "`Field(ge=0.0, le=1.0)`; the compiler of the model refuses the value.",
+          "id": "CTR-002:d0",
+          "promise_id": "CTR-002",
+          "subject_scope": "src/heldtospec/contracts/models.py::CompletenessSLA"
+        }
+      ],
+      "the_test_that_would_catch_it": "A contract declaring `max_null_percentage: 50` accepted by lint.",
+      "next_step": "No test in the contracts or CLI suites submits an out-of-range value; locate one elsewhere or record that the type is the only defense."
+    },
+    {
+      "id": "CTR-003",
+      "text": "Duration units for `max_age` are s, m, h and d.",
+      "subject_scope": "src/heldtospec/contracts/mapper.py::parse_duration",
+      "source": "docs/CONTRACTS.md:59; mapper.py:104-125",
+      "published_in": [
+        "docs/CONTRACTS.md"
+      ],
+      "confidence": "verified",
+      "why": "A misparsed freshness limit is a gate that fires always or never.",
+      "defenses": [],
+      "the_test_that_would_catch_it": "`parse_duration('1w')` accepted, or `'90'` silently read as ninety seconds without the doc saying so (it is: a bare number parses as seconds, undocumented).",
+      "next_step": "No test of `parse_duration` found in the contracts or CLI suites. Note also that `metrics/temporal.py` has a second duration parser accepting w/ms/us/ns; the two grammars differ and nothing says which a contract author gets."
+    },
+    {
+      "id": "CTR-004",
+      "text": "`verify` compiles each declaration in the documented table to its named check: type to schema_match, nullable to null share 0, unique to uniqueness 100, allowed_values to outside-count 0, min/max to value_range, regex to match 100, freshness to freshness_check, min_rows to row_count, max_null to a per-column null limit, expr to expr_check.",
+      "subject_scope": "src/heldtospec/contracts/mapper.py::contract_to_checks",
+      "source": "docs/CONTRACTS.md:76-89; mapper.py:128-376",
+      "published_in": [
+        "docs/CONTRACTS.md"
+      ],
+      "confidence": "verified",
+      "why": "This table is the whole meaning of `verify`; a row that does not compile is a published guarantee nothing tests.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_every_column_promise_is_discharged_by_a_tagged_check",
+          "why_this_kind": "Asserts each column promise is claimed by a compiled check.",
+          "id": "CTR-004:d0",
+          "promise_id": "CTR-004",
+          "subject_scope": "src/heldtospec/contracts/mapper.py::contract_to_checks"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_schema_match_answers_every_column_type_at_once",
+          "why_this_kind": "The one-check-many-clauses case.",
+          "id": "CTR-004:d1",
+          "promise_id": "CTR-004",
+          "subject_scope": "src/heldtospec/contracts/mapper.py::contract_to_checks"
+        },
+        {
+          "guarded_by": "runtime_invariant",
+          "artifact_locator": "src/heldtospec/contracts/mapper.py:532-586",
+          "why_this_kind": "`compile_contract` reconciles the clause register against the emitted checks on every lint, verify and prove, and reports any clause that compiled to nothing. It runs where the product runs and cannot see a defect before a contract exercises it.",
+          "id": "CTR-004:d2",
+          "promise_id": "CTR-004",
+          "subject_scope": "src/heldtospec/contracts/mapper.py::contract_to_checks"
+        }
+      ],
+      "the_test_that_would_catch_it": "A ClauseKind added to the enumerator and not to the compiler, with lint reporting nothing."
+    },
+    {
+      "id": "CTR-005",
+      "text": "Foreign-key `references` is contract metadata in the current verifier and is not enforced.",
+      "subject_scope": "src/heldtospec/contracts/mapper.py::_column_checks",
+      "source": "docs/CONTRACTS.md:91-92",
+      "published_in": [
+        "docs/CONTRACTS.md"
+      ],
+      "confidence": "verified",
+      "why": "This published sentence is now false: mapper.py:186-210 compiles `references` to `referential_integrity` when a parent is supplied, and CONTRACT_PROVE.md documents that. The page in the mkdocs nav promises the opposite of what the code does, and the enforced-check table above it omits the row.",
+      "defenses": [],
+      "the_test_that_would_catch_it": "A sweep that reads CONTRACTS.md's enforced-check table and asserts every compiled clause kind has a row, and every 'is metadata' claim names a kind that compiles to nothing. The existing rendering checker covers three other documents and not this one.",
+      "next_step": "Correct the sentence and the table, add `references`, `--reference`, `--strict` and `accepted:`; then add CONTRACTS.md to the rendering sweep or write its own."
+    },
+    {
+      "id": "CTR-006",
+      "text": "A bare `checks[].metric` has no pass condition and cannot gate; it is enumerated as a promise and reported, not dropped.",
+      "subject_scope": "src/heldtospec/contracts/clauses.py::enumerate_clauses",
+      "source": "docs/CONTRACTS.md:92-94; clauses.py:296-308; mapper.py:359-367",
+      "published_in": [
+        "docs/CONTRACTS.md"
+      ],
+      "confidence": "verified",
+      "why": "A check that cannot fail is the vacuity shape; enumerating it is what keeps it visible.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_a_promise_that_cannot_be_kept_is_still_a_promise",
+          "why_this_kind": "The inert check appears in the register.",
+          "id": "CTR-006:d0",
+          "promise_id": "CTR-006",
+          "subject_scope": "src/heldtospec/contracts/clauses.py::enumerate_clauses"
+        },
+        {
+          "guarded_by": "runtime_invariant",
+          "artifact_locator": "src/heldtospec/contracts/mapper.py:360-367",
+          "why_this_kind": "`logger.warning` at compile time. The older, weaker defense: it alarms where it runs, to a channel that scrolls past.",
+          "id": "CTR-006:d1",
+          "promise_id": "CTR-006",
+          "subject_scope": "src/heldtospec/contracts/clauses.py::enumerate_clauses"
+        }
+      ],
+      "the_test_that_would_catch_it": "A `checks:` entry with only `metric:` compiling to a passing check."
+    },
+    {
+      "id": "CTR-007",
+      "text": "`verify` returns the pipeline's own exit code, 3 on a violation, and exits 1 rather than 0 when the contract produces no checks.",
+      "subject_scope": "src/heldtospec/cli/contract.py::verify_contract",
+      "source": "docs/CONTRACTS.md:96-98; cli/contract.py:274-290,309-327",
+      "published_in": [
+        "docs/CONTRACTS.md"
+      ],
+      "confidence": "verified",
+      "why": "A CI job gates on this code; collapsing it once let 'your data failed' read as 'your contract file is broken'.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/cli/test_contract_exit_codes.py::test_verify_reports_the_pipeline_code",
+          "why_this_kind": "",
+          "id": "CTR-007:d0",
+          "promise_id": "CTR-007",
+          "subject_scope": "src/heldtospec/cli/contract.py::verify_contract"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/cli/test_contract_exit_codes.py::test_a_threshold_breach_is_not_a_config_error",
+          "why_this_kind": "",
+          "id": "CTR-007:d1",
+          "promise_id": "CTR-007",
+          "subject_scope": "src/heldtospec/cli/contract.py::verify_contract"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/cli/test_contract_exit_codes.py::test_a_contract_yielding_no_checks_fails",
+          "why_this_kind": "",
+          "id": "CTR-007:d2",
+          "promise_id": "CTR-007",
+          "subject_scope": "src/heldtospec/cli/contract.py::verify_contract"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/cli/test_contract_exit_codes.py::test_the_pipeline_is_never_run_with_no_checks",
+          "why_this_kind": "",
+          "id": "CTR-007:d3",
+          "promise_id": "CTR-007",
+          "subject_scope": "src/heldtospec/cli/contract.py::verify_contract"
+        }
+      ],
+      "the_test_that_would_catch_it": "A pipeline exit of 3 surfacing from the CLI as 1."
+    },
+    {
+      "id": "CTR-008",
+      "text": "A failed verification names the columns that broke the contract and the rule each broke, including a check that could not run because a type changed.",
+      "subject_scope": "src/heldtospec/cli/contract.py::_why_it_failed",
+      "source": "docs/CONTRACTS.md:100-102; cli/contract.py:153-215",
+      "published_in": [
+        "docs/CONTRACTS.md"
+      ],
+      "confidence": "verified",
+      "why": "Without it the next step is reading Polars expression errors out of the log.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/cli/test_contract_failure_says_what_drifted.py",
+          "why_this_kind": "Seven tests, one per failure shape, including the type-change case and the exclusion of the synthetic task marker.",
+          "id": "CTR-008:d0",
+          "promise_id": "CTR-008",
+          "subject_scope": "src/heldtospec/cli/contract.py::_why_it_failed"
+        }
+      ],
+      "the_test_that_would_catch_it": "A breached range producing a panel with no column name in it."
+    },
+    {
+      "id": "CTR-009",
+      "text": "A contract is additive-compatible: an extra column passes; a removed, renamed or re-typed column, a null in a `nullable: false` column, or a duplicate in a `unique: true` column fails.",
+      "subject_scope": "src/heldtospec/contracts/mapper.py",
+      "source": "docs/CONTRACTS.md:106-110",
+      "published_in": [
+        "docs/CONTRACTS.md"
+      ],
+      "confidence": "verified",
+      "why": "This is the compatibility rule consumers plan against.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/cli/test_contract_failure_says_what_drifted.py::test_a_removed_column_keeps_its_existing_message",
+          "why_this_kind": "The removal case.",
+          "id": "CTR-009:d0",
+          "promise_id": "CTR-009",
+          "subject_scope": "src/heldtospec/contracts/mapper.py"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/cli/test_contract_failure_says_what_drifted.py::test_a_changed_type_says_which_check_could_not_run",
+          "why_this_kind": "The re-type case.",
+          "id": "CTR-009:d1",
+          "promise_id": "CTR-009",
+          "subject_scope": "src/heldtospec/contracts/mapper.py"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/cli/test_contract_failure_says_what_drifted.py::test_a_duplicate_in_a_unique_column_is_named",
+          "why_this_kind": "The duplicate case.",
+          "id": "CTR-009:d2",
+          "promise_id": "CTR-009",
+          "subject_scope": "src/heldtospec/contracts/mapper.py"
+        }
+      ],
+      "the_test_that_would_catch_it": "A dataset with one column the contract does not mention failing verification.",
+      "next_step": "No test found for the additive half (an extra column passes). The failing half is covered; the passing half is asserted only by the doc."
+    },
+    {
+      "id": "CTR-010",
+      "text": "There is no way to write a closed contract: `checks:` takes only name, expr and metric, so `no_extra_columns` cannot be configured from a contract.",
+      "subject_scope": "src/heldtospec/contracts/models.py::ContractCheck",
+      "source": "docs/CONTRACTS.md:112-118",
+      "published_in": [
+        "docs/CONTRACTS.md"
+      ],
+      "confidence": "verified",
+      "why": "A documented limitation is a promise about the limitation's shape; it stops being true the day `ContractCheck` grows a `parameters:` field.",
+      "defenses": [],
+      "gap": {
+        "reason": "Documented as a current limitation with the workaround 'verify it outside the contract'.",
+        "source": "docs/CONTRACTS.md:112-118"
+      },
+      "the_test_that_would_catch_it": "A type-shaped pin: the field set of `ContractCheck` is exactly {name, expr, metric, accepted}, so the paragraph is retired the day it grows.",
+      "next_step": "Note the doc says three fields; the model now has four (`accepted` was added). The paragraph is already slightly stale."
+    },
+    {
+      "id": "CTR-011",
+      "text": "`contract docs` renders markdown, to stdout without `--output`, and a pipe or newline in a name or description does not break the table.",
+      "subject_scope": "src/heldtospec/contracts/docs_generator.py",
+      "source": "docs/CONTRACTS.md:122-128; docs_generator.py:15-36",
+      "published_in": [
+        "docs/CONTRACTS.md"
+      ],
+      "confidence": "verified",
+      "why": "A broken cell silently misattributes every value after it in the rendered table.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/cli/test_contract_workflow.py::test_docs_renders_a_generated_contract",
+          "why_this_kind": "Renders once; does not exercise escaping.",
+          "id": "CTR-011:d0",
+          "promise_id": "CTR-011",
+          "subject_scope": "src/heldtospec/contracts/docs_generator.py"
+        }
+      ],
+      "the_test_that_would_catch_it": "A description containing `a | pipe` producing a nine-cell row.",
+      "next_step": "No test of `_cell` escaping found in the contracts or CLI suites; the defect it fixes is narrated in the docstring only."
+    },
+    {
+      "id": "CTR-012",
+      "text": "A contract produced by `contract init` does not contradict the data it was generated from: null tolerance is observed share plus headroom, a near-unique column gets no `allowed_values`, and no unverifiable `quality:` block is emitted.",
+      "subject_scope": "src/heldtospec/contracts/generator.py::generate_contract",
+      "source": "generator.py:24-44,84-98,121-127",
+      "confidence": "verified",
+      "why": "The narrated defect: a column half null received `max_null_percentage: 0.01`, and the false claim was published because nothing enforced it.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/cli/test_contract_workflow.py::test_verify_does_not_crash",
+          "why_this_kind": "Explicitly asserts only that verify reaches the metrics -- its own docstring says it is not asserted to pass outright.",
+          "id": "CTR-012:d0",
+          "promise_id": "CTR-012",
+          "subject_scope": "src/heldtospec/contracts/generator.py::generate_contract"
+        }
+      ],
+      "the_test_that_would_catch_it": "`init` on a frame with a half-null column, then `verify` on the same frame, exiting 0.",
+      "next_step": "The round trip is defended by nothing that asserts it passes. The workflow test stops one step short on purpose and says so."
+    },
+    {
+      "id": "CTR-013",
+      "text": "`prove` builds one witness satisfying every mechanical promise and one counterexample per clause breaking exactly that clause, runs the real compiled checks over both, and classifies from the pair.",
+      "subject_scope": "src/heldtospec/contracts/prove/grader.py::prove_contract",
+      "source": "docs/CONTRACT_PROVE.md:9-12; grader.py:400-519",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md"
+      ],
+      "confidence": "verified",
+      "why": "This is the feature.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_the_violation_is_caught",
+          "why_this_kind": "",
+          "id": "CTR-013:d0",
+          "promise_id": "CTR-013",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::prove_contract"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_the_witness_satisfies_every_promise_it_was_built_from",
+          "why_this_kind": "",
+          "id": "CTR-013:d1",
+          "promise_id": "CTR-013",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::prove_contract"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_a_counterexample_touches_one_column_unless_it_cannot",
+          "why_this_kind": "",
+          "id": "CTR-013:d2",
+          "promise_id": "CTR-013",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::prove_contract"
+        }
+      ],
+      "the_test_that_would_catch_it": "A witness that fails a clause it was built from."
+    },
+    {
+      "id": "CTR-014",
+      "text": "The verdict vocabulary is exactly ten states, and every prose rendering of it -- CONTRACT_PROVE.md, DESIGN_CONTRACT_SOUNDNESS.md, the ODCS RFC -- names all ten and invents none.",
+      "subject_scope": "src/heldtospec/contracts/prove/grader.py::Verdict",
+      "source": "grader.py:46-61; tests/contracts/test_a_verdict_means_the_same_in_every_rendering.py:1-17",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md",
+        "docs/DESIGN_CONTRACT_SOUNDNESS.md",
+        "docs/rfc/odcs-clause-soundness.md"
+      ],
+      "confidence": "verified",
+      "why": "It had already drifted once: the RFC listed three non-verdict states where the code has four.",
+      "defenses": [
+        {
+          "guarded_by": "checker",
+          "artifact_locator": "tests/contracts/test_a_verdict_means_the_same_in_every_rendering.py",
+          "why_this_kind": "Sweeps three documents against a code constant, enumerates the missing and the invented per document, guards the guard by asserting ten. By the four-clause definition: enumerates, yes; separates 'found nothing' from 'could not look', yes (a missing file raises); fails on the tree as it stands or ratchets, it is an invariant with a static exemption list; runs somewhere that fires, no -- see triage.",
+          "id": "CTR-014:d0",
+          "promise_id": "CTR-014",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::Verdict"
+        }
+      ],
+      "the_test_that_would_catch_it": "A state added to `Verdict` and one rendering left unchanged.",
+      "next_step": "The swept set is a fixed tuple of three; CONTRACTS.md is not in it and is the page in the nav."
+    },
+    {
+      "id": "CTR-015",
+      "text": "`ACTIONABLE` is exactly {vacuous, over_constrained, inverted, undefended, misattributed}; ungradeable, accepted, errored and unassessed are counted apart and never fold into sound or into the actionable count.",
+      "subject_scope": "src/heldtospec/contracts/prove/grader.py::ACTIONABLE",
+      "source": "docs/CONTRACT_PROVE.md:30-38; grader.py:64-76",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md"
+      ],
+      "confidence": "verified",
+      "why": "Folding 'nobody looked' into either column is how a report flatters itself.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_not_graded_is_counted_apart_from_defended",
+          "why_this_kind": "",
+          "id": "CTR-015:d0",
+          "promise_id": "CTR-015",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::ACTIONABLE"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_a_promise_declared_accepted_is_neither",
+          "why_this_kind": "",
+          "id": "CTR-015:d1",
+          "promise_id": "CTR-015",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::ACTIONABLE"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_a_kind_with_no_operator_is_never_reported_sound",
+          "why_this_kind": "",
+          "id": "CTR-015:d2",
+          "promise_id": "CTR-015",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::ACTIONABLE"
+        },
+        {
+          "guarded_by": "checker",
+          "artifact_locator": "tests/contracts/test_a_verdict_means_the_same_in_every_rendering.py::test_every_actionable_state_is_a_declared_one",
+          "why_this_kind": "A typo in ACTIONABLE would drop a defect class from the count.",
+          "id": "CTR-015:d3",
+          "promise_id": "CTR-015",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::ACTIONABLE"
+        }
+      ],
+      "the_test_that_would_catch_it": "An `ungradeable` clause raising the actionable count."
+    },
+    {
+      "id": "CTR-016",
+      "text": "Every actionable verdict is produced by at least one test, so no verdict sits in the docs implying coverage that does not exist.",
+      "subject_scope": "tests/contracts",
+      "source": "docs/DESIGN_CONTRACT_SOUNDNESS.md:212-218 (revision 5); test_what_a_check_is_worth.py:530-545",
+      "confidence": "verified",
+      "why": "`inverted` was exported, counted and documented while no branch could emit it.",
+      "defenses": [
+        {
+          "guarded_by": "checker",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_every_actionable_verdict_has_a_test_that_produces_it",
+          "why_this_kind": "Sweeps the suite for each verdict. Its oracle is a text match for `Verdict.X` in the suite's source, which is the name-matched join the method warns about: a comment or a negative assertion mentioning the constant satisfies it.",
+          "id": "CTR-016:d0",
+          "promise_id": "CTR-016",
+          "subject_scope": "tests/contracts"
+        }
+      ],
+      "the_test_that_would_catch_it": "A test asserting `verdict != Verdict.INVERTED`, with nothing producing `inverted`, and this checker passing.",
+      "next_step": "Replace the text match with a record of which verdicts `emit` actually produced during the run -- a conftest hook -- so the link is by execution rather than by name."
+    },
+    {
+      "id": "CTR-017",
+      "text": "Only `accepted` is declared by a person; `checker`, `runtime` and `type` are computed from the clause kind and, for `type`, from ODCS `servers[].type`.",
+      "subject_scope": "src/heldtospec/contracts/prove/grader.py::_answered_by; prove/odcs.py::answered_by",
+      "source": "docs/CONTRACT_PROVE.md:42-53; grader.py:113-118; odcs.py:90-116",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md"
+      ],
+      "confidence": "verified",
+      "why": "Asking an author to restate what a tool can observe is a tax paid in wrong answers.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_carrying_a_verdict_in_odcs.py::TestWhoKeepsThePromise",
+          "why_this_kind": "Seven tests over the server-type rule, including the mixed-deployment case.",
+          "id": "CTR-017:d0",
+          "promise_id": "CTR-017",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::_answered_by; prove/odcs.py::answered_by"
+        }
+      ],
+      "the_test_that_would_catch_it": "A plain YAML contract against Postgres reporting `type` for anything, since without ODCS the grader can only return accepted, runtime or checker."
+    },
+    {
+      "id": "CTR-018",
+      "text": "`accepted:` is keyed by clause kind, so accepting a foreign key does not accept the column's other promises.",
+      "subject_scope": "src/heldtospec/contracts/models.py::AcceptedReasons",
+      "source": "docs/CONTRACT_PROVE.md:48-53; models.py:42-66; clauses.py:169-174",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md"
+      ],
+      "confidence": "verified",
+      "why": "A column-level flag would silently accept everything beside the thing accepted.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_accepting_one_promise_does_not_accept_the_others",
+          "why_this_kind": "",
+          "id": "CTR-018:d0",
+          "promise_id": "CTR-018",
+          "subject_scope": "src/heldtospec/contracts/models.py::AcceptedReasons"
+        }
+      ],
+      "the_test_that_would_catch_it": "`accepted: {referenses: ...}` -- a misspelled kind -- accepted by lint with no warning. The dict's keys are free strings; `_STRICT` forbids unknown keys on every model but not inside this mapping. It fails safe (the clause stays undefended) and misleads the author who believes it accepted.",
+      "next_step": "Validate the keys against `ClauseKind` and report an unknown one."
+    },
+    {
+      "id": "CTR-019",
+      "text": "`prove --check` exits 0 when every promise is defended or accounted for, 3 when a promise lost its defence or a new undefended one appeared, and 4 when the register is stale or a clause could not be graded.",
+      "subject_scope": "src/heldtospec/cli/contract.py::prove_contract_cli",
+      "source": "docs/CONTRACT_PROVE.md:56-64; cli/contract.py:443-524",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md"
+      ],
+      "confidence": "verified",
+      "why": "'Something is wrong' and 'I could not look' call for different people.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_the_prove_command.py::test_a_lost_defence_exits_three",
+          "why_this_kind": "",
+          "id": "CTR-019:d0",
+          "promise_id": "CTR-019",
+          "subject_scope": "src/heldtospec/cli/contract.py::prove_contract_cli"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_the_prove_command.py::test_a_changed_promise_exits_four_not_zero",
+          "why_this_kind": "The stale half of 4.",
+          "id": "CTR-019:d1",
+          "promise_id": "CTR-019",
+          "subject_scope": "src/heldtospec/cli/contract.py::prove_contract_cli"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_the_prove_command.py::test_checking_against_a_register_that_does_not_exist_exits_four",
+          "why_this_kind": "",
+          "id": "CTR-019:d2",
+          "promise_id": "CTR-019",
+          "subject_scope": "src/heldtospec/cli/contract.py::prove_contract_cli"
+        }
+      ],
+      "the_test_that_would_catch_it": "A contract whose only non-type clause is an arbitrary `expr` -- ungradeable -- exiting 0. Probed on 2026-09-06 at c8c9362: it exits 0 in write mode and 0 in check mode. The documented 'or a clause could not be graded' half of exit 4 is not implemented; only a failing baseline (write) or a stale register (check) produces 4.",
+      "next_step": "Either implement 4-on-ungradeable or correct the doc and the `prove_contract_cli` docstring, which makes the same claim. No test covers the claim either way."
+    },
+    {
+      "id": "CTR-020",
+      "text": "A verdict pinned to a clause digest that no longer matches is stale -- a third state, exit 4, not a pass -- and a clause removed from the contract is stale too.",
+      "subject_scope": "src/heldtospec/contracts/prove/register.py::compare",
+      "source": "docs/CONTRACT_PROVE.md:66-71; register.py:93-194",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md"
+      ],
+      "confidence": "verified",
+      "why": "Treating a stale verdict as a pass lets a contract be edited out from under its own evidence.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_a_changed_promise_is_stale_not_passing",
+          "why_this_kind": "",
+          "id": "CTR-020:d0",
+          "promise_id": "CTR-020",
+          "subject_scope": "src/heldtospec/contracts/prove/register.py::compare"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_a_removed_promise_is_stale_too",
+          "why_this_kind": "",
+          "id": "CTR-020:d1",
+          "promise_id": "CTR-020",
+          "subject_scope": "src/heldtospec/contracts/prove/register.py::compare"
+        }
+      ],
+      "the_test_that_would_catch_it": "A bound changed from 100 to 200 and `--check` exiting 0."
+    },
+    {
+      "id": "CTR-021",
+      "text": "`expected_verdict` pins exactly one verdict: the same verdict passes, an improvement passes and is reported, a different defect fails, and sound-to-undefended fails.",
+      "subject_scope": "src/heldtospec/contracts/prove/register.py::compare",
+      "source": "docs/CONTRACT_PROVE.md:73-98; register.py:136-182",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md"
+      ],
+      "confidence": "verified",
+      "why": "An expectation that accepted any bad verdict was a mute button, and shipped that way once.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_a_promise_at_its_recorded_expectation_does_not_fail_the_gate",
+          "why_this_kind": "",
+          "id": "CTR-021:d0",
+          "promise_id": "CTR-021",
+          "subject_scope": "src/heldtospec/contracts/prove/register.py::compare"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_outgrowing_the_expectation_is_reported_so_the_floor_can_rise",
+          "why_this_kind": "",
+          "id": "CTR-021:d1",
+          "promise_id": "CTR-021",
+          "subject_scope": "src/heldtospec/contracts/prove/register.py::compare"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_a_different_defect_is_not_covered_by_the_expectation",
+          "why_this_kind": "",
+          "id": "CTR-021:d2",
+          "promise_id": "CTR-021",
+          "subject_scope": "src/heldtospec/contracts/prove/register.py::compare"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_an_expectation_cannot_excuse_a_clause_that_was_working",
+          "why_this_kind": "",
+          "id": "CTR-021:d3",
+          "promise_id": "CTR-021",
+          "subject_scope": "src/heldtospec/contracts/prove/register.py::compare"
+        }
+      ],
+      "the_test_that_would_catch_it": "Add `expected_verdict` to the register by hand, run `prove --register` again, and read it back. Probed on 2026-09-06 at c8c9362: the next write drops it. `build_register` rebuilds the file from the run and carries no field it did not compute, so the pin the doc describes survives exactly one run. This is the generated-file-that-people-also-edit hazard CHECKER.md T22 exists for.",
+      "next_step": "Either carry `expected_verdict` and `reason` through `build_register` from the previous register, or move expectations into a file the tool never rewrites. No test covers survival across a write."
+    },
+    {
+      "id": "CTR-022",
+      "text": "Every generated dataset is written to a path of its own, because `SchemaCache` is keyed by path.",
+      "subject_scope": "src/heldtospec/contracts/prove/grader.py::_Executor",
+      "source": "docs/CONTRACT_PROVE.md:113-118; grader.py:140-161",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md"
+      ],
+      "confidence": "verified",
+      "why": "Reusing one filename served a cached layout for a changed schema, and the reader error looked exactly like a checker defect.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_the_prove_command.py::test_no_two_runs_share_a_filename",
+          "why_this_kind": "",
+          "id": "CTR-022:d0",
+          "promise_id": "CTR-022",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::_Executor"
+        }
+      ],
+      "the_test_that_would_catch_it": "Two datasets in one run sharing a path."
+    },
+    {
+      "id": "CTR-023",
+      "text": "The witness is checked before any clause is graded; if it fails, clauses whose own checks rejected it are `over_constrained` or `inverted`, and every other clause is `unassessed` rather than assumed fine.",
+      "subject_scope": "src/heldtospec/contracts/prove/grader.py::_grade_a_failing_baseline",
+      "source": "docs/CONTRACT_PROVE.md:120-123; grader.py:206-273,481-499",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md"
+      ],
+      "confidence": "verified",
+      "why": "A verdict read against a failing baseline describes the baseline.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_an_over_constrained_check_is_named_and_grading_stops",
+          "why_this_kind": "",
+          "id": "CTR-023:d0",
+          "promise_id": "CTR-023",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::_grade_a_failing_baseline"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_a_check_that_fires_on_good_data_and_not_on_bad_is_inverted",
+          "why_this_kind": "",
+          "id": "CTR-023:d1",
+          "promise_id": "CTR-023",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::_grade_a_failing_baseline"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_a_merely_strict_check_stays_over_constrained",
+          "why_this_kind": "",
+          "id": "CTR-023:d2",
+          "promise_id": "CTR-023",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::_grade_a_failing_baseline"
+        }
+      ],
+      "the_test_that_would_catch_it": "A failing witness with some clause reported `sound`."
+    },
+    {
+      "id": "CTR-024",
+      "text": "Counterexamples sit on the boundary: an integer bound is exceeded by exactly one, a float bound by a relative epsilon of 1e-6, and a counterexample moves one cell unless the clause is table-scoped by nature.",
+      "subject_scope": "src/heldtospec/contracts/prove/operators.py",
+      "source": "docs/CONTRACT_PROVE.md:125-127; operators.py:1-22,38-44,85-88",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md"
+      ],
+      "confidence": "verified",
+      "why": "A mutation far from the boundary grades the check on the one input it was always going to get right.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_a_numeric_ceiling_is_broken_by_the_smallest_step_that_counts",
+          "why_this_kind": "",
+          "id": "CTR-024:d0",
+          "promise_id": "CTR-024",
+          "subject_scope": "src/heldtospec/contracts/prove/operators.py"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_the_boundary_is_where_the_ceiling_is_tested",
+          "why_this_kind": "",
+          "id": "CTR-024:d1",
+          "promise_id": "CTR-024",
+          "subject_scope": "src/heldtospec/contracts/prove/operators.py"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_a_counterexample_touches_one_column_unless_it_cannot",
+          "why_this_kind": "",
+          "id": "CTR-024:d2",
+          "promise_id": "CTR-024",
+          "subject_scope": "src/heldtospec/contracts/prove/operators.py"
+        }
+      ],
+      "the_test_that_would_catch_it": "`max: 100` counterexampled with 1000."
+    },
+    {
+      "id": "CTR-025",
+      "text": "`misattributed` is unreachable from a contract with correct per-column scoping; its decision rule is unit-tested and guards a regression the mapper once shipped.",
+      "subject_scope": "src/heldtospec/contracts/prove/grader.py::_grade_one_clause",
+      "source": "docs/CONTRACT_PROVE.md:131-137; DESIGN_CONTRACT_SOUNDNESS.md:185-190",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md",
+        "docs/DESIGN_CONTRACT_SOUNDNESS.md"
+      ],
+      "confidence": "verified",
+      "why": "The design overclaimed it as the verdict no competitor could add later; the build found it unreachable and said so.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_a_check_on_another_column_does_not_count_as_this_ones_defence",
+          "why_this_kind": "The rule, not a live condition.",
+          "id": "CTR-025:d0",
+          "promise_id": "CTR-025",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::_grade_one_clause"
+        }
+      ],
+      "gap": {
+        "reason": "Documented as unreachable with per-column scoping as it stands; kept as a regression guard.",
+        "source": "docs/CONTRACT_PROVE.md:131-137"
+      },
+      "the_test_that_would_catch_it": "A contract, not a hand-built run, producing `misattributed` -- which would mean scoping had regressed."
+    },
+    {
+      "id": "CTR-026",
+      "text": "Arbitrary `expr` checks and ODCS sql/text/custom rules grade `ungradeable`, never sound, and stay in the denominator.",
+      "subject_scope": "src/heldtospec/contracts/clauses.py::MECHANICAL_KINDS",
+      "source": "docs/CONTRACT_PROVE.md:138-142; clauses.py:68-85; operators.py:186-191",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md"
+      ],
+      "confidence": "verified",
+      "why": "A contract full of hand-written SQL must not look covered by virtue of the tool being unable to look at it.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_a_kind_with_no_operator_is_never_reported_sound",
+          "why_this_kind": "",
+          "id": "CTR-026:d0",
+          "promise_id": "CTR-026",
+          "subject_scope": "src/heldtospec/contracts/clauses.py::MECHANICAL_KINDS"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_a_kind_with_no_operator_says_a_fixture_is_the_only_route",
+          "why_this_kind": "",
+          "id": "CTR-026:d1",
+          "promise_id": "CTR-026",
+          "subject_scope": "src/heldtospec/contracts/clauses.py::MECHANICAL_KINDS"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_carrying_a_verdict_in_odcs.py::test_a_hand_written_sql_rule_stays_in_the_denominator",
+          "why_this_kind": "",
+          "id": "CTR-026:d2",
+          "promise_id": "CTR-026",
+          "subject_scope": "src/heldtospec/contracts/clauses.py::MECHANICAL_KINDS"
+        }
+      ],
+      "gap": {
+        "reason": "Generating a counterexample for an arbitrary predicate is undecidable in general; a user-supplied fixture pair is the intended escape hatch and is not built.",
+        "source": "docs/DESIGN_CONTRACT_SOUNDNESS.md:290-291"
+      },
+      "the_test_that_would_catch_it": "An `expr` clause reported `sound`."
+    },
+    {
+      "id": "CTR-027",
+      "text": "`answered_by: type` is a claim computed from ODCS `servers[].type`, not a verification against live DDL.",
+      "subject_scope": "src/heldtospec/contracts/prove/odcs.py::answered_by",
+      "source": "docs/CONTRACT_PROVE.md:143-145; DESIGN_CONTRACT_SOUNDNESS.md:288-289",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md"
+      ],
+      "confidence": "verified",
+      "why": "The same `required: true` is a column constraint against Postgres and a hope against S3.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_carrying_a_verdict_in_odcs.py::test_a_database_is_not_credited_with_checks_nobody_declared",
+          "why_this_kind": "",
+          "id": "CTR-027:d0",
+          "promise_id": "CTR-027",
+          "subject_scope": "src/heldtospec/contracts/prove/odcs.py::answered_by"
+        }
+      ],
+      "gap": {
+        "reason": "Documented as a known limit; verifying against live DDL is listed as open.",
+        "source": "docs/DESIGN_CONTRACT_SOUNDNESS.md:288-289"
+      },
+      "the_test_that_would_catch_it": "A Postgres server whose actual column is nullable, graded `type` for `not_null`."
+    },
+    {
+      "id": "CTR-028",
+      "text": "The declaration that a kind can be counterexampled (`MECHANICAL_KINDS`) and the implementation (`_OPERATORS`) agree, and are written independently so the claim is falsifiable.",
+      "subject_scope": "src/heldtospec/contracts/prove/operators.py::_OPERATORS",
+      "source": "clauses.py:68-85; operators.py:455-472",
+      "confidence": "verified",
+      "why": "A single list would make the claim unfalsifiable.",
+      "defenses": [
+        {
+          "guarded_by": "checker",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_every_mechanical_kind_yields_a_counterexample",
+          "why_this_kind": "Reconciles two independently written tables.",
+          "id": "CTR-028:d0",
+          "promise_id": "CTR-028",
+          "subject_scope": "src/heldtospec/contracts/prove/operators.py::_OPERATORS"
+        }
+      ],
+      "the_test_that_would_catch_it": "A kind in MECHANICAL_KINDS with no operator."
+    },
+    {
+      "id": "CTR-029",
+      "text": "Every type swap in `_TYPE_SWAPS` is lossless, and the swap table covers every dtype a witness can build.",
+      "subject_scope": "src/heldtospec/contracts/prove/operators.py::_TYPE_SWAPS",
+      "source": "operators.py:135-164; witness.py:38-54",
+      "confidence": "verified",
+      "why": "A lossy cast breaks the column's other promises and makes the verdict unreadable; a missing entry falls back to String silently.",
+      "defenses": [
+        {
+          "guarded_by": "checker",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_every_type_swap_is_lossless",
+          "why_this_kind": "",
+          "id": "CTR-029:d0",
+          "promise_id": "CTR-029",
+          "subject_scope": "src/heldtospec/contracts/prove/operators.py::_TYPE_SWAPS"
+        },
+        {
+          "guarded_by": "checker",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_the_swap_table_covers_the_types_a_witness_can_build",
+          "why_this_kind": "",
+          "id": "CTR-029:d1",
+          "promise_id": "CTR-029",
+          "subject_scope": "src/heldtospec/contracts/prove/operators.py::_TYPE_SWAPS"
+        }
+      ],
+      "the_test_that_would_catch_it": "A dtype added to `_DTYPES` and not to `_TYPE_SWAPS`."
+    },
+    {
+      "id": "CTR-030",
+      "text": "The clause register and the compiler are independent: a clause the compiler forgets is a finding, and a check claiming a clause the register lacks is reported as drift.",
+      "subject_scope": "src/heldtospec/contracts/mapper.py::compile_contract",
+      "source": "mapper.py:532-586; DESIGN_CONTRACT_SOUNDNESS.md:87-93",
+      "confidence": "verified",
+      "why": "The foreign key that compiled to nothing and left no trace is the exhibit.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_a_foreign_key_with_no_parent_is_a_finding_not_a_silence",
+          "why_this_kind": "",
+          "id": "CTR-030:d0",
+          "promise_id": "CTR-030",
+          "subject_scope": "src/heldtospec/contracts/mapper.py::compile_contract"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_a_check_claiming_an_unpromised_clause_is_reported",
+          "why_this_kind": "",
+          "id": "CTR-030:d1",
+          "promise_id": "CTR-030",
+          "subject_scope": "src/heldtospec/contracts/mapper.py::compile_contract"
+        }
+      ],
+      "the_test_that_would_catch_it": "A kind removed from the enumerator, with the compiler still emitting for it, and lint saying nothing."
+    },
+    {
+      "id": "CTR-031",
+      "text": "Attribution from check to clause is by a tag written at emission, never by matching column and metric names; two clauses compiling to the same metric on the same column stay distinguishable.",
+      "subject_scope": "src/heldtospec/contracts/mapper.py::CheckDefinition.clauses",
+      "source": "mapper.py:48-55; grader.py:3-11",
+      "confidence": "verified",
+      "why": "A `not_null` and a table-wide null share both compile to `column_null_percentage` on the same column.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_two_clauses_compiling_to_the_same_metric_stay_distinguishable",
+          "why_this_kind": "",
+          "id": "CTR-031:d0",
+          "promise_id": "CTR-031",
+          "subject_scope": "src/heldtospec/contracts/mapper.py::CheckDefinition.clauses"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_a_column_promise_is_scoped_to_the_column_it_names",
+          "why_this_kind": "",
+          "id": "CTR-031:d1",
+          "promise_id": "CTR-031",
+          "subject_scope": "src/heldtospec/contracts/mapper.py::CheckDefinition.clauses"
+        }
+      ],
+      "the_test_that_would_catch_it": "A vacuous `not_null` reported sound because the null-share check on the same column fired."
+    },
+    {
+      "id": "CTR-032",
+      "text": "A check that never ran -- because the pipeline stops scheduling after a raise -- is tracked as absent and reported `errored`, never read as did-not-fire.",
+      "subject_scope": "src/heldtospec/contracts/prove/grader.py::_Run.absent",
+      "source": "grader.py:128-137,329-337; DESIGN_CONTRACT_SOUNDNESS.md:199-203",
+      "confidence": "verified",
+      "why": "Reading that silence as 'did not fire' would report a working check vacuous.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_a_mutation_that_broke_more_than_it_meant_to_is_refused",
+          "why_this_kind": "The collateral path, which shares the mechanism.",
+          "id": "CTR-032:d0",
+          "promise_id": "CTR-032",
+          "subject_scope": "src/heldtospec/contracts/prove/grader.py::_Run.absent"
+        }
+      ],
+      "the_test_that_would_catch_it": "A run where the clause's own check is absent, reported `vacuous`.",
+      "next_step": "No test named for the `own & run.absent` branch specifically; confirm it is exercised or add one."
+    },
+    {
+      "id": "CTR-033",
+      "text": "`enumerate_clauses` returns a stable order; min and max are two clauses; the digest excludes `accepted` and is insensitive to list order.",
+      "subject_scope": "src/heldtospec/contracts/clauses.py",
+      "source": "clauses.py:41-50,105-166,240-246",
+      "confidence": "verified",
+      "why": "A register that cries wolf on reordering is one nobody reads; a digest that moves when a reason is documented reports every verdict stale.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_the_order_is_stable_across_runs",
+          "why_this_kind": "",
+          "id": "CTR-033:d0",
+          "promise_id": "CTR-033",
+          "subject_scope": "src/heldtospec/contracts/clauses.py"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_min_and_max_are_two_promises_not_one",
+          "why_this_kind": "",
+          "id": "CTR-033:d1",
+          "promise_id": "CTR-033",
+          "subject_scope": "src/heldtospec/contracts/clauses.py"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_changing_a_bound_changes_the_digest",
+          "why_this_kind": "",
+          "id": "CTR-033:d2",
+          "promise_id": "CTR-033",
+          "subject_scope": "src/heldtospec/contracts/clauses.py"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_documenting_a_promise_as_accepted_does_not_change_it",
+          "why_this_kind": "",
+          "id": "CTR-033:d3",
+          "promise_id": "CTR-033",
+          "subject_scope": "src/heldtospec/contracts/clauses.py"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_reordering_an_allowed_set_does_not_change_it",
+          "why_this_kind": "",
+          "id": "CTR-033:d4",
+          "promise_id": "CTR-033",
+          "subject_scope": "src/heldtospec/contracts/clauses.py"
+        },
+        {
+          "guarded_by": "type",
+          "artifact_locator": "src/heldtospec/contracts/clauses.py:122",
+          "why_this_kind": "`@dataclass(frozen=True)`: a clause's identity cannot be mutated after construction.",
+          "id": "CTR-033:d5",
+          "promise_id": "CTR-033",
+          "subject_scope": "src/heldtospec/contracts/clauses.py"
+        }
+      ],
+      "the_test_that_would_catch_it": "The same contract enumerated twice in different orders."
+    },
+    {
+      "id": "CTR-034",
+      "text": "The register carries no timestamp and no witness digest at the top level, so regenerating it on an unchanged contract produces no diff; the same seed builds the same witness.",
+      "subject_scope": "src/heldtospec/contracts/prove/register.py::build_register",
+      "source": "register.py:31-37; witness.py:171-181",
+      "confidence": "verified",
+      "why": "A baseline that diffs on every regeneration cannot be a baseline.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_the_register_does_not_change_when_nothing_did",
+          "why_this_kind": "",
+          "id": "CTR-034:d0",
+          "promise_id": "CTR-034",
+          "subject_scope": "src/heldtospec/contracts/prove/register.py::build_register"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_the_same_seed_builds_the_same_witness",
+          "why_this_kind": "",
+          "id": "CTR-034:d1",
+          "promise_id": "CTR-034",
+          "subject_scope": "src/heldtospec/contracts/prove/register.py::build_register"
+        }
+      ],
+      "the_test_that_would_catch_it": "Two consecutive writes differing by a timestamp."
+    },
+    {
+      "id": "CTR-035",
+      "text": "A written register reads back identical and the file ends with a newline.",
+      "subject_scope": "src/heldtospec/contracts/prove/register.py::write_register",
+      "source": "register.py:68-70",
+      "confidence": "verified",
+      "why": "A format that loses a digest on the way to disk turns every stale verdict into a silent pass.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_a_written_register_reads_back_identical",
+          "why_this_kind": "",
+          "id": "CTR-035:d0",
+          "promise_id": "CTR-035",
+          "subject_scope": "src/heldtospec/contracts/prove/register.py::write_register"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_what_a_check_is_worth.py::test_the_file_ends_with_a_newline",
+          "why_this_kind": "",
+          "id": "CTR-035:d1",
+          "promise_id": "CTR-035",
+          "subject_scope": "src/heldtospec/contracts/prove/register.py::write_register"
+        }
+      ],
+      "the_test_that_would_catch_it": "A round trip that drops `clause_digest`."
+    },
+    {
+      "id": "CTR-036",
+      "text": "Every `Ungradeable` refusal carries a reason.",
+      "subject_scope": "src/heldtospec/contracts/prove/operators.py::Ungradeable",
+      "source": "operators.py:76-82",
+      "confidence": "verified",
+      "why": "A clause reported ungradeable without a reason is indistinguishable from one nobody got round to.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_which_promises_reach_the_runner.py::test_every_refusal_carries_a_reason",
+          "why_this_kind": "",
+          "id": "CTR-036:d0",
+          "promise_id": "CTR-036",
+          "subject_scope": "src/heldtospec/contracts/prove/operators.py::Ungradeable"
+        }
+      ],
+      "the_test_that_would_catch_it": "`raise Ungradeable()` with no message."
+    },
+    {
+      "id": "CTR-037",
+      "text": "The parser reports an empty file, a comments-only file and a list-valued top level as named `ConfigError`s, and flattens pydantic errors to `location: message`.",
+      "subject_scope": "src/heldtospec/contracts/parser.py::load_contract",
+      "source": "parser.py:30-61",
+      "confidence": "verified",
+      "why": "Each surfaced as a Python internal that named neither the file nor what was wrong.",
+      "defenses": [],
+      "the_test_that_would_catch_it": "An empty contract file raising `TypeError` from `**data`.",
+      "next_step": "No test of the parser's error shapes found in the contracts or CLI suites; the defect is narrated in the source comment only. The `fix(contract): readable load errors` commit of 2026-09-01 may carry a test elsewhere."
+    },
+    {
+      "id": "CTR-038",
+      "text": "The dbt adapter reads `manifest.json` rather than re-parsing YAML, invokes the real `dbt test`, carries a test's own config through, reports every execution verdict `unassessed` when dbt is absent, and reports no basis rather than 0.0 when a project documents no columns.",
+      "subject_scope": "src/heldtospec/contracts/prove/dbt.py",
+      "source": "docs/CONTRACT_PROVE.md:100-111; dbt.py:1-27; DESIGN revisions 6 and 8",
+      "published_in": [
+        "docs/CONTRACT_PROVE.md"
+      ],
+      "confidence": "verified",
+      "why": "A grader that downgrades to guessing when its instrument is missing produces exactly the false confidence it exists to remove.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_grading_a_dbt_project.py",
+          "why_this_kind": "Eighteen tests; the execution half is `skipif` when dbt is absent, so a skip is reported as a skip rather than folded into a pass.",
+          "id": "CTR-038:d0",
+          "promise_id": "CTR-038",
+          "subject_scope": "src/heldtospec/contracts/prove/dbt.py"
+        }
+      ],
+      "the_test_that_would_catch_it": "A `severity: warn` test graded `sound`.",
+      "next_step": "dbt is on PATH in this environment, so the execution half can run here; whether it has been run anywhere else is unknown."
+    },
+    {
+      "id": "CTR-039",
+      "text": "Verdicts ride in ODCS `customProperties`; re-annotating converges rather than accreting; the input contract is not mutated; existing custom properties survive.",
+      "subject_scope": "src/heldtospec/contracts/prove/odcs.py::annotate",
+      "source": "odcs.py:189-279",
+      "confidence": "verified",
+      "why": "A rival format would make the tool one more thing to be locked into.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_carrying_a_verdict_in_odcs.py::test_existing_custom_properties_survive",
+          "why_this_kind": "",
+          "id": "CTR-039:d0",
+          "promise_id": "CTR-039",
+          "subject_scope": "src/heldtospec/contracts/prove/odcs.py::annotate"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_carrying_a_verdict_in_odcs.py::test_re_annotating_converges_rather_than_accreting",
+          "why_this_kind": "",
+          "id": "CTR-039:d1",
+          "promise_id": "CTR-039",
+          "subject_scope": "src/heldtospec/contracts/prove/odcs.py::annotate"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_carrying_a_verdict_in_odcs.py::test_the_input_contract_is_not_mutated",
+          "why_this_kind": "",
+          "id": "CTR-039:d2",
+          "promise_id": "CTR-039",
+          "subject_scope": "src/heldtospec/contracts/prove/odcs.py::annotate"
+        }
+      ],
+      "the_test_that_would_catch_it": "Annotating twice producing two soundness entries."
+    },
+    {
+      "id": "CTR-040",
+      "text": "`--reference ALIAS=PATH` is parsed strictly: a malformed pair is refused, not skipped; surrounding space is trimmed; a path containing `=` survives.",
+      "subject_scope": "src/heldtospec/cli/contract.py::_parse_references",
+      "source": "cli/contract.py:424-440",
+      "confidence": "verified",
+      "why": "A dropped pair leaves the foreign key uncompiled and reported as undefended, which sends the user to edit the wrong file.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_the_prove_command.py::test_a_malformed_pair_is_refused_rather_than_skipped",
+          "why_this_kind": "",
+          "id": "CTR-040:d0",
+          "promise_id": "CTR-040",
+          "subject_scope": "src/heldtospec/cli/contract.py::_parse_references"
+        },
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_the_prove_command.py::test_a_path_containing_an_equals_sign_survives",
+          "why_this_kind": "",
+          "id": "CTR-040:d1",
+          "promise_id": "CTR-040",
+          "subject_scope": "src/heldtospec/cli/contract.py::_parse_references"
+        }
+      ],
+      "the_test_that_would_catch_it": "`--reference customers` silently ignored."
+    },
+    {
+      "id": "CTR-041",
+      "text": "A missing contract file is `CONFIG_ERROR` (1) for lint, verify, docs and prove, never `UNEXPECTED_ERROR` (5).",
+      "subject_scope": "src/heldtospec/cli/contract.py",
+      "source": "cli/contract.py:120-135,238-253,393-403,471-477",
+      "confidence": "verified",
+      "why": "Exit 5 is documented as 'may be a bug, please report it'; a missing file is the user's problem.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/contracts/test_the_prove_command.py::test_a_missing_contract_is_a_config_error",
+          "why_this_kind": "The prove case.",
+          "id": "CTR-041:d0",
+          "promise_id": "CTR-041",
+          "subject_scope": "src/heldtospec/cli/contract.py"
+        }
+      ],
+      "the_test_that_would_catch_it": "`contract verify missing.yaml data.csv` exiting 5.",
+      "next_step": "Only the prove case is asserted by name. The verify handler's own comment says its missing-file path once escaped as a traceback while a test asserting all three agree passed for the wrong reason; confirm lint, verify and docs are each asserted."
+    },
+    {
+      "id": "CTR-042",
+      "text": "`handle_contract_command` returns its callee's exit code for every subcommand and never collapses codes.",
+      "subject_scope": "src/heldtospec/cli/contract.py::handle_contract_command",
+      "source": "cli/contract.py:677-722",
+      "confidence": "verified",
+      "why": "Every branch once ended `SUCCESS if result == 0 else CONFIG_ERROR`.",
+      "defenses": [
+        {
+          "guarded_by": "test",
+          "artifact_locator": "tests/cli/test_contract_exit_codes.py",
+          "why_this_kind": "Eight tests.",
+          "id": "CTR-042:d0",
+          "promise_id": "CTR-042",
+          "subject_scope": "src/heldtospec/cli/contract.py::handle_contract_command"
+        }
+      ],
+      "the_test_that_would_catch_it": "A callee returning 3 and the dispatcher returning 1."
+    },
+    {
+      "id": "CTR-043",
+      "text": "The design note's operator table names every `ClauseKind`, with a static exemption for the five kinds described as tiers or as one row about bounds.",
+      "subject_scope": "docs/DESIGN_CONTRACT_SOUNDNESS.md:122-133",
+      "source": "tests/contracts/test_a_verdict_means_the_same_in_every_rendering.py::TestTheClauseKindsAgreeToo",
+      "published_in": [
+        "docs/DESIGN_CONTRACT_SOUNDNESS.md"
+      ],
+      "confidence": "verified",
+      "why": "A kind added to `ClauseKind` and not to the table is a promise the tool grades and the docs never mention.",
+      "defenses": [
+        {
+          "guarded_by": "checker",
+          "artifact_locator": "tests/contracts/test_a_verdict_means_the_same_in_every_rendering.py::test_the_design_note_describes_every_kind_the_code_enumerates",
+          "why_this_kind": "A doc-versus-code sweep with an exempt set; a kind added to `exempt` escapes it silently.",
+          "id": "CTR-043:d0",
+          "promise_id": "CTR-043",
+          "subject_scope": "docs/DESIGN_CONTRACT_SOUNDNESS.md:122-133"
+        }
+      ],
+      "the_test_that_would_catch_it": "A new kind added to `exempt` rather than to the table."
+    },
+    {
+      "id": "CTR-044",
+      "text": "The example contract published in docs/CONTRACTS.md is a valid contract that `prove` can grade.",
+      "subject_scope": "docs/CONTRACTS.md:22-56",
+      "source": "docs/CONTRACTS.md:20-56 (published as the canonical example)",
+      "published_in": [
+        "docs/CONTRACTS.md"
+      ],
+      "confidence": "verified",
+      "why": "It is the example every reader copies. Probed on 2026-09-06 at c8c9362 by extracting it verbatim and running `contract prove`: exit 4, 12 promises, 0 defended, 11 unassessed, 1 errored. Its `sla.freshness.timestamp_column: created_at` names a column the schema does not declare, so `freshness_check` errors on conforming data and the baseline fails. This is the design note's own 'freshness SLA pointed at a column that is never populated', in the tool's own documentation.",
+      "defenses": [],
+      "the_test_that_would_catch_it": "Extract the example from the doc and prove it, asserting exit 0 and no `errored` verdict.",
+      "next_step": "Add `created_at` to the example's schema, or drop the freshness block; then pin the example with the test above."
+    }
+  ]
+}
