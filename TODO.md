@@ -1,8 +1,8 @@
-# D01–D08, S01, and S11 are complete; S02 needs further checks
+# D01–D08, S01, S11, and S12 are complete; S02 needs further checks
 
 Readers are engineers choosing the next Upheld task. This list tracks the supplied discussion against the repository, updated 7 September 2026.
 
-Ten tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXES.md), plus S01 and S11 research. S02 has a working prototype but remains open after its red-team review. D04, D06, and D08 were reopened and repaired; the original completion claim overstated their checks. The other 58 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
+Eleven tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXES.md), plus S01 and S11 research and the S12 guide package. S02 has a working prototype but remains open after its red-team review. D04, D06, and D08 were reopened and repaired; the original completion claim overstated their checks. The other 57 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
 
 [The completion record](docs/COMPLETED_D01_D08.md) links the changes and checks. [The original derived list](docs/history/2026-09-06/DERIVED_TODO.md) preserves the full reasoning, dependencies, and sources for the original 64 items. S11 adds research requested on 6 September 2026. S12–S14 carry its follow-ups. The total is 68 tasks.
 
@@ -20,6 +20,7 @@ Ten tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXES
 | D08 | Complete | Recorded README drift, added a status defense, and exercised seeded failures. | [Artifact](examples/upheld-status/README.md) |
 | S01 | Complete | Defined useful, new, confirmed, and decision-required outcomes; specified attention and omission measures; compared cross-domain methods and user-configured backends. E01 trial registration remains open. | [Objective](docs/SURVEY_TOOL.md), [research](docs/SURVEY_RESEARCH.md), [backend proposal](docs/SURVEY_BACKENDS.md) |
 | S11 | Complete | Compared primary research and official interfaces; chose an opt-in guide prototype; specified trials and follow-ups. No measured benefit or shipped skill is claimed. | [Research](docs/AGENT_METHOD_RESEARCH.md), [test proposal](docs/AGENT_METHOD_EVALUATION.md), [Repo C case](docs/CONNECTLANG_METHOD_CASE.md) |
+| S12 | Complete | Built the opt-in guide, exact method reference, worked case, and client packager after research and design review. Live client behavior and benefit remain unverified under S14. | [Use guide](docs/UPHELD_SKILL.md), [implementation and checks](docs/S12_IMPLEMENTATION.md), [design](docs/S12_DESIGN.md), [red team](docs/S12_RED_TEAM.md) |
 
 
 ## Build the survey and small checker together
@@ -31,7 +32,6 @@ Priority P0 means a trust blocker. P1 means the next learning milestone. P2 mean
 | ID | Priority | Task | Completion condition |
 |---|---|---|---|
 | S02 | P1 | Finish live adapter checks and independently assess the implemented source-review prototype | Demonstrate the configured real CLI and effective permissions; independently review source passages for missed or distorted claims. The source/import path and replay work, but those results do not complete the agreed assessment. See [red-team findings](docs/S02_RED_TEAM.md). |
-| S12 | P1 | Build the opt-in Upheld guide and versioned references | Preserve all method IDs and strengths, source limits, independent evidence, and project scope. Cover discovery without a register, change review, defense challenge, probe reading, and record proposals. Include the reviewed Repo C example. A source-text instruction cannot authorize a run or binding. No benefit claim before E01 trials. |
 | S13 | P1 | Prepare independently reviewed agent-method cases | Pin real sources across software, scientific evidence, and reproducible analysis; separate expected answers from agent inputs. Two reviewers record judgments and disagreements. Exclude Repo C, heldtospec, and related answers from held-out cases. Meet the [test proposal](docs/AGENT_METHOD_EVALUATION.md) before registering E01. |
 | S14 | P1 | Exercise configured clients and compare added support | After S12–S13, record real skill loading, effective permissions, missing-tool behavior, cancellation, and cost for each claimed client. Run the E01-registered comparisons and publish failures, useful findings, misses, and human work. Test automatic triggering separately. Add a server only for a demonstrated need unmet by local commands. Feed the decision into E07. |
 | S03 | P1 | Add test/code sources and audit source-selection bias | the survey records what each source adds and checks the documented undercount of shape/type-related promises. |

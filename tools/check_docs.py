@@ -9,6 +9,7 @@ import sys
 import fastjsonschema
 from check_readme_status import check
 from prepare_probe_review import convert, diagnostics
+from package_upheld_skill import check_bundle
 from documentation_integrity import require, check_todo, check_fixtures, check_rules
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +19,7 @@ CURRENT += [ROOT / 'docs/history/README.md', ROOT / 'examples/README.md']
 CURRENT += sorted((ROOT / 'examples').glob('*/*.md'))
 CURRENT += [ROOT / 'measurements/RESULTS.md']
 CURRENT += sorted((ROOT / 'reference').glob('*.md'))
+CURRENT += sorted((ROOT / 'skills/upheld').rglob('*.md'))
 CURRENT += sorted((ROOT / 'messages').glob('*.md'))
 CURRENT += sorted((ROOT / 'reviews').glob('*.md'))  # verbatim bodies are fenced from the gate
 
@@ -26,6 +28,7 @@ def json_file(path): return json.loads((ROOT / path).read_text())
 
 
 def check_artifacts():
+    check_bundle(ROOT)
     compiled = {p.stem.replace('.schema',''): fastjsonschema.compile(json.loads(p.read_text()))
                 for p in (ROOT / 'schemas/0.1').glob('*.json')}
     cases = [('probe-register','examples/heldtospec-contracts/obligations.register.json'),
