@@ -1,0 +1,6 @@
+interface:
+  display_name: "Upheld"
+  short_description: "Review promises, defenses, and their evidence"
+  default_prompt: "Use $upheld to review the requested scope and identify supported findings and useful next checks."
+policy:
+  allow_implicit_invocation: false

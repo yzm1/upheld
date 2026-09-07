@@ -37,6 +37,7 @@ The [milestone](docs/MILESTONE.md) pairs a survey and cheap-probe workflow with 
 ## Start with the method or the next task
 
 - [Current method](docs/METHOD.md) explains how to assess a defense.
+- [Agent guide](docs/UPHELD_SKILL.md) explains the opt-in skill prototype and its untested live-client behavior.
 - [Todo list](TODO.md) records remaining work and completed decisions.
 - [Design choices](docs/DECISIONS.md) explain the product boundary and the source of each rule.
 - [Measured results](measurements/RESULTS.md) separate observed results from pending trials.

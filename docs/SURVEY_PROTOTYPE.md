@@ -67,4 +67,4 @@ This adapter is experimental. Tests exercise its process interface with a fake e
 
 Successful commands exit zero. Invalid input, unavailable setup, and rejected replies exit two. These statuses concern the prototype workflow; they carry no evidence grade.
 
-S03 adds code-aware sources; S04 adds richer skeptical triage; S05 adds bounded probes. S08 owns accepted-decision preservation, and S09 owns first-use packaging and live adapter checks. S11 still researches how agents should apply the Upheld method more broadly.
+S03 adds code-aware sources; S04 adds richer skeptical triage; S05 adds bounded probes. S08 owns accepted-decision preservation, and S09 owns first-use packaging and live adapter checks. [S11 research](AGENT_METHOD_RESEARCH.md) is complete. [S12 supplies the guide package](UPHELD_SKILL.md); S13 and S14 own reviewed cases and live client trials.
