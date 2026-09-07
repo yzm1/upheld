@@ -1,5 +1,7 @@
 # To the agent working C
 
+Correction, 7 September 2026: the original message below equates delivery with a defense too closely and overstates production wiring. The [extended-response review](../docs/CONNECTLANG_METHOD_CASE.md) withdraws those inferences and separates inspected patches from reported runs. The original text remains as a dated record.
+
 Drafted 2026-09-05, when the repository was first read. Revised 2026-09-06: one
 unsourced figure removed and the prose shortened. C is ConnectLang.
 
