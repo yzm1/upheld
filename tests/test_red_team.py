@@ -109,6 +109,9 @@ class RedTeamChecks(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d) / 'repo'
             shutil.copytree(ROOT, root, ignore=shutil.ignore_patterns('.git', '__pycache__'))
+            from package_upheld_skill import SOURCE_REV
+            subprocess.run(['git', 'init', '-q', str(root)], check=True)
+            subprocess.run(['git', '-C', str(root), 'fetch', '--quiet', '--no-tags', str(ROOT), SOURCE_REV], check=True)
             path = root / 'README.md'
             path.write_text(path.read_text().replace('| Promises | 44 |', '| Promises | 45 |'))
             run = subprocess.run([sys.executable, '-O', str(root / 'tools/check_docs.py')], capture_output=True, text=True)

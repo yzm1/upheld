@@ -6,6 +6,8 @@ Readers are engineers reviewing the S12 result. Date: 7 September 2026. The [res
 
 No supported client executable was available here. Packaging checks and the author walkthrough below do not establish agent compliance, live loading, or better judgments. S13, E01, and S14 remain open for those observations.
 
+The later [self-audit](SELF_AUDIT.md) found that these checks missed a wrong source commit and an empty package. Version 0.1.1 repairs those defects and separates failure to inspect. The dated results below describe 0.1.0.
+
 ## File checks expose drift without claiming behavior
 
 | Observed check on 7 September 2026 | Result and limit |

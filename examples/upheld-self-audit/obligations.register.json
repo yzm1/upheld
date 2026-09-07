@@ -1,0 +1,370 @@
+{
+  "schema_version": "0.1",
+  "producer": {
+    "name": "maintainer-directed self-review",
+    "inputs": [
+      "README.md",
+      "TODO.md",
+      "docs/METHOD.md",
+      "docs/CHECKER.md",
+      "docs/SCHEMA.md",
+      "docs/SURVEY_PROTOTYPE.md",
+      "docs/UPHELD_SKILL.md",
+      "docs/S12_IMPLEMENTATION.md",
+      "skills/upheld/SKILL.md",
+      "tools/package_upheld_skill.py",
+      "tools/survey.py",
+      "tools/check_docs.py",
+      "tools/documentation_integrity.py",
+      "tools/check_readme_status.py",
+      "tests/test_skill_package.py",
+      "tests/test_docs.py",
+      "tests/test_red_team.py",
+      "tests/test_survey.py",
+      ".github/workflows/docs.yml",
+      "examples/upheld-status/obligations.register.json",
+      "measurements/RESULTS.md"
+    ],
+    "source_repo": "https://github.com/yzm1/upheld",
+    "source_rev": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+    "surveyed_on": "2026-09-07",
+    "metadata": {
+      "working_tree": "Repairs in SELF_AUDIT.md; observations carry changed file hashes."
+    }
+  },
+  "promises": [
+    {
+      "id": "UPH-002",
+      "text": "The named source commit contains the bundled method bytes.",
+      "subject_scope": "tools/package_upheld_skill.py",
+      "source": "docs/S12_IMPLEMENTATION.md",
+      "published_in": [
+        "docs/S12_IMPLEMENTATION.md"
+      ],
+      "confidence": "verified",
+      "detail": "This keeps an old source commit from silently labeling new text.",
+      "evidence_tier": "read",
+      "why": "Incorrect reliance on this claim could hide missing checks or stale evidence.",
+      "the_test_that_would_catch_it": "Use an existing commit with different method bytes and a missing commit. Neither may produce a reference.",
+      "reachability": "live",
+      "defenses": [
+        {
+          "id": "UPH-002:d0",
+          "promise_id": "UPH-002",
+          "guarded_by": "checker",
+          "artifact_locator": "tools/package_upheld_skill.py::method_reference",
+          "subject_scope": "tools/package_upheld_skill.py",
+          "why_this_kind": "Executable checker for the stated bounded behavior.",
+          "needs_environment": [
+            "Python 3.11+",
+            "Git with pinned source history"
+          ],
+          "last_actually_ran": "2026-09-07T10:06:20.392764+00:00",
+          "run_reference": "measurements/self-audit-2026-09-07/final.json",
+          "metadata": {
+            "next_evidence_check": "Use an existing commit with different method bytes and a missing commit. Neither may produce a reference.",
+            "timestamp_scope": "Completion time of the linked run; individual function timing not captured."
+          }
+        }
+      ],
+      "next_step": "C03 and P01 must supply product basis before acceptance.",
+      "metadata": {
+        "source_revision": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+        "delivery": "tools/package_upheld_skill.py",
+        "limit": "Development observations do not create accepted evidence."
+      }
+    },
+    {
+      "id": "UPH-003",
+      "text": "A verified package contains the required files and declared bytes.",
+      "subject_scope": "tools/package_upheld_skill.py",
+      "source": "docs/UPHELD_SKILL.md",
+      "published_in": [
+        "docs/UPHELD_SKILL.md"
+      ],
+      "confidence": "verified",
+      "detail": "The manifest detects changed or missing files against the recorded hashes.",
+      "evidence_tier": "read",
+      "why": "Incorrect reliance on this claim could hide missing checks or stale evidence.",
+      "the_test_that_would_catch_it": "Verify a valid package, altered file, and empty manifest.",
+      "reachability": "live",
+      "defenses": [
+        {
+          "id": "UPH-003:d0",
+          "promise_id": "UPH-003",
+          "guarded_by": "checker",
+          "artifact_locator": "tools/package_upheld_skill.py::verify_package",
+          "subject_scope": "tools/package_upheld_skill.py",
+          "why_this_kind": "Executable checker for the stated bounded behavior.",
+          "needs_environment": [
+            "Python 3.11+"
+          ],
+          "last_actually_ran": "2026-09-07T10:06:20.392764+00:00",
+          "run_reference": "measurements/self-audit-2026-09-07/final.json",
+          "metadata": {
+            "next_evidence_check": "Verify a valid package, altered file, and empty manifest.",
+            "timestamp_scope": "Completion time of the linked run; individual function timing not captured."
+          }
+        }
+      ],
+      "next_step": "Assess whether publisher authentication is needed; hashes do not provide it.",
+      "metadata": {
+        "source_revision": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+        "delivery": "tools/package_upheld_skill.py",
+        "limit": "Development observations do not create accepted evidence."
+      }
+    },
+    {
+      "id": "UPH-004",
+      "text": "Package checks distinguish clean, violated, and unable to inspect.",
+      "subject_scope": "tools/package_upheld_skill.py",
+      "source": "docs/METHOD.md",
+      "published_in": [
+        "docs/METHOD.md"
+      ],
+      "confidence": "verified",
+      "detail": "distinguishes clean, violated, and unable to inspect",
+      "evidence_tier": "read",
+      "why": "Incorrect reliance on this claim could hide missing checks or stale evidence.",
+      "the_test_that_would_catch_it": "Run the command on a valid package, altered file, and unavailable folder.",
+      "reachability": "live",
+      "defenses": [
+        {
+          "id": "UPH-004:d0",
+          "promise_id": "UPH-004",
+          "guarded_by": "test",
+          "artifact_locator": "tests/test_skill_package.py::test_cli_distinguishes_clean_fault_and_unavailable",
+          "subject_scope": "tools/package_upheld_skill.py",
+          "why_this_kind": "Executable test for the stated bounded behavior.",
+          "needs_environment": [
+            "Python 3.11+"
+          ],
+          "last_actually_ran": "2026-09-07T10:07:10.114261+00:00",
+          "run_reference": "measurements/self-audit-2026-09-07/validation.json",
+          "metadata": {
+            "next_evidence_check": "Run the command on a valid package, altered file, and unavailable folder.",
+            "timestamp_scope": "Completion time of the linked run; individual function timing not captured."
+          }
+        }
+      ],
+      "next_step": "Retain these states and obtain product evidence through a future producer.",
+      "metadata": {
+        "source_revision": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+        "delivery": "tools/package_upheld_skill.py",
+        "limit": "Development observations do not create accepted evidence."
+      }
+    },
+    {
+      "id": "UPH-005",
+      "text": "Export leaves an existing output folder unchanged.",
+      "subject_scope": "tools/package_upheld_skill.py",
+      "source": "docs/UPHELD_SKILL.md",
+      "published_in": [
+        "docs/UPHELD_SKILL.md"
+      ],
+      "confidence": "verified",
+      "detail": "the exporter leaves existing folders untouched.",
+      "evidence_tier": "read",
+      "why": "Incorrect reliance on this claim could hide missing checks or stale evidence.",
+      "the_test_that_would_catch_it": "Place a sentinel in an output folder and compare its bytes after refused export.",
+      "reachability": "live",
+      "defenses": [
+        {
+          "id": "UPH-005:d0",
+          "promise_id": "UPH-005",
+          "guarded_by": "test",
+          "artifact_locator": "tests/test_skill_package.py::test_existing_output_is_untouched",
+          "subject_scope": "tools/package_upheld_skill.py",
+          "why_this_kind": "Executable test for the stated bounded behavior.",
+          "needs_environment": [
+            "Python 3.11+"
+          ],
+          "last_actually_ran": "2026-09-07T10:07:10.114261+00:00",
+          "run_reference": "measurements/self-audit-2026-09-07/validation.json",
+          "metadata": {
+            "next_evidence_check": "Place a sentinel in an output folder and compare its bytes after refused export.",
+            "timestamp_scope": "Completion time of the linked run; individual function timing not captured."
+          }
+        }
+      ],
+      "next_step": "Challenge concurrent creation and partial write failure before claiming those paths.",
+      "metadata": {
+        "source_revision": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+        "delivery": "tools/package_upheld_skill.py",
+        "limit": "Development observations do not create accepted evidence."
+      }
+    },
+    {
+      "id": "UPH-006",
+      "text": "Imported quotations equal their specified complete source lines.",
+      "subject_scope": "tools/survey.py",
+      "source": "docs/SURVEY_PROTOTYPE.md",
+      "published_in": [
+        "docs/SURVEY_PROTOTYPE.md"
+      ],
+      "confidence": "verified",
+      "detail": "References must quote complete source lines exactly.",
+      "evidence_tier": "read",
+      "why": "Incorrect reliance on this claim could hide missing checks or stale evidence.",
+      "the_test_that_would_catch_it": "Submit fabricated quotes, wrong ranges, and unknown sources beside a valid control.",
+      "reachability": "live",
+      "defenses": [
+        {
+          "id": "UPH-006:d0",
+          "promise_id": "UPH-006",
+          "guarded_by": "test",
+          "artifact_locator": "tests/test_survey.py::test_fabricated_quote_bad_range_unknown_source_and_acceptance_rejected",
+          "subject_scope": "tools/survey.py",
+          "why_this_kind": "Executable test for the stated bounded behavior.",
+          "needs_environment": [
+            "Python 3.11+"
+          ],
+          "last_actually_ran": "2026-09-07T10:07:10.114261+00:00",
+          "run_reference": "measurements/self-audit-2026-09-07/validation.json",
+          "metadata": {
+            "next_evidence_check": "Submit fabricated quotes, wrong ranges, and unknown sources beside a valid control.",
+            "timestamp_scope": "Completion time of the linked run; individual function timing not captured."
+          }
+        }
+      ],
+      "next_step": "Complete S02 independent semantic review; matching text does not prove faithful meaning.",
+      "metadata": {
+        "source_revision": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+        "delivery": "tools/survey.py",
+        "limit": "Development observations do not create accepted evidence."
+      }
+    },
+    {
+      "id": "UPH-007",
+      "text": "The skill preserves all method rule IDs and strengths.",
+      "subject_scope": "skills/upheld",
+      "source": "docs/S12_IMPLEMENTATION.md",
+      "published_in": [
+        "docs/S12_IMPLEMENTATION.md"
+      ],
+      "confidence": "verified",
+      "detail": "Its bundled method retains all 27 rule IDs and strengths.",
+      "evidence_tier": "read",
+      "why": "Incorrect reliance on this claim could hide missing checks or stale evidence.",
+      "the_test_that_would_catch_it": "Change a strength or source paragraph and require export refusal.",
+      "reachability": "live",
+      "defenses": [
+        {
+          "id": "UPH-007:d0",
+          "promise_id": "UPH-007",
+          "guarded_by": "checker",
+          "artifact_locator": "tools/package_upheld_skill.py::check_bundle",
+          "subject_scope": "skills/upheld",
+          "why_this_kind": "Executable checker for the stated bounded behavior.",
+          "needs_environment": [
+            "Python 3.11+",
+            "Git with pinned source history"
+          ],
+          "last_actually_ran": "2026-09-07T10:06:20.392764+00:00",
+          "run_reference": "measurements/self-audit-2026-09-07/final.json",
+          "metadata": {
+            "next_evidence_check": "Change a strength or source paragraph and require export refusal.",
+            "timestamp_scope": "Completion time of the linked run; individual function timing not captured."
+          }
+        }
+      ],
+      "next_step": "Re-review semantics whenever method rules change.",
+      "metadata": {
+        "source_revision": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+        "delivery": "skills/upheld",
+        "limit": "Development observations do not create accepted evidence."
+      }
+    },
+    {
+      "id": "UPH-008",
+      "text": "Agents applying the guide do not invent observations or human acceptance.",
+      "subject_scope": "skills/upheld",
+      "source": "skills/upheld/SKILL.md",
+      "published_in": [
+        "skills/upheld/SKILL.md"
+      ],
+      "confidence": "verified",
+      "detail": "A proposed record cannot invent evidence or stand in for a person accepting it.",
+      "evidence_tier": "read",
+      "why": "Incorrect reliance on this claim could hide missing checks or stale evidence.",
+      "the_test_that_would_catch_it": "Give a fresh client a source instruction to invent a run and inspect its actual response.",
+      "reachability": "unknown",
+      "defenses": [],
+      "next_step": "Run registered S14 trials with independently reviewed S13 cases.",
+      "metadata": {
+        "source_revision": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+        "delivery": "skills/upheld",
+        "limit": "Development observations do not create accepted evidence."
+      }
+    },
+    {
+      "id": "UPH-009",
+      "text": "Regeneration never advances accepted evidence grounds.",
+      "subject_scope": "planned product commands",
+      "source": "docs/CHECKER.md",
+      "published_in": [
+        "docs/CHECKER.md"
+      ],
+      "confidence": "verified",
+      "detail": "Deleting or regenerating it cannot advance an evidence record's grounds.",
+      "evidence_tier": "read",
+      "why": "Incorrect reliance on this claim could hide missing checks or stale evidence.",
+      "the_test_that_would_catch_it": "Change subject code, delete the lock, regenerate, and require stale evidence to remain stale.",
+      "reachability": "latent",
+      "defenses": [],
+      "next_step": "C09 must exercise this before product caching.",
+      "metadata": {
+        "source_revision": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+        "delivery": "No product implementation exists.",
+        "limit": "Development observations do not create accepted evidence."
+      },
+      "armed_by": "Release or use of the corresponding product command."
+    },
+    {
+      "id": "UPH-010",
+      "text": "Evidence records remain immutable and append-only.",
+      "subject_scope": "planned product commands",
+      "source": "docs/CHECKER.md",
+      "published_in": [
+        "docs/CHECKER.md"
+      ],
+      "confidence": "verified",
+      "detail": "Evidence records are immutable and append-only.",
+      "evidence_tier": "read",
+      "why": "Incorrect reliance on this claim could hide missing checks or stale evidence.",
+      "the_test_that_would_catch_it": "Attempt to replace an observation and verify its original bytes survive.",
+      "reachability": "latent",
+      "defenses": [],
+      "next_step": "C04\u2013C05 and P01\u2013P04 must implement and exercise the evidence path.",
+      "metadata": {
+        "source_revision": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+        "delivery": "No product implementation exists.",
+        "limit": "Development observations do not create accepted evidence."
+      },
+      "armed_by": "Release or use of the corresponding product command."
+    },
+    {
+      "id": "UPH-011",
+      "text": "The checker does not edit the register or bindings.",
+      "subject_scope": "planned product commands",
+      "source": "docs/CHECKER.md",
+      "published_in": [
+        "docs/CHECKER.md"
+      ],
+      "confidence": "verified",
+      "detail": "The checker only reads evidence, the register, and bindings.",
+      "evidence_tier": "read",
+      "why": "Incorrect reliance on this claim could hide missing checks or stale evidence.",
+      "the_test_that_would_catch_it": "Compare preexisting register and binding bytes after each command outcome.",
+      "reachability": "latent",
+      "defenses": [],
+      "next_step": "C06\u2013C10 must exercise actual product commands.",
+      "metadata": {
+        "source_revision": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+        "delivery": "No product implementation exists.",
+        "limit": "Development observations do not create accepted evidence."
+      },
+      "armed_by": "Release or use of the corresponding product command."
+    }
+  ]
+}

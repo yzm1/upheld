@@ -29,7 +29,7 @@ Use source-grounded cases with permission to retain the needed materials. Scient
 
 Balance known faults, adequate defenses, missing evidence, conflicting sources, and intended-behavior decisions. Cover discovery, change review, defense challenge, probe interpretation, and record proposals. Include work without a register. Keep sources and expected answers in separate stores so agents cannot read the scoring material.
 
-Repo C and the heldtospec examples already shaped Upheld. Use them for development only. Exclude the same fault, adjacent revisions, and paraphrased answers from the held-out set. Existing public benchmarks may be familiar to models; disclose this limit and include newly reviewed source combinations. Split by project or source family, rather than scattering near-duplicates across both sets.
+Repo C, heldtospec, and the Upheld self-audit already shaped Upheld. Use them for development only. Exclude the same fault, adjacent revisions, and paraphrased answers from the held-out set. Existing public benchmarks may be familiar to models; disclose this limit and include newly reviewed source combinations. Split by project or source family, rather than scattering near-duplicates across both sets.
 
 Two reviewers should independently write expected findings and their source support before seeing agent output. A third reviewer resolves disagreements where possible; contested cases retain an unresolved label. Record reviewer expertise and conflicts. If independent reviewers are unavailable, label the run a guide-building exercise and keep the adoption decision open.
 

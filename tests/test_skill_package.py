@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 import shutil
 import sys
+import subprocess
+from unittest.mock import patch
 import tempfile
 import unittest
 
@@ -24,6 +26,8 @@ class SkillPackageTests(unittest.TestCase):
             shutil.copyfile(skill.ROOT / 'docs' / name, root / 'docs' / name)
         shutil.copyfile(skill.ROOT / 'LICENSE', root / 'LICENSE')
         shutil.copyfile(skill.ROOT / 'NOTICE', root / 'NOTICE')
+        subprocess.run(['git', 'init', '-q', str(root)], check=True)
+        subprocess.run(['git', '-C', str(root), 'fetch', '--quiet', '--no-tags', str(skill.ROOT), skill.SOURCE_REV], check=True)
         return root
 
     def test_each_client_exports_detachable_package(self):
@@ -112,6 +116,46 @@ class SkillPackageTests(unittest.TestCase):
         (out / 'references/manifest.json').write_text('{}')
         with self.assertRaisesRegex(ValueError, 'files differ'):
             skill.verify_package(out)
+
+    def test_source_commit_is_read_and_compared(self):
+        root = self.source_copy()
+        path = root / 'docs/METHOD.md'
+        original = path.read_bytes()
+        path.write_bytes(original + b'\nolder source\n')
+        subprocess.run(['git', '-C', str(root), 'add', 'docs/METHOD.md'], check=True)
+        subprocess.run(['git', '-C', str(root), '-c', 'user.name=Probe', '-c',
+                        'user.email=probe@example.invalid', 'commit', '-qm', 'older source'], check=True)
+        wrong = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD']).decode().strip()
+        path.write_bytes(original)
+        with patch.object(skill, 'SOURCE_REV', wrong):
+            with self.assertRaisesRegex(ValueError, 'Source commit method differs'):
+                skill.method_reference(root)
+        with patch.object(skill, 'SOURCE_REV', '0' * 40):
+            with self.assertRaisesRegex(OSError, 'unavailable'):
+                skill.method_reference(root)
+
+    def test_manifest_cannot_define_an_empty_package(self):
+        out = self.root / 'upheld'
+        out.mkdir()
+        for manifest in ({'files': {}}, {'version': '0.1.1', 'client': 'codex',
+                         'method_source_commit': '0' * 40,
+                         'method_source_sha256': '0' * 64, 'files': {}}):
+            (out / 'manifest.json').write_text(json.dumps(manifest))
+            with self.assertRaises(ValueError):
+                skill.verify_package(out)
+
+    def test_cli_distinguishes_clean_fault_and_unavailable(self):
+        out = self.root / 'upheld'
+        skill.build('codex', out)
+        command = [sys.executable, str(skill.ROOT / 'tools/package_upheld_skill.py'), '--verify', str(out)]
+        def result():
+            run = subprocess.run(command, capture_output=True, text=True)
+            return run.returncode, json.loads(run.stdout)['result']
+        self.assertEqual(result(), (0, 'clean'))
+        (out / 'SKILL.md').write_text('corrupted')
+        self.assertEqual(result(), (1, 'violated'))
+        shutil.rmtree(out)
+        self.assertEqual(result(), (2, 'could_not_look'))
 
     def test_same_sources_produce_same_bytes(self):
         left = self.root / 'left/upheld'
