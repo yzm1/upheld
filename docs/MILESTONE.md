@@ -13,6 +13,10 @@ The thresholds below are project choices recorded on 6 September 2026. They are 
 
 Hash rules and run context need agreement before the checker can produce trustworthy evidence. JSON schemas only check record shape. The historical 44-promise input should expose its four undecided promises during validation.
 
+The [development lifecycle](EVIDENCE_LIFECYCLE.md) exercises a closed README case with simulated acceptance. It is an early conformance check. It does not complete either deliverable or the independent trials.
+
+The product demonstration must reject a mismatched defense, unsupported scope, inconclusive record, and unavailable input. Changed claims, checks, subjects, and declared inputs must name the affected ground. Regeneration must preserve evidence and choices. Track unsupported lineage and component cases explicitly.
+
 ## Register predictions before the trials
 
 Use two independent public projects: one ordinary mature codebase outside Upheld's source projects, and another in a different language. Record target choice, commit, component, environment, and the engineer's prior knowledge before each trial.
@@ -30,6 +34,8 @@ When testing categories, compare per-item choices against independently reviewed
 Follow the original evidence through roughly a month of real development. Report actual elapsed time and relevant changes. If nothing relevant changed, the trial supplies no upkeep result.
 
 Before the follow-up, cap semantic review at 30 minutes per active project-week for these pilot components. Measure missed stale assertions, correct reassessments, unnecessary reviews, queue age, and time to clear. Any confirmed silent stale result blocks release. Exceeding the review budget triggers narrower oracle scope or workflow revision.
+
+Include both small refactors and large contract changes. Measure distinct review decisions and all affected defenses separately. Suppressing real impact to reduce the queue cannot count as an improvement.
 
 Historical replay may test the protocol earlier. Label it as replay and keep its results separate from live follow-up. Do not claim real-world success from seeded drift alone.
 

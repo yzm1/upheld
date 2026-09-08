@@ -17,6 +17,8 @@ This is the first published wire version, dated 6 September 2026. A breaking cha
 
 This version publishes four input schemas and outputs for `validate`, `basis`, and `verify`. Lock and baseline formats remain deferred with their commands. Producers never write bindings.
 
+The [development lifecycle](EVIDENCE_LIFECYCLE.md) embeds records of these shapes under a named test profile. Its binding is explicitly simulated. Schema validation cannot establish human acceptance, producer trust, or agreed product hash behavior.
+
 ## The promise carries survey notes; each defense carries its kind
 
 | Earlier field | Version 0.1 location | Rule |

@@ -41,3 +41,9 @@ The old sketch's five-way vocabulary omitted distinctions already present in the
 The [milestone](MILESTONE.md) sets the next deliverables and evaluation rules. The working effort split is 60% survey and trials, 30% checker demonstration, and 10% document repair. These are planning choices; review them after the first trials.
 
 Advanced history, rename handling, indexes, and review acknowledgments wait for an observed need. Hashing remains an explicit blocker before trustworthy product evidence.
+
+## Earlier tools establish the value we must demonstrate
+
+The [prior-art review](PRIOR_ART.md) covers Doorstop, Boundver, ComplianceAsCode, shared control models, and assurance-case upkeep. Fingerprinted links, tests of checks, and structured evidence have precedents. Upheld combines them around the reasons to rely on a software defense.
+
+The [development lifecycle](EVIDENCE_LIFECYCLE.md) exercises one existing checker and a simulated choice to rely on its evidence. Product commands and pilot results remain open. New features must improve useful findings or review work against a stated baseline.

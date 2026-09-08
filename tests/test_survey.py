@@ -154,8 +154,10 @@ class SurveyTests(unittest.TestCase):
         example = Path(__file__).resolve().parents[1] / 'examples/survey-heldtospec'
         packet = survey.prepare(example / 'sources', example / 'manifest.json', self.base / 'example')
         recorded = survey.load_packet(example / 'run')
-        self.assertEqual(packet['packet_id'], recorded['packet_id'])
-        survey.validate_reply(survey.read_json(example / 'response.json'), packet)
+        self.assertEqual(packet['payload']['sources'], recorded['payload']['sources'])
+        # Collector changes produce a new packet identity; preserve the old reply
+        # against its original packet instead of silently relabeling its provenance.
+        survey.validate_reply(survey.read_json(example / 'response.json'), recorded)
 
     def test_missing_cli_preserves_queue_and_records_failure(self):
         self.prepare()

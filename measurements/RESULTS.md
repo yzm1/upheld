@@ -39,3 +39,7 @@ Keep history out of routine verification. An optional explanation command can us
 ## The 7 September self-audit records local fault challenges
 
 [The self-audit](../docs/SELF_AUDIT.md) records package failures and repairs with explicit run context. These new local runs supply no accepted product evidence or independently measured agent benefit.
+
+## The 8 September lifecycle exercises one existing defense
+
+The [development probe](../docs/EVIDENCE_LIFECYCLE.md) runs the README checker on clean and faulty inputs. It records the run and a simulated binding, then checks changed grounds and regeneration. The [dated output](lifecycle-2026-09-08/observation.json) retains the expected and actual results. Human acceptance, product conformance, and review cost remain unmeasured.

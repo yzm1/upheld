@@ -2,9 +2,11 @@
 
 Upheld is a software assurance tool in development. It records what code promises, what evidence defends each promise, and when that evidence needs another check.
 
-**The survey has a runnable repository prototype. The Upheld CLI remains unbuilt.** The prototype prepares sources and imports candidate judgments. Documentation checks run separately from the planned product commands.
+**The survey has a runnable repository prototype. The Upheld CLI remains unbuilt.** The prototype prepares sources, imports candidate judgments, and writes schema 0.1 register proposals. Documentation checks run separately from the planned product commands.
 
 A promise is a claim that can be false. A defense is a test, rule, type guarantee, or other mechanism intended to uphold it. An evidence record describes a run that assessed a defense. A binding records a person's choice to rely on that evidence.
+
+The [development lifecycle](docs/EVIDENCE_LIFECYCLE.md) runs an existing checker through a fault challenge and changed-ground review. Acceptance in that case is simulated. [Earlier tools](docs/PRIOR_ART.md) supply precedents; useful findings and review cost remain the product tests.
 
 ## The committed example has no graded defenses
 
@@ -29,13 +31,15 @@ The [milestone](docs/MILESTONE.md) pairs a survey and cheap-probe workflow with 
 
 | Piece | Current state | Read next |
 |---|---|---|
-| Survey | Source-packet prototype, external judgment import, and experimental Codex adapter | [Run the prototype](docs/SURVEY_PROTOTYPE.md) |
+| Survey | Source packets, external judgments, register proposals, and an experimental Codex adapter | [Run the prototype](docs/SURVEY_PROTOTYPE.md) |
 | Evidence producers | Specified; no product producer | [Checker and producer rules](docs/CHECKER.md) |
 | Checker CLI | Specified; no product commands | [Schemas and compatibility](docs/SCHEMA.md) |
 | Documentation checks | Executable repository tools | [Contribution checks](CONTRIBUTING.md) |
 
 ## Start with the method or the next task
 
+- [Survey register](docs/SURVEY_REGISTER.md) explains the machine-readable output and its limits.
+- [Component design](docs/COMPONENT_REGISTER_DESIGN.md) records the next schema work.
 - [Current method](docs/METHOD.md) explains how to assess a defense.
 - [Self-audit](docs/SELF_AUDIT.md) applies the method to Upheld and records observed faults and remaining gaps.
 - [Agent guide](docs/UPHELD_SKILL.md) explains the opt-in skill prototype and its untested live-client behavior.

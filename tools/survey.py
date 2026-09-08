@@ -1,6 +1,7 @@
 """S02 repository prototype: prepare evidence, import judgments, render review.
 
-This module never creates register entries, bindings, or accepted evidence.
+The register command exports unaccepted schema 0.1 proposals. No command writes
+bindings or accepted evidence.
 """
 import argparse
 import hashlib
@@ -404,6 +405,9 @@ def main(argv=None):
     p = sub.add_parser('compare')
     p.add_argument('--left', required=True)
     p.add_argument('--right', required=True)
+    p = sub.add_parser('register', help='Export a new schema 0.1 register proposal')
+    p.add_argument('--run', required=True)
+    p.add_argument('--out', required=True, help='New file outside the input run; existing files are protected')
     args = parser.parse_args(argv)
     try:
         if args.command == 'prepare':
@@ -413,6 +417,9 @@ def main(argv=None):
             print(json.dumps(compare(args.left, args.right), indent=2))
         elif args.command == 'report':
             print(json.dumps(render(args.run)))
+        elif args.command == 'register':
+            from survey_register import export_register
+            print(json.dumps(export_register(args.run, args.out)))
         else:
             if args.command == 'codex':
                 result = run_codex(args.run, args.config)
