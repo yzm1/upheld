@@ -29,8 +29,8 @@ def check_todo(text):
 
 
 def check_fixtures(root):
-    # These two examples are explicitly unbound. Future examples may carry evidence.
-    for name in ('heldtospec-contracts', 'upheld-status'):
+    # These examples are explicitly unbound. Future examples may carry evidence.
+    for name in ('heldtospec-contracts', 'upheld-status', 'upheld-self-audit'):
         folder = root / 'examples' / name
         evidence = folder / 'obligations.evidence.jsonl'
         require(evidence.is_file(), f'Missing evidence fixture: {evidence}')

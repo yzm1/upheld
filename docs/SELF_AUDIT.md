@@ -63,3 +63,9 @@ python -m unittest discover -s tests -p 'test_*.py'
 The probe uses temporary source fixtures, leaves the project files untouched, and rejects an existing observation path. Its records include times, source hashes, Python and platform details, dirty-tree status, expected results, and actual outputs. They are development observations rather than product evidence records. The [validation record](../measurements/self-audit-2026-09-07/validation.json) records the separate repository checks.
 
 The next work is to independently review survey omissions and agent behavior under S02 and S13–S14, then build and challenge the product evidence path under C01–C09. A green package check must not close those tasks.
+
+## The PR review found two gaps in the supporting tools
+
+The 8 September review added checks for this example's empty evidence log and bindings. Deleted or populated logs and unexpected bindings now fail the document gate. The probe also supports a selected checkout through `--root`; its record hashes the invoking script separately from the inspected files.
+
+Both repairs have regression tests. All 51 repository tests and the checks for 47 current documents passed locally. The earlier observation files remain intact.
