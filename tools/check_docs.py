@@ -35,6 +35,8 @@ def check_artifacts():
              ('probe-bindings','examples/heldtospec-contracts/obligations.bindings.json'),
              ('register','examples/heldtospec-contracts/review-register.json'),
              ('register','examples/upheld-status/obligations.register.json'),
+             ('register','examples/upheld-self-audit/obligations.register.json'),
+             ('bindings','examples/upheld-self-audit/obligations.bindings.json'),
              ('bindings','examples/upheld-status/obligations.bindings.json')]
     for name, path in cases: compiled[name](json_file(path))
     source = json_file(cases[0][1]); ps=source['promises']

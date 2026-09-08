@@ -1,0 +1,36 @@
+{
+  "started_at": "2026-09-07T10:07:07.485719+00:00",
+  "finished_at": "2026-09-07T10:07:10.114261+00:00",
+  "repository": "yzm1/upheld",
+  "source_commit": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+  "working_tree": " M .github/workflows/docs.yml\n M README.md\n M TODO.md\n M docs/S12_IMPLEMENTATION.md\n M docs/UPHELD_SKILL.md\n M measurements/RESULTS.md\n M skills/upheld/SKILL.md\n M tests/test_red_team.py\n M tests/test_skill_package.py\n M tools/check_docs.py\n M tools/package_upheld_skill.py\n?? docs/SELF_AUDIT.md\n?? examples/upheld-self-audit/\n?? measurements/self-audit-2026-09-07/\n?? tools/probe_self_audit.py\n",
+  "python": "3.12.13",
+  "environment": "Local fastjsonschema dependency through PYTHONPATH; CI installs requirements-docs.txt.",
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "tools/check_docs.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Artifact checks passed: 9 schemas; 44 promises; 78 defenses; 19 triage bullets; 4 expected unresolved choices.\nCurrent document links passed.\nProse checks passed for all 47 current documents.\n31/31 passed supplied prose-check tests\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".................................................\n----------------------------------------------------------------------\nRan 49 tests in 1.207s\n\nOK\n"
+    }
+  ],
+  "limit": "Suite observations are not accepted product evidence."
+}

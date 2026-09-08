@@ -37,6 +37,7 @@ The [milestone](docs/MILESTONE.md) pairs a survey and cheap-probe workflow with 
 ## Start with the method or the next task
 
 - [Current method](docs/METHOD.md) explains how to assess a defense.
+- [Self-audit](docs/SELF_AUDIT.md) applies the method to Upheld and records observed faults and remaining gaps.
 - [Agent guide](docs/UPHELD_SKILL.md) explains the opt-in skill prototype and its untested live-client behavior.
 - [Todo list](TODO.md) records remaining work and completed decisions.
 - [Design choices](docs/DECISIONS.md) explain the product boundary and the source of each rule.

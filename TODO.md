@@ -32,7 +32,7 @@ Priority P0 means a trust blocker. P1 means the next learning milestone. P2 mean
 | ID | Priority | Task | Completion condition |
 |---|---|---|---|
 | S02 | P1 | Finish live adapter checks and independently assess the implemented source-review prototype | Demonstrate the configured real CLI and effective permissions; independently review source passages for missed or distorted claims. The source/import path and replay work, but those results do not complete the agreed assessment. See [red-team findings](docs/S02_RED_TEAM.md). |
-| S13 | P1 | Prepare independently reviewed agent-method cases | Pin real sources across software, scientific evidence, and reproducible analysis; separate expected answers from agent inputs. Two reviewers record judgments and disagreements. Exclude Repo C, heldtospec, and related answers from held-out cases. Meet the [test proposal](docs/AGENT_METHOD_EVALUATION.md) before registering E01. |
+| S13 | P1 | Prepare independently reviewed agent-method cases | Pin real sources across software, scientific evidence, and reproducible analysis; separate expected answers from agent inputs. Two reviewers record judgments and disagreements. Exclude Repo C, heldtospec, the Upheld self-audit, and related answers from held-out cases. Meet the [test proposal](docs/AGENT_METHOD_EVALUATION.md) before registering E01. |
 | S14 | P1 | Exercise configured clients and compare added support | After S12–S13, record real skill loading, effective permissions, missing-tool behavior, cancellation, and cost for each claimed client. Run the E01-registered comparisons and publish failures, useful findings, misses, and human work. Test automatic triggering separately. Add a server only for a demonstrated need unmet by local commands. Feed the decision into E07. |
 | S03 | P1 | Add test/code sources and audit source-selection bias | the survey records what each source adds and checks the documented undercount of shape/type-related promises. |
 | S04 | P1 | Build skeptical triage with explicit uncertainty | the example queue has an auditable disposition per item and unknowns cannot be converted into verified coverage by a default. |
@@ -108,6 +108,10 @@ Match S01's research quality: inspect primary papers, official interfaces, and w
 The comparison must measure judgment correctness, missed issues, unsupported conclusions, useful discoveries, human review cost, and operating cost. Use independent outcome review and source-grounded cases beyond software vocabulary. Control source access, model, available tools, and budgets. Distinguish proposed experiments from completed runs.
 
 Close S11 with a dated research report, a supported interface decision, and explicit implementation follow-ups with acceptance criteria. Register concrete trials under E01 before running them. Do not assume a skill, server, or orchestration layer is necessary before comparing the alternatives.
+
+## Upheld now has a bounded self-audit
+
+The [self-audit](docs/SELF_AUDIT.md) records ten self-promises, three repaired package defects, and six predeclared fault checks. It adds no accepted evidence. S02, S13–S14, P01–P04, and C01–C10 retain the linked work; this local review closes none of those tasks.
 
 ## Historical target findings need a fresh check
 
