@@ -5,11 +5,13 @@ import json
 from pathlib import Path
 import re
 import sys
+import subprocess
+import os
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_REV = '9f3e06f5b9ea9d53d1e48860e318068b9df8d978'
 METHOD_SHA256 = 'a03ad586ed0cbac902cf4f9282cea7996086084f6c1483f53ef63bda8f7f6c05'
-VERSION = '0.1.0'
+VERSION = '0.1.2'
 CLIENTS = ('codex', 'claude', 'copilot')
 FILES = ('SKILL.md', 'references/method.md', 'references/connectlang.md')
 
@@ -23,6 +25,19 @@ def method_reference(root=ROOT):
     reviewed = json.loads((root / 'docs/rule-review.json').read_text())['docs/METHOD.md']
     if digest(source) != reviewed['sha256'] or digest(source) != METHOD_SHA256:
         raise ValueError('Method text needs its normal rule review before packaging')
+    if not re.fullmatch(r'[0-9a-f]{40}', SOURCE_REV):
+        raise ValueError('Source revision must be a full commit ID')
+    try:
+        observed = subprocess.run(
+            ['git', '-C', str(root), 'show', f'{SOURCE_REV}:docs/METHOD.md'],
+            env={**os.environ, 'GIT_NO_REPLACE_OBJECTS': '1'},
+            capture_output=True, timeout=10, check=False)
+    except subprocess.TimeoutExpired as exc:
+        raise OSError('Could not inspect source commit within 10 seconds') from exc
+    if observed.returncode:
+        raise OSError('Source commit unavailable; fetch the pinned history before export')
+    if digest(observed.stdout) != METHOD_SHA256:
+        raise ValueError('Source commit method differs from the pinned method bytes')
     text = source.decode('utf-8').split('## Current evidence includes')[0]
     rows = re.findall(r'^\| (\w+) \| (MUST|SHOULD) \|', text, re.M)
     if len(rows) != 27 or dict(rows) != reviewed['strengths']:
@@ -93,7 +108,22 @@ def build(client, output, root=ROOT):
 def verify_package(output):
     output = Path(output)
     manifest = json.loads((output / 'manifest.json').read_text())
+    fields = {'version', 'client', 'method_source_commit', 'method_source_sha256', 'files'}
+    if not isinstance(manifest, dict) or set(manifest) != fields:
+        raise ValueError('Invalid package manifest fields')
+    if manifest['version'] not in ('0.1.0', '0.1.1', VERSION) or manifest['client'] not in CLIENTS:
+        raise ValueError('Unsupported package version or client')
+    for key, size in [('method_source_commit', 40), ('method_source_sha256', 64)]:
+        if not isinstance(manifest[key], str) or not re.fullmatch('[0-9a-f]{' + str(size) + '}', manifest[key]):
+            raise ValueError('Invalid package source identity')
     entries = manifest['files']
+    required = set(FILES) | {'LICENSE', 'NOTICE'}
+    if manifest['client'] == 'codex':
+        required.add('agents/openai.yaml')
+    if not isinstance(entries, dict) or set(entries) != required:
+        raise ValueError('Package manifest must list every required file')
+    if any(not isinstance(value, str) or not re.fullmatch('[0-9a-f]{64}', value) for value in entries.values()):
+        raise ValueError('Invalid package file digest')
     actual = set()
     for path in output.rglob('*'):
         if path.is_symlink():
@@ -129,9 +159,12 @@ def main():
             verify_package(args.verify)
         else:
             build(args.client, args.output)
-        print('Skill file check completed; agent behavior remains unverified.')
-    except (ValueError, OSError, KeyError) as exc:
-        print(str(exc), file=sys.stderr)
+        print(json.dumps({'result': 'clean', 'limit': 'File checks only; agent behavior remains unverified.'}))
+    except OSError as exc:
+        print(json.dumps({'result': 'could_not_look', 'error': str(exc)}))
+        return 2
+    except (ValueError, KeyError, TypeError) as exc:
+        print(json.dumps({'result': 'violated', 'error': str(exc)}))
         return 1
     return 0
 

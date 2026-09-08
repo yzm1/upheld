@@ -1,0 +1,79 @@
+{
+  "kind": "development_fault_challenge",
+  "repository": "yzm1/upheld",
+  "started_at": "2026-09-07T10:01:43.871190+00:00",
+  "finished_at": "2026-09-07T10:01:44.077068+00:00",
+  "source_commit": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+  "working_tree": "M .github/workflows/docs.yml\n M tests/test_skill_package.py\n M tools/package_upheld_skill.py\n?? measurements/self-audit-2026-09-07/\n?? tools/probe_self_audit.py",
+  "python": "3.12.13",
+  "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+  "invocation": "python tools/probe_self_audit.py --output <new-observation.json>",
+  "source_sha256": {
+    "tools/package_upheld_skill.py": "0d597fddf9393ef9ecad4b03da7ecd9f913fff5b0f2392d05735040430201239",
+    "docs/METHOD.md": "a03ad586ed0cbac902cf4f9282cea7996086084f6c1483f53ef63bda8f7f6c05",
+    "skills/upheld/SKILL.md": "c93cfab12ca577a047ccb9b7fbace456563dbf955010c67a24ca34e07ba0a05e",
+    "tools/probe_self_audit.py": "c2aae9db2a2916dcdb7da39fb040b52afbdcf2290d38941cc51dbd378e8bce67"
+  },
+  "expected_results_declared_before_execution": {
+    "clean": 0,
+    "altered_file": 1,
+    "empty_manifest": 1,
+    "cannot_inspect": 2,
+    "wrong_source_commit": "ValueError",
+    "missing_source_commit": "OSError"
+  },
+  "cases": [
+    {
+      "case": "clean",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "{\"result\": \"clean\", \"limit\": \"File checks only; agent behavior remains unverified.\"}\n",
+      "stderr": "",
+      "matches_expectation": true
+    },
+    {
+      "case": "altered_file",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "{\"result\": \"violated\", \"error\": \"Package digest mismatch: SKILL.md\"}\n",
+      "stderr": "",
+      "matches_expectation": true
+    },
+    {
+      "case": "empty_manifest",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "{\"result\": \"violated\", \"error\": \"Invalid package manifest fields\"}\n",
+      "stderr": "",
+      "matches_expectation": true
+    },
+    {
+      "case": "cannot_inspect",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "stdout": "{\"result\": \"could_not_look\", \"error\": \"[Errno 2] No such file or directory: '/tmp/upheld-self-audit-wmeyuag9/cannot_inspect/upheld/manifest.json'\"}\n",
+      "stderr": "",
+      "matches_expectation": true
+    },
+    {
+      "case": "wrong_source_commit",
+      "source_revision": "a696a3f74f722e311b0d649b941b1bb3de6c55ae",
+      "expected": "ValueError",
+      "actual": "ValueError",
+      "matches_expectation": true
+    },
+    {
+      "case": "missing_source_commit",
+      "source_revision": "0000000000000000000000000000000000000000",
+      "expected": "OSError",
+      "actual": "OSError",
+      "matches_expectation": true
+    }
+  ],
+  "accepted_bindings_created": 0,
+  "limits": [
+    "Single local development observation; not an independent agent trial.",
+    "No product basis, oracle producer, or accepted evidence record.",
+    "Operating-system denial, concurrent edits, and live client behavior not exercised."
+  ]
+}

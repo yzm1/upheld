@@ -4,6 +4,12 @@ Readers are Upheld maintainers reviewing the shortened rules. This review compar
 
 The initial rewrite preserved identifiers but lost operational clauses. The repairs below restore those clauses and state deliberate changes. Historical examples remain in the unchanged source snapshots. This review records what each rule requires. The product still has no grade.
 
+## The 8 September review clarifies how to judge defenses
+
+Method 1.4 keeps all rule IDs and strengths. The [prior-art review](PRIOR_ART.md) adds reasons for defense choice, separates changed grounds from observed failure, and requires review-cost claims to retain misses. The checker now explains the limits of preserved bytes and matching hashes. No stored promise grade or automatic acceptance was added.
+
+The development probe exercises these distinctions in one README case. It leaves product hashing, evidence lineage, and independent trials open. The rule hashes and packaged method reference track this reviewed revision.
+
 ## Every original rule has a current disposition
 
 Original sources: [method](history/2026-09-06/METHOD.md) and [checker](history/2026-09-06/CHECKER.md). Current sources: [method](METHOD.md) and [checker](CHECKER.md). Every rule retains its original MUST or SHOULD strength.

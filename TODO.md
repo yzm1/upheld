@@ -32,7 +32,7 @@ Priority P0 means a trust blocker. P1 means the next learning milestone. P2 mean
 | ID | Priority | Task | Completion condition |
 |---|---|---|---|
 | S02 | P1 | Finish live adapter checks and independently assess the implemented source-review prototype | Demonstrate the configured real CLI and effective permissions; independently review source passages for missed or distorted claims. The source/import path and replay work, but those results do not complete the agreed assessment. See [red-team findings](docs/S02_RED_TEAM.md). |
-| S13 | P1 | Prepare independently reviewed agent-method cases | Pin real sources across software, scientific evidence, and reproducible analysis; separate expected answers from agent inputs. Two reviewers record judgments and disagreements. Exclude Repo C, heldtospec, and related answers from held-out cases. Meet the [test proposal](docs/AGENT_METHOD_EVALUATION.md) before registering E01. |
+| S13 | P1 | Prepare independently reviewed agent-method cases | Pin real sources across software, scientific evidence, and reproducible analysis; separate expected answers from agent inputs. Two reviewers record judgments and disagreements. Exclude Repo C, heldtospec, the Upheld self-audit, and related answers from held-out cases. Meet the [test proposal](docs/AGENT_METHOD_EVALUATION.md) before registering E01. |
 | S14 | P1 | Exercise configured clients and compare added support | After S12–S13, record real skill loading, effective permissions, missing-tool behavior, cancellation, and cost for each claimed client. Run the E01-registered comparisons and publish failures, useful findings, misses, and human work. Test automatic triggering separately. Add a server only for a demonstrated need unmet by local commands. Feed the decision into E07. |
 | S15 | P1 | Specify component records and shared obligations | Define owners, exported claims, typed references, assumptions, and shared-contract records. Distinguish membership from support. Review cycles, missing sources, and conflicting versions. Publish a schema version and an explicit migration from 0.1. See [design and sources](docs/COMPONENT_REGISTER_DESIGN.md). |
 | S16 | P1 | Assemble component registers into a scoped system view | Load an explicit manifest; preserve stable claim IDs across file moves; show missing and excluded inputs. Derive views and change impact without copying authoritative claims. Review removed records and old relationships. Keep existing evidence and human choices intact. |
@@ -40,7 +40,7 @@ Priority P0 means a trust blocker. P1 means the next learning milestone. P2 mean
 | S03 | P1 | Add test/code sources and audit source-selection bias | the survey records what each source adds and checks the documented undercount of shape/type-related promises. |
 | S04 | P1 | Build skeptical triage with explicit uncertainty | the example queue has an auditable disposition per item and unknowns cannot be converted into verified coverage by a default. |
 | S05 | P1 | Build the cheap-probe stage before investing heavily in a classifier | the first queue can be mechanically reduced with a measured cost per resolved item. Findings about a promise remain distinct from evidence grading a defense. |
-| S06 | P1 | Implement classification without a preselected defense | the interface cannot silently turn uncertainty, unavailable infrastructure, or every new row into `test`. |
+| S06 | P1 | Implement classification without a preselected defense | Give each recommendation a rationale, scope, bypass paths, fault challenge, and residual uncertainty. Compare against reviewed cases; technique names have no universal rank. Unknowns and unavailable infrastructure cannot default to `test`. |
 | S07 | P1 | Define document-to-subject mapping and usable locators | supported locators resolve deterministically and scope containment can be checked without pretending the artifact locator is subject scope. |
 | S08 | P1 | Reconcile repeated surveys while preserving human decisions | The [proposal exporter](docs/SURVEY_REGISTER.md) now protects existing files. Finish matching edited claims across runs: retain reviewed decisions or surface a conflict, leave bindings intact, and never emit accepted evidence merely because a defense was named. |
 | S09 | P1 | Deliver a one-command first-use path | a first-time engineer can reach a useful finding without manually authoring six ontology files. Complete live adapter checks for authentication, output, effective permissions, cancellation, and costs before claiming provider readiness. Counts distinguish candidates, unbound defenses, findings, and confirmed evidence; the review's sample “104 well supported” is illustrative, not a valid evidence claim. |
@@ -58,7 +58,7 @@ Priority P0 means a trust blocker. P1 means the next learning milestone. P2 mean
 | C07 | P1 | Implement the minimal `verify` path and honest output | unchanged grounds produce the expected result and all implemented finding classes have structured output. |
 | C08 | P1 | Demonstrate invalidation and evidence-lineage behavior | moved grounds never produce `still_valid`; lineage invalidates only as specified; unrelated inconclusive observations do not automatically invalidate a supporting binding. |
 | C09 | P0 release gate | Prove regeneration cannot restore validity | no stale defense becomes current, binding decisions survive, and any cache that is implemented is reproducible. Start with this acceptance test before implementing caching. |
-| C10 | P1 | Package the reproducible demonstration and score its conformance honestly | another engineer can reproduce it, a run record exists, and the CHECKER conformance table distinguishes passed, unsupported, and deferred requirements. |
+| C10 | P1 | Package the reproducible demonstration and score its conformance honestly | The [development lifecycle](docs/EVIDENCE_LIFECYCLE.md) exercises one real checker with simulated acceptance. Complete product commands, hash conformance, lineage, and a real binding; another engineer reproduces the result. Report passed, unsupported, and deferred requirements separately. |
 | E01 | P1 | Pre-register the evaluation protocol | discovery yield, error rates, and human effort cannot be redefined after the run to flatter it. |
 | E02 | P1 | Select two independent pilot targets | the pair challenges both shared development habits and language assumptions; no claim of universality follows from two examples. |
 | E03 | P1 | Run the two-hour discovery experiment on both targets | the findings have evidence and the denominators include unsuccessful triage effort. |
@@ -112,6 +112,10 @@ The comparison must measure judgment correctness, missed issues, unsupported con
 
 Close S11 with a dated research report, a supported interface decision, and explicit implementation follow-ups with acceptance criteria. Register concrete trials under E01 before running them. Do not assume a skill, server, or orchestration layer is necessary before comparing the alternatives.
 
+## Upheld now has a bounded self-audit
+
+The [self-audit](docs/SELF_AUDIT.md) records ten self-promises, three repaired package defects, and six predeclared fault checks. It adds no accepted evidence. S02, S13–S14, P01–P04, and C01–C10 retain the linked work; this local review closes none of those tasks.
+
 ## Historical target findings need a fresh check
 
 H01–H19 describe heldtospec at the recorded survey date. Check its current source before treating any item as an unresolved defect. The later library run already addressed part of H16; its record still needs linking at defense scope.
@@ -121,3 +125,9 @@ Close a task with a dated artifact, decision, or observed check. Keep designed, 
 ## The survey now writes canonical register proposals
 
 The [exporter](docs/SURVEY_REGISTER.md) writes schema 0.1 from saved source judgments. It retains unknown defenses and reading limits. Existing files remain untouched. This closes the output-format gap; S02, S06–S10, and the evidence work keep their remaining checks. S15–S17 follow the [Boundver and assurance research](docs/COMPONENT_REGISTER_DESIGN.md).
+
+## The prior-art review adds checks without closing product tasks
+
+The [research](docs/PRIOR_ART.md) now informs method 1.4 and the milestone. The [development lifecycle](docs/EVIDENCE_LIFECYCLE.md) records real fault challenges with simulated acceptance. It leaves C01–C10 and the independent trials open. S06 must justify each recommended defense; E05–E06 must count misses and review work alongside affected links.
+
+The PR review also repaired rejected-attempt checks, the self-audit's empty-evidence guard, and alternate-checkout probes. [The merge review](docs/PR_MERGE_REVIEW.md) records their regression checks.

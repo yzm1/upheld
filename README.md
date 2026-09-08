@@ -6,6 +6,8 @@ Upheld is a software assurance tool in development. It records what code promise
 
 A promise is a claim that can be false. A defense is a test, rule, type guarantee, or other mechanism intended to uphold it. An evidence record describes a run that assessed a defense. A binding records a person's choice to rely on that evidence.
 
+The [development lifecycle](docs/EVIDENCE_LIFECYCLE.md) runs an existing checker through a fault challenge and changed-ground review. Acceptance in that case is simulated. [Earlier tools](docs/PRIOR_ART.md) supply precedents; useful findings and review cost remain the product tests.
+
 ## The committed example has no graded defenses
 
 The heldtospec survey covers one contracts component. Its records date from 6 September 2026; they do not describe that project's current state.
@@ -39,6 +41,7 @@ The [milestone](docs/MILESTONE.md) pairs a survey and cheap-probe workflow with 
 - [Survey register](docs/SURVEY_REGISTER.md) explains the machine-readable output and its limits.
 - [Component design](docs/COMPONENT_REGISTER_DESIGN.md) records the next schema work.
 - [Current method](docs/METHOD.md) explains how to assess a defense.
+- [Self-audit](docs/SELF_AUDIT.md) applies the method to Upheld and records observed faults and remaining gaps.
 - [Agent guide](docs/UPHELD_SKILL.md) explains the opt-in skill prototype and its untested live-client behavior.
 - [Todo list](TODO.md) records remaining work and completed decisions.
 - [Design choices](docs/DECISIONS.md) explain the product boundary and the source of each rule.

@@ -2,7 +2,7 @@
 
 Readers are engineers surveying a codebase. Upheld records falsifiable software promises and the mechanisms intended to defend them.
 
-This is method version 1.3, dated 6 September 2026. It keeps all 27 rule IDs from version 1.0. The [original snapshot](history/2026-09-06/METHOD.md) keeps each defect, reason, and historical self-score. The tables below govern new records. MUST marks a rule earned by an observed defect. SHOULD marks a reasoned rule that still needs stronger support.
+This is method version 1.4, dated 8 September 2026. It keeps all 27 rule IDs and their strengths. The [original snapshot](history/2026-09-06/METHOD.md) keeps each defect, reason, and historical self-score. The tables below govern new records. MUST marks a rule earned by an observed defect. SHOULD marks a reasoned rule that still needs stronger support.
 
 **Reading a test can establish a candidate link. A run that detects a stated fault can grade that defense.** Neither observation proves the whole promise.
 
@@ -78,6 +78,16 @@ The survey aims to discover useful new promises and defects within the time peop
 | Rp3 | MUST | Read the whole report before sharing it. A diff can hide contradictions elsewhere. |
 
 Requirements describe the instrument. Meeting the rules alone establishes neither useful findings nor safe software. Write down expected results before trials. Write expectations and models from the contract before running the implementation. A static screen selects work to inspect and cannot grade it. State how source choice and different category rules limit the findings. Matching category totals does not establish correct labels. Open-thread counts measure unresolved work; movement requires dated comparisons. Rp3 requires human review and has no mechanical proof.
+
+## Judge the grounds for relying on each defense
+
+The [prior-art review](PRIOR_ART.md) identifies earlier tools for trace links, fault challenges, and evidence review. Upheld must demonstrate useful findings and manageable review work before claiming an advantage.
+
+Explain why the proposed mechanism fits the claim, which faults challenge it, what the expected result relies on, and what remains untested. Defense kinds have no universal ranking. Scope and bypass paths can matter more than the technique name. Record uncertain proposals for review.
+
+Keep a changed ground, a need for review, and an observed failure distinct. A matching hash cannot establish that the original judgment was sound. Preserving evidence bytes cannot establish that its producer or expected result was trustworthy. Refreshing derived files never supplies a person's choice to rely on evidence.
+
+Count useful findings, misses, false links, and human review time. Group related reviews while preserving every affected defense. A large real change may justify many findings; their count alone does not measure quality.
 
 ## Current evidence includes a hand survey and a prototype replay
 

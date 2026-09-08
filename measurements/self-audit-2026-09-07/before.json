@@ -1,0 +1,79 @@
+{
+  "kind": "development_fault_challenge",
+  "repository": "yzm1/upheld",
+  "started_at": "2026-09-07T10:00:29.896078+00:00",
+  "finished_at": "2026-09-07T10:00:30.029396+00:00",
+  "source_commit": "ee5b075cd918fb8068233e54579d8bb9c9145d39",
+  "working_tree": "?? tools/probe_self_audit.py",
+  "python": "3.12.13",
+  "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+  "invocation": "python tools/probe_self_audit.py --output <new-observation.json>",
+  "source_sha256": {
+    "tools/package_upheld_skill.py": "f733dca8845a3b1b32a122aa32d0e342ac4b93dd8147b152d4286b5f2eedd205",
+    "docs/METHOD.md": "a03ad586ed0cbac902cf4f9282cea7996086084f6c1483f53ef63bda8f7f6c05",
+    "skills/upheld/SKILL.md": "c93cfab12ca577a047ccb9b7fbace456563dbf955010c67a24ca34e07ba0a05e",
+    "tools/probe_self_audit.py": "c2aae9db2a2916dcdb7da39fb040b52afbdcf2290d38941cc51dbd378e8bce67"
+  },
+  "expected_results_declared_before_execution": {
+    "clean": 0,
+    "altered_file": 1,
+    "empty_manifest": 1,
+    "cannot_inspect": 2,
+    "wrong_source_commit": "ValueError",
+    "missing_source_commit": "OSError"
+  },
+  "cases": [
+    {
+      "case": "clean",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Skill file check completed; agent behavior remains unverified.\n",
+      "stderr": "",
+      "matches_expectation": true
+    },
+    {
+      "case": "altered_file",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "Package digest mismatch: SKILL.md\n",
+      "matches_expectation": true
+    },
+    {
+      "case": "empty_manifest",
+      "expected_exit": 1,
+      "actual_exit": 0,
+      "stdout": "Skill file check completed; agent behavior remains unverified.\n",
+      "stderr": "",
+      "matches_expectation": false
+    },
+    {
+      "case": "cannot_inspect",
+      "expected_exit": 2,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "[Errno 2] No such file or directory: '/tmp/upheld-self-audit-z2b2ecfa/cannot_inspect/upheld/manifest.json'\n",
+      "matches_expectation": false
+    },
+    {
+      "case": "wrong_source_commit",
+      "source_revision": "6acc04fe9f8b49eed5696e216418e1da02af2a23",
+      "expected": "ValueError",
+      "actual": "returned",
+      "matches_expectation": false
+    },
+    {
+      "case": "missing_source_commit",
+      "source_revision": "0000000000000000000000000000000000000000",
+      "expected": "OSError",
+      "actual": "returned",
+      "matches_expectation": false
+    }
+  ],
+  "accepted_bindings_created": 0,
+  "limits": [
+    "Single local development observation; not an independent agent trial.",
+    "No product basis, oracle producer, or accepted evidence record.",
+    "Operating-system denial, concurrent edits, and live client behavior not exercised."
+  ]
+}

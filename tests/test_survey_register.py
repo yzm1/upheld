@@ -178,6 +178,41 @@ class RegisterExportTests(unittest.TestCase):
         self.assertEqual(len(result['promises']), 1)
         self.assertEqual(result['metadata']['survey']['rejected_attempts'], 1)
 
+    def test_rejected_status_cannot_hide_a_valid_submission(self):
+        self.submit(self.reply())
+        path = next((self.run / 'attempts').glob('*.json'))
+        original = json.loads(path.read_text())
+        other = self.reply()
+        other['reviewer'] = 'another reviewer'
+        self.submit(other)
+        for fields in ({'status': 'rejected'},
+                       {'status': 'rejected', 'reply': None, 'error': 'changed label'}):
+            with self.subTest(fields=fields):
+                path.write_text(json.dumps({**original, **fields}))
+                with self.assertRaisesRegex(ValueError, 'Rejected attempt'):
+                    survey_register.export_register(self.run, self.output)
+                self.assertFalse(self.output.exists())
+
+    def test_rejected_attempt_bytes_and_failure_shape_are_checked(self):
+        self.submit({'invalid': True})
+        path = next((self.run / 'attempts').glob('*.json'))
+        original = json.loads(path.read_text())
+        self.submit(self.reply())
+        for fields in ({'response_sha256': '0' * 64}, {'error': None}, {'reply': {}},
+                       {'raw_response': None}):
+            with self.subTest(fields=fields):
+                path.write_text(json.dumps({**original, **fields}))
+                with self.assertRaises(ValueError):
+                    survey_register.export_register(self.run, self.output)
+                self.assertFalse(self.output.exists())
+
+    def test_failure_before_receiving_a_reply_remains_visible(self):
+        survey.record_attempt(self.run, self.packet, self.base / 'absent.json',
+                              {'backend': 'test'}, failure='Client never started')
+        self.submit(self.reply())
+        result = survey_register.build_register(self.run)
+        self.assertEqual(result['metadata']['survey']['rejected_attempts'], 1)
+
     def test_changed_candidate_gets_a_new_proposal_id_without_modifying_old_output(self):
         first = self.reply()
         self.submit(first)

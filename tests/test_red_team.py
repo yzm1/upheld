@@ -85,6 +85,39 @@ class RedTeamChecks(unittest.TestCase):
             (future / 'obligations.evidence.jsonl').write_text('synthetic placeholder\n')
             check_fixtures(root)
 
+    def test_self_audit_empty_evidence_claim_is_guarded(self):
+        for mode in ('missing', 'populated', 'binding'):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as d:
+                root = Path(d)
+                shutil.copytree(ROOT / 'examples', root / 'examples')
+                folder = root / 'examples/upheld-self-audit'
+                log = folder / 'obligations.evidence.jsonl'
+                if mode == 'missing':
+                    log.unlink()
+                elif mode == 'populated':
+                    log.write_text('{"unexpected": "record"}\n')
+                else:
+                    path = folder / 'obligations.bindings.json'
+                    doc = json.loads(path.read_text())
+                    doc['bindings'] = {'UPH-SELF-001:d0': 'unexpected-record'}
+                    path.write_text(json.dumps(doc))
+                with self.assertRaises(ValueError):
+                    check_fixtures(root)
+
+    def test_self_audit_probe_can_run_from_outside_selected_root(self):
+        with tempfile.TemporaryDirectory() as d:
+            runner, out = Path(d) / 'outside_probe.py', Path(d) / 'observation.json'
+            shutil.copyfile(ROOT / 'tools/probe_self_audit.py', runner)
+            run = subprocess.run([sys.executable, str(runner), '--root', str(ROOT),
+                                  '--output', str(out)], capture_output=True, text=True, timeout=30)
+            self.assertEqual(run.returncode, 0, run.stderr)
+            record = json.loads(out.read_text())
+            self.assertEqual(len(record['cases']), 6)
+            self.assertTrue(all(row['matches_expectation'] for row in record['cases']))
+            self.assertEqual(record['runner']['path'], str(runner))
+            self.assertIn('tools/package_upheld_skill.py', record['source_sha256'])
+            self.assertEqual(record['accepted_bindings_created'], 0)
+
     def test_timestamp_format(self):
         doc = json.loads((ROOT / 'examples/upheld-status/obligations.register.json').read_text())
         defense = doc['promises'][0]['defenses'][0]
@@ -109,6 +142,9 @@ class RedTeamChecks(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d) / 'repo'
             shutil.copytree(ROOT, root, ignore=shutil.ignore_patterns('.git', '__pycache__'))
+            from package_upheld_skill import SOURCE_REV
+            subprocess.run(['git', 'init', '-q', str(root)], check=True)
+            subprocess.run(['git', '-C', str(root), 'fetch', '--quiet', '--no-tags', str(ROOT), SOURCE_REV], check=True)
             path = root / 'README.md'
             path.write_text(path.read_text().replace('| Promises | 44 |', '| Promises | 45 |'))
             run = subprocess.run([sys.executable, '-O', str(root / 'tools/check_docs.py')], capture_output=True, text=True)

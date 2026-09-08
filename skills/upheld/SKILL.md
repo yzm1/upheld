@@ -3,8 +3,8 @@ name: upheld
 description: Apply the Upheld method when the user asks to review promises, challenge defenses, interpret evidence, or propose obligation records. Keep the review within the requested scope.
 license: Apache-2.0
 metadata:
-  version: "0.1.0"
-  method-version: "1.3"
+  version: "0.1.2"
+  method-version: "1.4"
 ---
 
 # Find what supports a promise and what still needs checking

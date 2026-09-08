@@ -1,6 +1,6 @@
 # Real survey counts exist; product upkeep remains unmeasured
 
-Readers deciding what to build can use the measurements below. All observations date from 5–6 September 2026. The historical reports supply no raw oracle records.
+Readers deciding what to build can use the measurements below. The historical observations below date from 5–6 September 2026. The historical reports supply no raw oracle records.
 
 ## The hand survey provides counts and reported outcomes
 
@@ -35,3 +35,11 @@ Keep history out of routine verification. An optional explanation command can us
 ## Discovery and upkeep trials still need runs
 
 [The milestone](../docs/MILESTONE.md) defines two-hour discovery trials and a month of follow-up. Record review time, missed stale assertions, unnecessary reviews, queue age, and subject-scope cost. No result for those trials exists yet.
+
+## The 7 September self-audit records local fault challenges
+
+[The self-audit](../docs/SELF_AUDIT.md) records package failures and repairs with explicit run context. These new local runs supply no accepted product evidence or independently measured agent benefit.
+
+## The 8 September lifecycle exercises one existing defense
+
+The [development probe](../docs/EVIDENCE_LIFECYCLE.md) runs the README checker on clean and faulty inputs. It records the run and a simulated binding, then checks changed grounds and regeneration. The [dated output](lifecycle-2026-09-08/observation.json) retains the expected and actual results. Human acceptance, product conformance, and review cost remain unmeasured.

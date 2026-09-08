@@ -14,6 +14,8 @@ The trade is explicit: a schema-valid record can still contain a poor claim. The
 |---|---|---|
 | Matching quote with omitted limits | Retain the submitted limits in promise text | Qualifier export test |
 | Parsed reply edited after import | Reject disagreement with the saved raw reply | Saved-input test |
+| Valid reply relabeled rejected | Reject inconsistent result fields or a valid response hidden by the label | Rejected-status test |
+| Rejected response bytes edited | Reject a mismatched hash or malformed failure record | Rejected-input test |
 | Ambiguous item | Keep a question without creating a promise | Ambiguity test |
 | Two incompatible rewrites | Retain both as suspected claims | Conflict test |
 | Missing file or partial reading | Retain the unresolved source and unread extent | Scope test |
@@ -42,4 +44,4 @@ Component ownership, cross-project references, and cycle support belong to S15â€
 
 The full repository suite passed 57 tests, including eleven new export tests. The recorded heldtospec run produced twelve suspected promises, zero ambiguity items, and zero defenses. The documentation checks compare that output with a fresh export and validate it against schema 0.1.
 
-These are local checks of a recorded run. No live model call, defense probe, or accepted evidence record was produced by this change.
+These are the initial export checks of a recorded run. The [merge review](PR_MERGE_REVIEW.md) records subsequent fixes and the combined checks. Export alone makes no live model call and produces no defense grade or accepted evidence.

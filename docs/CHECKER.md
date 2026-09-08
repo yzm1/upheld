@@ -37,6 +37,8 @@ The lock is a disposable cache. Deleting or regenerating it cannot advance an ev
 
 Evidence records are immutable and append-only. A binding names one existing record for the same defense, with a compatible oracle and a `supports` verdict. A later inconclusive run alone does not invalidate it. A record that explicitly supersedes or contradicts it does.
 
+Preserving bytes protects the recorded observation. It does not establish the truth of a producer's claim. A matching basis preserves the grounds for a recorded choice; it supplies no new grade. Explicit batch choices can be valid, but refresh and acknowledgment never create acceptance.
+
 Declared setup files use reproducible fingerprints. Runtime context belongs in a separate run field. The [schema](SCHEMA.md) reserves honest unknown values; P01–P04 in the todo list still owe the complete execution policy.
 
 Hash profile v0.1 is not yet specified. Before implementation, settle working-tree semantics, path normalization, line endings, symlinks, ordering, claim serialization, missing/unreadable inputs, scope hashing, and versioning. Then publish executable agreement vectors.

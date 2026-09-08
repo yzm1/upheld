@@ -45,16 +45,28 @@ def collect(run):
         if total > MAX_REGISTER:
             raise ValueError('Attempt inputs exceed 16 MiB; split the survey run')
         attempt = survey.read_json(path, 4 * survey.MAX_REPLY)
-        if attempt['packet_id'] != packet['packet_id']:
+        if not isinstance(attempt, dict) or attempt.get('packet_id') != packet['packet_id']:
             raise ValueError('Attempt belongs to another packet')
-        if attempt['status'] == 'rejected':
-            rejected += 1
-            continue
-        if attempt['status'] != 'valid_candidate_submission':
+        status = attempt.get('status')
+        if status not in ('rejected', 'valid_candidate_submission'):
             raise ValueError('Unknown attempt status')
+        if not {'raw_response', 'response_sha256', 'reply', 'error'} <= attempt.keys():
+            raise ValueError('Incomplete saved attempt')
         raw = attempt['raw_response']
-        if not isinstance(raw, str) or survey.digest(raw.encode('utf-8')) != attempt['response_sha256']:
+        expected_hash = survey.digest(raw.encode('utf-8')) if isinstance(raw, str) and raw else None
+        if not isinstance(raw, str) or expected_hash != attempt['response_sha256']:
             raise ValueError('Saved response hash does not match')
+        if status == 'rejected':
+            if attempt['reply'] is not None or not isinstance(attempt['error'], str) or not attempt['error']:
+                raise ValueError('Rejected attempt has inconsistent result fields')
+            try:
+                survey.validate_reply(json.loads(raw), packet)
+            except (ValueError, TypeError, KeyError):
+                rejected += 1
+                continue
+            raise ValueError('Rejected attempt contains a valid submission')
+        if attempt['error'] is not None:
+            raise ValueError('Valid attempt contains an error')
         reply = survey.validate_reply(json.loads(raw), packet)
         if reply != attempt['reply']:
             raise ValueError('Saved parsed reply differs from raw response')
