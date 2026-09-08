@@ -9,7 +9,7 @@ import subprocess
 import os
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_REV = 'e66aba07623997806c79423beb137b6ac8442470'
+SOURCE_REV = '386a90748f8c6118bf296f1bc0391a172d217f88'
 METHOD_SHA256 = 'e245680b5d72751e105eab729caf1458f8a522ee4e6bfec0d75f438e8a1c38eb'
 VERSION = '0.1.2'
 CLIENTS = ('codex', 'claude', 'copilot')
