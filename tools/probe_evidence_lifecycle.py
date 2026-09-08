@@ -75,6 +75,26 @@ def evidence_id(record):
     return 'development:' + digest(encoded(payload))
 
 
+def check_recorded_demo(record):
+    """Guard the committed report's simulated-acceptance and observed-result claims."""
+    if (record['kind'] != 'development_evidence_lifecycle'
+            or record['accepted_human_bindings_created'] != 0
+            or 'SIMULATED acceptance' not in record['simulated_binding']['note']):
+        raise ValueError('Development record must not claim human acceptance')
+    evidence = record['evidence']
+    if evidence['evidence_id'] != evidence_id(evidence):
+        raise ValueError('Development evidence bytes changed')
+    if record['simulated_binding']['bindings'] != {evidence['defense_id']: evidence['evidence_id']}:
+        raise ValueError('Simulated binding names different evidence')
+    rows = record['scenarios']
+    if not rows or not all(r['matched'] and r['expected'] == r['actual']['state'] for r in rows):
+        raise ValueError('Recorded lifecycle results do not match')
+    expected = evidence['metadata']['expected_exits']
+    runs = evidence['metadata']['observed_runs']
+    if set(expected) != set(runs) or not all(runs[k]['exit_code'] == v for k, v in expected.items()):
+        raise ValueError('Recorded fault challenges do not match')
+
+
 def inspect(root, register, record, bindings):
     """Read-only, deliberately bounded comparison used by the demo scenarios."""
     try:

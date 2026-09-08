@@ -9,8 +9,8 @@ import subprocess
 import os
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_REV = '9f3e06f5b9ea9d53d1e48860e318068b9df8d978'
-METHOD_SHA256 = 'a03ad586ed0cbac902cf4f9282cea7996086084f6c1483f53ef63bda8f7f6c05'
+SOURCE_REV = 'e66aba07623997806c79423beb137b6ac8442470'
+METHOD_SHA256 = 'e245680b5d72751e105eab729caf1458f8a522ee4e6bfec0d75f438e8a1c38eb'
 VERSION = '0.1.2'
 CLIENTS = ('codex', 'claude', 'copilot')
 FILES = ('SKILL.md', 'references/method.md', 'references/connectlang.md')

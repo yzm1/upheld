@@ -113,3 +113,14 @@ class EvidenceLifecycleTests(unittest.TestCase):
         changed['promises'][0]['subject_scope'] = 'other.md'
         with self.assertRaisesRegex(ValueError, 'Unsupported'):
             lifecycle.basis(ROOT, changed)
+
+    def test_recorded_report_cannot_claim_human_acceptance_or_hide_a_failed_case(self):
+        lifecycle.check_recorded_demo(self.record)
+        for mutation in (lambda r: r.update(accepted_human_bindings_created=1),
+                         lambda r: r['simulated_binding'].update(note='A person accepted this'),
+                         lambda r: r['scenarios'][0]['actual'].update(state='invalid'),
+                         lambda r: r['evidence']['metadata']['observed_runs']['count_fault'].update(exit_code=0)):
+            record = copy.deepcopy(self.record)
+            mutation(record)
+            with self.assertRaises(ValueError):
+                lifecycle.check_recorded_demo(record)

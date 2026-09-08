@@ -12,6 +12,7 @@ from prepare_probe_review import convert, diagnostics
 from package_upheld_skill import check_bundle
 from survey_register import build_register
 from documentation_integrity import require, check_todo, check_fixtures, check_rules
+from probe_evidence_lifecycle import check_recorded_demo
 
 ROOT = Path(__file__).resolve().parents[1]
 CURRENT = [ROOT / x for x in ['AGENTS.md','CONTRIBUTING.md','README.md','TODO.md']]
@@ -41,6 +42,10 @@ def check_artifacts():
              ('bindings','examples/upheld-self-audit/obligations.bindings.json'),
              ('bindings','examples/upheld-status/obligations.bindings.json')]
     for name, path in cases: compiled[name](json_file(path))
+    lifecycle = json_file('measurements/lifecycle-2026-09-08/observation.json')
+    for name, key in [('register', 'register'), ('evidence', 'evidence'), ('bindings', 'simulated_binding')]:
+        compiled[name](lifecycle[key])
+    check_recorded_demo(lifecycle)
     require(json_file('examples/survey-register/obligations.register.json') ==
             build_register(ROOT / 'examples/survey-heldtospec/run'),
             'Survey register changed independently of its saved source judgments')

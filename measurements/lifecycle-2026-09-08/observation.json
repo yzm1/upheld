@@ -1,0 +1,306 @@
+{
+  "kind": "development_evidence_lifecycle",
+  "started_at": "2026-09-08T15:35:22.323736+00:00",
+  "finished_at": "2026-09-08T15:35:22.816123+00:00",
+  "register": {
+    "schema_version": "0.1",
+    "producer": {
+      "name": "maintainer-directed survey",
+      "inputs": [
+        "README.md",
+        "examples/heldtospec-contracts/obligations.register.json",
+        "tools/check_readme_status.py"
+      ],
+      "source_repo": "https://github.com/yzm1/upheld",
+      "source_rev": "3cc993edf7810901ce285b013e18fc670e18919a",
+      "surveyed_on": "2026-09-06",
+      "metadata": {
+        "working_tree": "D01-D08 edits; no evidence basis captured"
+      }
+    },
+    "promises": [
+      {
+        "id": "UPH-001",
+        "text": "The README status counts match the committed example and do not claim the example is absent.",
+        "subject_scope": "README.md",
+        "source": "README.md",
+        "confidence": "verified",
+        "detail": "The README states that the survey has a real example and the Upheld CLI remains unbuilt.",
+        "evidence_tier": "read",
+        "why": "An obsolete status claim prevents readers from assessing the available work.",
+        "the_test_that_would_catch_it": "Compare the status table with the example records and reintroduce the historical absence claim.",
+        "reachability": "live",
+        "defenses": [
+          {
+            "id": "UPH-001:d0",
+            "promise_id": "UPH-001",
+            "guarded_by": "checker",
+            "artifact_locator": "tools/check_readme_status.py::check",
+            "subject_scope": "README.md",
+            "why_this_kind": "Compares declared README counts to current artifacts and reports known stale status claims.",
+            "needs_environment": [],
+            "last_actually_ran": null,
+            "metadata": {
+              "limit": "Checks explicit table rows and known claims; arbitrary prose still needs review."
+            }
+          }
+        ],
+        "next_step": "Use the product basis and seeded-violation producer once available, then have a person bind a matching record."
+      }
+    ]
+  },
+  "evidence": {
+    "schema_version": "0.1",
+    "evidence_id": "development:sha256:f6e7e9f42bdf4c2a6d4d49e1ef638eeaef1fb429385e6468f6279d58751a47e8",
+    "defense_id": "UPH-001:d0",
+    "oracle": "seeded_violation",
+    "oracle_result": "fired",
+    "verdict": "supports",
+    "validated_subject_scope": "README.md",
+    "basis": {
+      "hashing_profile": "development/readme-byte-snapshot/v1",
+      "promise": "sha256:1156b95ae41693089d9aed6f04615f907e18ced48314d015ab307d255f341546",
+      "defense_assertion": "sha256:4125d984d8fa7471e6038599835c30dcb0dfd7cfe158d30b8c1139a4c9937d5c",
+      "artifacts": {
+        "tools/check_readme_status.py": "sha256:fa92d6624b1e26fad04cc5aae8f2901121310c8f75878b496f90a795aa00b707",
+        "tools/probe_evidence_lifecycle.py": "sha256:55d8daa9ee1044d4dbcf029f2e3d886a8b2737ed650ece1f971476018ba0e620"
+      },
+      "subject_scope": {
+        "scope": "README.md",
+        "hash": "sha256:4df8e675a929cd5f81a39c50edba873eff7b2e3a24f23cf561df848fc56fb813"
+      },
+      "environment": {
+        "examples/heldtospec-contracts/obligations.register.json": "sha256:4bdbe684dead0bc99133875a3123e1cb7dc7e26b3c727b673a9df8514b10c132",
+        "examples/heldtospec-contracts/obligations.bindings.json": "sha256:6e4388cde1d62dfe1eb11351e1867519b77335847e35345e31994dfae7092b6c",
+        "examples/heldtospec-contracts/observations.json": "sha256:51a73099177dff28a37736b084c77f175cde4aae0308389d589257789f72266b",
+        "demo-tree-paths": "sha256:311d8debf6613a734a0a640c57ed977f41d8293f430a42bce2d1714ce3b9be6c"
+      }
+    },
+    "source_rev": "e66aba07623997806c79423beb137b6ac8442470",
+    "producer": "development-readme-lifecycle",
+    "supersedes": null,
+    "execution": {
+      "status": "recorded",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "tools/probe_evidence_lifecycle.py",
+        "--output",
+        "measurements/lifecycle-2026-09-08/observation.json"
+      ],
+      "started_at": "2026-09-08T15:35:22.323736+00:00",
+      "duration_seconds": 0.15315702099996997,
+      "toolchain": {
+        "python": "3.12.13",
+        "platform": "Linux-6.18.35-x86_64-with-glibc2.39"
+      },
+      "target": "Disposable snapshot of Upheld README status checks",
+      "configuration": {
+        "profile": "development/readme-byte-snapshot/v1"
+      },
+      "dirty_tree": {
+        "state": "dirty",
+        "snapshot": "sha256:58b7eadbc0ed729cffc66c3fdfb9e49a8ffada0d419e2db2f09797f52ae06d74"
+      },
+      "omissions": [
+        "Arbitrary prose, concurrency, other platforms, and external state were not assessed."
+      ]
+    },
+    "metadata": {
+      "development_only": true,
+      "expected_exits": {
+        "clean": 0,
+        "count_fault": 1,
+        "historical_claim": 1,
+        "missing_input": 2,
+        "weakened_checker": 0
+      },
+      "observed_runs": {
+        "clean": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/tmp/upheld-lifecycle-ngzmwm4g/tools/check_readme_status.py"
+          ],
+          "exit_code": 0,
+          "stdout": "{\n  \"result\": \"clean\",\n  \"findings\": []\n}\n",
+          "stderr": "",
+          "duration_seconds": 0.022830380000414152
+        },
+        "count_fault": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/tmp/upheld-lifecycle-ngzmwm4g/tools/check_readme_status.py"
+          ],
+          "exit_code": 1,
+          "stdout": "{\n  \"result\": \"violated\",\n  \"findings\": [\n    {\n      \"code\": \"status_count_mismatch\",\n      \"subject\": \"Promises\",\n      \"expected\": 44\n    }\n  ]\n}\n",
+          "stderr": "",
+          "duration_seconds": 0.023745985999994446
+        },
+        "weakened_checker": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/tmp/upheld-lifecycle-ngzmwm4g/tools/check_readme_status.py"
+          ],
+          "exit_code": 0,
+          "stdout": "{\n  \"result\": \"clean\",\n  \"findings\": []\n}\n",
+          "stderr": "",
+          "duration_seconds": 0.025323756000034336
+        },
+        "historical_claim": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/tmp/upheld-lifecycle-ngzmwm4g/tools/check_readme_status.py"
+          ],
+          "exit_code": 1,
+          "stdout": "{\n  \"result\": \"violated\",\n  \"findings\": [\n    {\n      \"code\": \"obsolete_status_claim\",\n      \"subject\": \"nothing has been measured from a real register\"\n    }\n  ]\n}\n",
+          "stderr": "",
+          "duration_seconds": 0.025402985999789962
+        },
+        "missing_input": {
+          "command": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/tmp/upheld-lifecycle-ngzmwm4g/tools/check_readme_status.py"
+          ],
+          "exit_code": 2,
+          "stdout": "{\"result\": \"could_not_look\", \"error\": \"[Errno 2] No such file or directory: '/tmp/upheld-lifecycle-ngzmwm4g/examples/heldtospec-contracts/obligations.register.json'\"}\n",
+          "stderr": "",
+          "duration_seconds": 0.022804641000220727
+        }
+      },
+      "source_identity": "source_rev names checkout HEAD; basis hashes the copied working files."
+    }
+  },
+  "simulated_binding": {
+    "schema_version": "0.1",
+    "bindings": {
+      "UPH-001:d0": "development:sha256:f6e7e9f42bdf4c2a6d4d49e1ef638eeaef1fb429385e6468f6279d58751a47e8"
+    },
+    "note": "SIMULATED acceptance for a development probe; no human acceptance."
+  },
+  "scenarios": [
+    {
+      "case": "candidate_without_acceptance",
+      "expected": "open",
+      "actual": {
+        "state": "open",
+        "changed_grounds": []
+      },
+      "matched": true
+    },
+    {
+      "case": "accepted_fixture_unchanged",
+      "expected": "still_valid",
+      "actual": {
+        "state": "still_valid",
+        "changed_grounds": []
+      },
+      "matched": true
+    },
+    {
+      "case": "subject_changed",
+      "expected": "review_required",
+      "actual": {
+        "state": "review_required",
+        "changed_grounds": [
+          "subject_scope"
+        ]
+      },
+      "matched": true
+    },
+    {
+      "case": "regenerated_view_keeps_review",
+      "expected": "review_required",
+      "actual": {
+        "state": "review_required",
+        "changed_grounds": [
+          "subject_scope"
+        ]
+      },
+      "matched": true
+    },
+    {
+      "case": "defense_weakened",
+      "expected": "review_required",
+      "actual": {
+        "state": "review_required",
+        "changed_grounds": [
+          "artifacts:tools/check_readme_status.py"
+        ]
+      },
+      "matched": true
+    },
+    {
+      "case": "declared_input_changed",
+      "expected": "review_required",
+      "actual": {
+        "state": "review_required",
+        "changed_grounds": [
+          "environment:examples/heldtospec-contracts/observations.json"
+        ]
+      },
+      "matched": true
+    },
+    {
+      "case": "promise_changed",
+      "expected": "review_required",
+      "actual": {
+        "state": "review_required",
+        "changed_grounds": [
+          "promise"
+        ]
+      },
+      "matched": true
+    },
+    {
+      "case": "artifact_relocated",
+      "expected": "invalid",
+      "actual": {
+        "state": "invalid",
+        "changed_grounds": [
+          "artifact_missing:tools/check_readme_status.py"
+        ]
+      },
+      "matched": true
+    },
+    {
+      "case": "input_unavailable",
+      "expected": "unresolvable",
+      "actual": {
+        "state": "unresolvable",
+        "changed_grounds": [
+          "input_unavailable"
+        ],
+        "error": "[Errno 2] No such file or directory: '/tmp/upheld-lifecycle-ngzmwm4g/examples/heldtospec-contracts/obligations.register.json'"
+      },
+      "matched": true
+    },
+    {
+      "case": "evidence_missing",
+      "expected": "unresolvable",
+      "actual": {
+        "state": "unresolvable",
+        "changed_grounds": [
+          "evidence_missing"
+        ]
+      },
+      "matched": true
+    },
+    {
+      "case": "evidence_bytes_changed",
+      "expected": "invalid",
+      "actual": {
+        "state": "invalid",
+        "changed_grounds": [
+          "invalid_input"
+        ],
+        "error": "Evidence bytes changed"
+      },
+      "matched": true
+    }
+  ],
+  "accepted_human_bindings_created": 0,
+  "limits": [
+    "This is a closed fixture demonstration, not a product checker or hashing profile.",
+    "Acceptance is simulated and does not change any project bindings.",
+    "Lineage, arbitrary scopes, multi-component graphs, cycles, and review cost remain untested."
+  ]
+}

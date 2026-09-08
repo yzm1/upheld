@@ -1,0 +1,79 @@
+{
+  "kind": "local_development_validation",
+  "started_at": "2026-09-08T15:37:01.254174+00:00",
+  "source_commit": "e66aba07623997806c79423beb137b6ac8442470",
+  "working_files_sha256": {
+    "docs/AGENT_METHOD_EVALUATION.md": "af5dbcc95ae3f3d62a53a1749b4acd71653ac069075623d1b23a3d9686511276",
+    "docs/AGENT_METHOD_RESEARCH.md": "64d956b5f3602b95cc9ca6952906c9a41f7ee1a4a2796af4c8c589fb56da70b9",
+    "docs/CHECKER.md": "55ee79d31294ac4ec01845ae321ebfff6a906c95048baba5974bcc7536b6bc25",
+    "docs/COMPLETED_D01_D08.md": "4ed3c5ef5c66e41f1e6291f8927335d1efc09310c4f1a895fcec567be65c8070",
+    "docs/COMPONENT_REGISTER_DESIGN.md": "84b35c12027500c249c226a262b96669abbfe88417b93b5fafa827e00bc5e944",
+    "docs/CONNECTLANG_METHOD_CASE.md": "66e07c7d12b6ecfca65058728a5f0cb1cd084226581af4fd2aefc3858627c8b3",
+    "docs/DECISIONS.md": "8b303579d9464c15f563bcc846aa6b6621b31e178759812ad3a127fd6344179c",
+    "docs/EVIDENCE_LIFECYCLE.md": "5ea52ad0a16cee765d906cedca814cb0c3966c085fe11230cf4c0dd9fdc6f11f",
+    "docs/METHOD.md": "e245680b5d72751e105eab729caf1458f8a522ee4e6bfec0d75f438e8a1c38eb",
+    "docs/MILESTONE.md": "16815406570429b03eb05b2a0a8ea8c43175b80d99689818453ec74475eac894",
+    "docs/PRIOR_ART.md": "594c657f6edfcc891738d84afea9ef7e3f8542a9c3ec0354f2f4f96a73ae3dcd",
+    "docs/PR_MERGE_REVIEW.md": "178a1d031dfc1d080f604982f95c0a2fbb88e8b990fe6f95202b09151f4ff495",
+    "docs/RED_TEAM_FIXES.md": "1266d7295033cb793164be8d884d6862bf89915d11af38fd6bf3dcdd0e6d6d5b",
+    "docs/RULE_REVIEW.md": "48404253069355997cee9d5dda11b48cfe7a390d1d19a8705cbf4c4db7164043",
+    "docs/S02_RED_TEAM.md": "75010b6f3f159ad8ac89332d0705004b56e80496afdcbcdda9b40a65a415bf6c",
+    "docs/S12_DESIGN.md": "f82fafd677de7e02f73265e2e996842a7990f713dc858af7927214ad5a365bfd",
+    "docs/S12_IMPLEMENTATION.md": "c97b6bed2d0cae8d195d0d9200e7a1a30393c0aacb60abc3dc45d062b514f34a",
+    "docs/S12_RED_TEAM.md": "d9e133a2faac790aa3a15be2be93a7885d082761e540624cc7b69cfb7a8b0994",
+    "docs/SCHEMA.md": "80c91b2789e3eae721078c50a9cf4760389dd860fe433528bfff4864f2ed0aa0",
+    "docs/SELF_AUDIT.md": "f3f6aac67929dc71ccff87fdbf6ca3e66cc18808b49ec8d6f55eda0cca3294c5",
+    "docs/SURVEY_BACKENDS.md": "854e1d1e4e3cdbe721c8d7dab5a3fd4f3bc5e2e7b528478dc65ad213747f734f",
+    "docs/SURVEY_PROTOTYPE.md": "2d1ac35b3e279fe5800084e537b7eb3462bfed4e98be328059bf7be7c5c0c506",
+    "docs/SURVEY_REGISTER.md": "e4b1b0c14d474c84737b1255ee3761a6d1c87c3413c6379f4e4e9726e55298a8",
+    "docs/SURVEY_REGISTER_REVIEW.md": "d58da38c91f926d1471f078a77f0af04fe39f3bce6ed11d049550ea3db250d9b",
+    "docs/SURVEY_RESEARCH.md": "2eca2a2fe9ae95497bce0b160ffc032d15ff3a1c35c636ce0abaf46c2fa84516",
+    "docs/SURVEY_TOOL.md": "64a83ac01617f9eaaafbd5fa9227e4eac893303437ed818befb80525bef9e8bf",
+    "docs/UPHELD_SKILL.md": "0a83f5e7268828104f9d51d640529d2b30212307d935ef6d40426c8aecfe3f46",
+    "tests/test_docs.py": "610ec18f291b363c922a288f80d8225151359ee33ab01eb709462e367edcbdf2",
+    "tests/test_evidence_lifecycle.py": "2a37a98b3104eb92cf3b9f060615252b02690c3b051920e294f9805c1982f2c7",
+    "tests/test_red_team.py": "0e1e496d7391bb3f40b52c2717f3d929313c62488f58b5e3627f21c1895c1f70",
+    "tests/test_skill_package.py": "c1be88c2751617f33bca16563e721b4803ffb80f0f264d08b80e7ddae6baf65b",
+    "tests/test_survey.py": "6e359d9a982683b272413efb8875ca2dee4c4cb09ce88cbc19068f4b088ac30e",
+    "tests/test_survey_register.py": "932c65b12847ed05c966bc4222d1f9b451d93c14474fb23d88dc104a8e9a0609",
+    "tools/check_docs.py": "2a698eeef82a5ff4de6243f0606200f5d473ac0315c1c4cf254b84f73e8e4cc3",
+    "tools/check_readme_status.py": "fa92d6624b1e26fad04cc5aae8f2901121310c8f75878b496f90a795aa00b707",
+    "tools/documentation_integrity.py": "f62bdbe0c49a38e301d743ffc975837e4bc5cfa8f7c45fc61e0d757aafa3233c",
+    "tools/package_upheld_skill.py": "9bee480d3cf61f122f7adf767aa66c3bf523ae4217117d180ad4509e8255c28c",
+    "tools/prepare_probe_review.py": "5779843181f4283f81b56d154d108c05ed1d4027208d9c5ede07d534cf08e18e",
+    "tools/probe_evidence_lifecycle.py": "de2c8b0eb33abdfee8fc68fd58a355ff34919e1591bb2741f71f8c31eddda5ff",
+    "tools/probe_self_audit.py": "353e781bece085665bea5f2590c0fe99120b422bf5cd8384d8723cbebdccf4a1",
+    "tools/survey.py": "fb1a7c334a5ce5116042a15e0d663840ef0569a5a65085c3dd3a47972bbc9ee7",
+    "tools/survey_register.py": "5e413837e6676c4a108f203df48e0bcd9c8f7434a55193e661b72b32a9be3256"
+  },
+  "checks": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".........................................................................\n----------------------------------------------------------------------\nRan 73 tests in 2.972s\n\nOK\n",
+      "duration_seconds": 3.098115370999949
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "tools/check_docs.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Artifact checks passed: 9 schemas; 44 promises; 78 defenses; 19 triage bullets; 4 expected unresolved choices.\nCurrent document links passed.\nProse checks passed for all 54 current documents.\n31/31 passed supplied prose-check tests\n",
+      "stderr": "",
+      "duration_seconds": 1.586316378000447
+    }
+  ],
+  "limit": "Local checks; human acceptance, independent trials, and hosted CI are separate.",
+  "finished_at": "2026-09-08T15:37:05.943910+00:00"
+}
