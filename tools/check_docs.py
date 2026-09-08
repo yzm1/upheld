@@ -10,6 +10,7 @@ import fastjsonschema
 from check_readme_status import check
 from prepare_probe_review import convert, diagnostics
 from package_upheld_skill import check_bundle
+from survey_register import build_register
 from documentation_integrity import require, check_todo, check_fixtures, check_rules
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,8 +36,12 @@ def check_artifacts():
              ('probe-bindings','examples/heldtospec-contracts/obligations.bindings.json'),
              ('register','examples/heldtospec-contracts/review-register.json'),
              ('register','examples/upheld-status/obligations.register.json'),
+             ('register','examples/survey-register/obligations.register.json'),
              ('bindings','examples/upheld-status/obligations.bindings.json')]
     for name, path in cases: compiled[name](json_file(path))
+    require(json_file('examples/survey-register/obligations.register.json') ==
+            build_register(ROOT / 'examples/survey-heldtospec/run'),
+            'Survey register changed independently of its saved source judgments')
     source = json_file(cases[0][1]); ps=source['promises']
     require(json_file(cases[2][1]) == convert(source, cases[0][1]), 'Review copy changed independently of its source')
     actual = {'promises':len(ps), 'defenses':sum(len(p['defenses']) for p in ps),

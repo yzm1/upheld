@@ -1,10 +1,10 @@
 # D01–D08, S01, S11, and S12 are complete; S02 needs further checks
 
-Readers are engineers choosing the next Upheld task. This list tracks the supplied discussion against the repository, updated 7 September 2026.
+Readers are engineers choosing the next Upheld task. This list tracks the supplied discussion against the repository, updated 8 September 2026.
 
-Eleven tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXES.md), plus S01 and S11 research and the S12 guide package. S02 has a working prototype but remains open after its red-team review. D04, D06, and D08 were reopened and repaired; the original completion claim overstated their checks. The other 57 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
+Eleven tasks are complete: D01–D08 after the [review repairs](docs/RED_TEAM_FIXES.md), plus S01 and S11 research and the S12 guide package. S02 has a working prototype but remains open after its red-team review. D04, D06, and D08 were reopened and repaired; the original completion claim overstated their checks. The other 60 tasks remain open or deferred. Product commands, evidence producers, and hash rules remain unbuilt.
 
-[The completion record](docs/COMPLETED_D01_D08.md) links the changes and checks. [The original derived list](docs/history/2026-09-06/DERIVED_TODO.md) preserves the full reasoning, dependencies, and sources for the original 64 items. S11 adds research requested on 6 September 2026. S12–S14 carry its follow-ups. The total is 68 tasks.
+[The completion record](docs/COMPLETED_D01_D08.md) links the changes and checks. [The original derived list](docs/history/2026-09-06/DERIVED_TODO.md) preserves the full reasoning, dependencies, and sources for the original 64 items. S11 adds research requested on 6 September 2026. S12–S14 carry its follow-ups. S15–S17 carry the agreed component and shared-contract work. The total is 71 tasks.
 
 ## Completed work establishes the current rules
 
@@ -34,12 +34,15 @@ Priority P0 means a trust blocker. P1 means the next learning milestone. P2 mean
 | S02 | P1 | Finish live adapter checks and independently assess the implemented source-review prototype | Demonstrate the configured real CLI and effective permissions; independently review source passages for missed or distorted claims. The source/import path and replay work, but those results do not complete the agreed assessment. See [red-team findings](docs/S02_RED_TEAM.md). |
 | S13 | P1 | Prepare independently reviewed agent-method cases | Pin real sources across software, scientific evidence, and reproducible analysis; separate expected answers from agent inputs. Two reviewers record judgments and disagreements. Exclude Repo C, heldtospec, and related answers from held-out cases. Meet the [test proposal](docs/AGENT_METHOD_EVALUATION.md) before registering E01. |
 | S14 | P1 | Exercise configured clients and compare added support | After S12–S13, record real skill loading, effective permissions, missing-tool behavior, cancellation, and cost for each claimed client. Run the E01-registered comparisons and publish failures, useful findings, misses, and human work. Test automatic triggering separately. Add a server only for a demonstrated need unmet by local commands. Feed the decision into E07. |
+| S15 | P1 | Specify component records and shared obligations | Define owners, exported claims, typed references, assumptions, and shared-contract records. Distinguish membership from support. Review cycles, missing sources, and conflicting versions. Publish a schema version and an explicit migration from 0.1. See [design and sources](docs/COMPONENT_REGISTER_DESIGN.md). |
+| S16 | P1 | Assemble component registers into a scoped system view | Load an explicit manifest; preserve stable claim IDs across file moves; show missing and excluded inputs. Derive views and change impact without copying authoritative claims. Review removed records and old relationships. Keep existing evidence and human choices intact. |
+| S17 | P1 | Resolve and review contracts across projects | Pin participating sources and versions. Record why exported guarantees meet each consumer's requirements, including conditions, scope, owner, and defenses. Keep unavailable references and unsupported cycles open. Exercise real component and shared-contract cases before claiming this works. |
 | S03 | P1 | Add test/code sources and audit source-selection bias | the survey records what each source adds and checks the documented undercount of shape/type-related promises. |
 | S04 | P1 | Build skeptical triage with explicit uncertainty | the example queue has an auditable disposition per item and unknowns cannot be converted into verified coverage by a default. |
 | S05 | P1 | Build the cheap-probe stage before investing heavily in a classifier | the first queue can be mechanically reduced with a measured cost per resolved item. Findings about a promise remain distinct from evidence grading a defense. |
 | S06 | P1 | Implement classification without a preselected defense | the interface cannot silently turn uncertainty, unavailable infrastructure, or every new row into `test`. |
 | S07 | P1 | Define document-to-subject mapping and usable locators | supported locators resolve deterministically and scope containment can be checked without pretending the artifact locator is subject scope. |
-| S08 | P1 | Make register generation preserve human decisions | a second survey run retains reviewed decisions or surfaces an explicit conflict, leaves bindings intact, and never emits accepted evidence merely because it found a defense. |
+| S08 | P1 | Reconcile repeated surveys while preserving human decisions | The [proposal exporter](docs/SURVEY_REGISTER.md) now protects existing files. Finish matching edited claims across runs: retain reviewed decisions or surface a conflict, leave bindings intact, and never emit accepted evidence merely because a defense was named. |
 | S09 | P1 | Deliver a one-command first-use path | a first-time engineer can reach a useful finding without manually authoring six ontology files. Complete live adapter checks for authentication, output, effective permissions, cancellation, and costs before claiming provider readiness. Counts distinguish candidates, unbound defenses, findings, and confirmed evidence; the review's sample “104 well supported” is illustrative, not a valid evidence claim. |
 | S10 | P1 | Choose the minimum review surface and measure its usability | a new user can resolve a triage item and resume a rescan without understanding the whole checker ontology. |
 | P01 | P0 | Specify an execution-provenance object or equivalent linked run record | the recorded observation can be identified beyond a Git SHA and absent fields have explicit meaning. |
@@ -114,3 +117,7 @@ Close S11 with a dated research report, a supported interface decision, and expl
 H01–H19 describe heldtospec at the recorded survey date. Check its current source before treating any item as an unresolved defect. The later library run already addressed part of H16; its record still needs linking at defense scope.
 
 Close a task with a dated artifact, decision, or observed check. Keep designed, implemented, exercised, and measured states distinct. A completed planning task does not grade a software defense.
+
+## The survey now writes canonical register proposals
+
+The [exporter](docs/SURVEY_REGISTER.md) writes schema 0.1 from saved source judgments. It retains unknown defenses and reading limits. Existing files remain untouched. This closes the output-format gap; S02, S06–S10, and the evidence work keep their remaining checks. S15–S17 follow the [Boundver and assurance research](docs/COMPONENT_REGISTER_DESIGN.md).

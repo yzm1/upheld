@@ -1,29 +1,23 @@
 # Prepare a source packet and review proposed claims
 
-Readers are engineers running the S02 prototype from this repository. **The prototype collects source documents and validates submitted candidate claims.** A person or an external agent supplies the judgments. An experimental Codex adapter can request them from a user-configured CLI.
+Readers are engineers running the S02 prototype from this repository. **The prototype collects source documents and writes candidate claims to a schema 0.1 register.** A person or an external agent supplies the judgments. An experimental Codex adapter can request them from a user-configured CLI.
 
-The prototype does not execute probes, grade defenses, or write accepted register entries. The packaged Upheld CLI remains unbuilt. Python 3.10 or later runs this script without extra packages.
+The prototype does not execute probes, grade defenses, or write accepted register entries. The packaged Upheld CLI remains unbuilt. Python 3.10 or later runs the source and import commands without extra packages. Register export uses the validator in `requirements-docs.txt`.
 
 ## Replay the heldtospec example from the repository root
 
-Choose a new output directory outside the source folder:
+Use the recorded run to produce a new register file:
 
 ```bash
-python tools/survey.py prepare \
-  --root examples/survey-heldtospec/sources \
-  --manifest examples/survey-heldtospec/manifest.json \
-  --run /tmp/upheld-survey-replay
-python tools/survey.py import \
-  --run /tmp/upheld-survey-replay \
-  --response examples/survey-heldtospec/response.json \
-  --reviewer replay
-python tools/survey.py report --run /tmp/upheld-survey-replay
-python tools/survey.py compare \
-  --left examples/survey-heldtospec/run \
-  --right /tmp/upheld-survey-replay
+python -m pip install -r requirements-docs.txt
+python tools/survey.py register \
+  --run examples/survey-heldtospec/run \
+  --out /tmp/heldtospec-proposed.register.json
 ```
 
-Open `/tmp/upheld-survey-replay/review.html`. The page shows original quotations, full source context, proposed meanings, uncertainty, and next questions. This replay imports prior judgments. It measures no new discovery yield. [The run report](../examples/survey-heldtospec/README.md) records what actually ran.
+Open the JSON file and the saved [source review](../examples/survey-heldtospec/run/review.html). The export reuses saved judgments. It measures no new discovery yield. [The output guide](SURVEY_REGISTER.md) explains fields, unknown defenses, and unresolved questions.
+
+The recorded packet pins the collector code that produced it. A changed collector creates a different packet ID. Freshly prepared packets need replies that name their own IDs; an old reply remains tied to its original packet.
 
 ## Make a new survey boundary explicit
 
@@ -35,6 +29,15 @@ The first collector accepts whole UTF-8 text documents up to 64 KiB each. It pre
 
 Preparation saves the source text, source hashes, collector hash, instructions, and response schema in `packet.json`. Its content digest identifies the packet. Existing run directories cause an error. Prepare a new directory for changed inputs.
 
+For a new source review, prepare the packet outside the source folder:
+
+```bash
+python tools/survey.py prepare \
+  --root /path/to/repository \
+  --manifest /path/to/survey-manifest.json \
+  --run /tmp/new-upheld-survey
+```
+
 ## Supply judgments through the same response format
 
 Give `packet.json` to a reviewer or existing agent session. Request a JSON response matching `response-schema.json`. The committed response demonstrates the format. State which sources the reviewer inspected and explain a zero-candidate result. Each reviewer declares whole-document or partial reading and describes unread portions. These are reviewer assertions; the tool cannot prove their completeness.
@@ -45,13 +48,25 @@ Import rejects unknown fields, invented locations, altered quotations, wrong pac
 
 Each import creates a new attempt record. Rejected attempts retain diagnostics; prior valid submissions remain available. Reports group exact duplicates and leave differing claims visible. Source inspection status means a reviewer reported reading it; it does not establish complete claim coverage.
 
+Import the reply, then write the canonical register:
+
+```bash
+python tools/survey.py import \
+  --run /tmp/new-upheld-survey \
+  --response /path/to/reply.json \
+  --reviewer local-review
+python tools/survey.py register \
+  --run /tmp/new-upheld-survey \
+  --out /tmp/new-upheld-proposed.register.json
+```
+
 ## Configure Codex explicitly before requesting judgments
 
 Create a private JSON config with `executable`, `model`, `timeout_seconds`, and `allow_unverified_agent`. Use your installed executable and chosen model. The adapter requires `allow_unverified_agent: true` after you review its limits. Otherwise use external import. No model account or credentials belong in the repository.
 
 ```bash
 python tools/survey.py codex \
-  --run /tmp/upheld-survey-replay \
+  --run /tmp/new-upheld-survey \
   --config /path/to/your/codex-survey.json
 ```
 
