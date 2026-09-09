@@ -7,15 +7,15 @@
       "accepted_gaps": [],
       "actual_defenses": [
         {
-          "artifact_locator": "schemas/0.2/register.schema.json",
+          "artifact_locator": ["schemas/0.2/register.schema.json", "tools/check_docs.py"],
           "guarded_by": "checker",
           "id": "UPH-02-01:d:schema",
           "implementation_state": "present",
-          "needs_environment": [],
+          "needs_environment": ["Python with fastjsonschema"],
           "obligation_id": "UPH-02-01",
           "recommendation_member_ids": ["UPH-02-01:schema"],
-          "subject_scope": "schemas/0.2/register.schema.json",
-          "why_this_kind": "Executable or structural defense for this recorded claim."
+          "subject_scope": "schema 0.2 register shape",
+          "why_this_kind": "The schema defines separate plan and actual-defense fields, and the repository gate compiles it."
         },
         {
           "artifact_locator": "tests/test_assurance_report.py",
@@ -40,7 +40,7 @@
           "constraints_considered": [],
           "id": "UPH-02-01:plan",
           "members": [
-            {"bypass_paths": [], "fault_challenge": "Swap their shapes and require rejection.", "guarded_by": "checker", "id": "UPH-02-01:schema", "intended_scope": "schemas/0.2/register.schema.json", "needs_environment": [], "rationale": "Keep plan and actual defenses in distinct fields.", "residual_uncertainty": []},
+            {"bypass_paths": [], "fault_challenge": "Swap plan and actual-defense shapes and require rejection.", "guarded_by": "checker", "id": "UPH-02-01:schema", "intended_scope": "schemas/0.2/register.schema.json", "needs_environment": ["Python with fastjsonschema"], "rationale": "Keep plan and actual defenses in distinct fields and compile that shape in CI.", "residual_uncertainty": []},
             {"bypass_paths": [], "fault_challenge": "Remove a mapped implementation and require a gap.", "guarded_by": "test", "id": "UPH-02-01:fixture", "intended_scope": "self-assurance fixture", "needs_environment": [], "rationale": "Exercise both states in a real 0.2 record.", "residual_uncertainty": []}
           ],
           "objective": "Keep the recorded product behavior aligned with the 0.2 model.",
@@ -63,10 +63,10 @@
       "actual_defenses": [
         {
           "artifact_locator": "skills/upheld/SKILL.md",
-          "guarded_by": "x-agent-guidance",
+          "guarded_by": "x-recommender",
           "id": "UPH-02-02:d:skill-recommend",
           "implementation_state": "present",
-          "mechanism": "Upheld skill recommendation route executed by a configured agent",
+          "mechanism": "constraint-aware defense planning route executed by a configured agent",
           "needs_environment": ["configured agent client"],
           "obligation_id": "UPH-02-02",
           "recommendation_member_ids": ["UPH-02-02:recommend"],
@@ -85,7 +85,7 @@
           "constraints_considered": [],
           "id": "UPH-02-02:plan",
           "members": [
-            {"bypass_paths": [], "fault_challenge": "Change a hard constraint and require the preferred plan to change.", "guarded_by": "x-recommender", "id": "UPH-02-02:recommend", "intended_scope": "defense planner", "mechanism": "constraint-aware defense planner", "needs_environment": [], "rationale": "Choose plans under project constraints instead of a fixed defense ranking.", "residual_uncertainty": []},
+            {"bypass_paths": [], "fault_challenge": "Change a hard constraint and require the preferred plan to change.", "guarded_by": "x-recommender", "id": "UPH-02-02:recommend", "intended_scope": "defense planner", "mechanism": "constraint-aware defense planner", "needs_environment": ["configured agent client"], "rationale": "Choose plans under project constraints instead of a fixed defense ranking.", "residual_uncertainty": []},
             {"bypass_paths": [], "fault_challenge": "Score scope, bypasses, constraints, and portfolio need.", "guarded_by": "test", "id": "UPH-02-02:eval", "intended_scope": "recommendation trials", "needs_environment": [], "rationale": "Compare suggestions with independently reviewed acceptable plans.", "residual_uncertainty": []}
           ],
           "objective": "Keep the recorded product behavior aligned with the 0.2 model.",
@@ -111,7 +111,7 @@
           "guarded_by": "x-agent-guidance",
           "id": "UPH-02-03:d:skill-inventory",
           "implementation_state": "present",
-          "mechanism": "Upheld skill inventory route executed by a configured agent",
+          "mechanism": "agent-guided defense inventory",
           "needs_environment": ["configured agent client", "source access"],
           "obligation_id": "UPH-02-03",
           "recommendation_member_ids": ["UPH-02-03:inventory"],
@@ -127,7 +127,7 @@
           "obligation_id": "UPH-02-03",
           "recommendation_member_ids": ["UPH-02-03:gap"],
           "subject_scope": "tools/assurance_report.py",
-          "why_this_kind": "Executable or structural defense for this recorded claim."
+          "why_this_kind": "The reporter compares plan-member mappings with actual defenses, bindings, and evidence."
         }
       ],
       "confidence": "verified",
@@ -141,7 +141,7 @@
           "constraints_considered": [],
           "id": "UPH-02-03:plan",
           "members": [
-            {"bypass_paths": [], "fault_challenge": "Seed a plausible name match that does not guard the obligation.", "guarded_by": "checker", "id": "UPH-02-03:inventory", "intended_scope": "survey/code inventory", "needs_environment": [], "rationale": "Find actual defenses by reading mechanism and scope.", "residual_uncertainty": []},
+            {"bypass_paths": [], "fault_challenge": "Seed a plausible name match that does not guard the obligation.", "guarded_by": "x-agent-guidance", "id": "UPH-02-03:inventory", "intended_scope": "survey/code inventory", "mechanism": "agent-guided defense inventory", "needs_environment": ["configured agent client", "source access"], "rationale": "Find actual defenses by reading mechanism and scope.", "residual_uncertainty": []},
             {"bypass_paths": [], "fault_challenge": "Record missing, unmapped, and unbound defenses and require distinct gaps.", "guarded_by": "checker", "id": "UPH-02-03:gap", "intended_scope": "tools/assurance_report.py", "needs_environment": [], "rationale": "Compare selected plan members with actual mappings and bindings.", "residual_uncertainty": []}
           ],
           "objective": "Keep the recorded product behavior aligned with the 0.2 model.",
@@ -194,8 +194,17 @@
     {
       "accepted_gaps": [],
       "actual_defenses": [
-        {"artifact_locator": "skills/upheld/SKILL.md", "guarded_by": "checker", "id": "UPH-02-05:d:skill", "implementation_state": "present", "needs_environment": [], "obligation_id": "UPH-02-05", "recommendation_member_ids": ["UPH-02-05:package"], "subject_scope": "skills/upheld/SKILL.md", "why_this_kind": "Executable or structural defense for this recorded claim."},
-        {"artifact_locator": "tests/test_skill_package.py", "guarded_by": "test", "id": "UPH-02-05:d:package-tests", "implementation_state": "present", "needs_environment": [], "obligation_id": "UPH-02-05", "recommendation_member_ids": ["UPH-02-05:package"], "subject_scope": "skill package", "why_this_kind": "Package tests exercise detachable explicit-only packages and integrity failures."}
+        {
+          "artifact_locator": "tests/test_skill_package.py",
+          "guarded_by": "test",
+          "id": "UPH-02-05:d:package-tests",
+          "implementation_state": "present",
+          "needs_environment": [],
+          "obligation_id": "UPH-02-05",
+          "recommendation_member_ids": ["UPH-02-05:package"],
+          "subject_scope": "skill package",
+          "why_this_kind": "Package tests exercise detachable explicit-only packages and integrity failures."
+        }
       ],
       "confidence": "verified",
       "constraints": {"consequence": "Migration and imports must lower adoption cost without upgrading meaning.", "environment": [], "hard_limits": [], "objectives": []},
