@@ -56,7 +56,8 @@ The [milestone](docs/MILESTONE.md) pairs source review and cheap probes with a s
 
 ## Start with the product model or the next task
 
-- [Design choices](docs/DECISIONS.md) state the promise-to-defense product spine.
+- [Product model](docs/PRODUCT_MODEL.md) gives the whole promise-to-defense-to-gap workflow.
+- [Design choices](docs/DECISIONS.md) records the rules that follow from that model.
 - [Survey register](docs/SURVEY_REGISTER.md) explains the current machine-readable output and its limits.
 - [Trace-freshness boundary](docs/TRACE_FRESHNESS_BOUNDARY.md) keeps fingerprint and impact work in its supporting role.
 - [Component design](docs/COMPONENT_REGISTER_DESIGN.md) records the next schema work.
