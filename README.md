@@ -6,6 +6,8 @@ Upheld is a software assurance tool in development. It records what code promise
 
 A promise is a claim that can be false. A defense is a test, rule, type guarantee, or other mechanism intended to uphold it. An evidence record describes a run that assessed a defense. A binding records a person's choice to rely on that evidence.
 
+Fingerprinting a requirement or dependency link and flagging it after change is established prior art in tools such as Doorstop and Boundver. Upheld does not treat that trace-freshness layer as its differentiator. Its added responsibility is to record **why a defense is worth relying on, how that defense was challenged, what was actually observed, what a person accepted, and when the grounds for that acceptance change**. [The boundary and adoption bypass](docs/TRACE_FRESHNESS_BOUNDARY.md) explain how existing trace and impact systems can feed Upheld instead of being replaced.
+
 The [development lifecycle](docs/EVIDENCE_LIFECYCLE.md) runs an existing checker through a fault challenge and changed-ground review. Acceptance in that case is simulated. [Earlier tools](docs/PRIOR_ART.md) supply precedents; useful findings and review cost remain the product tests.
 
 ## The committed example has no graded defenses
@@ -39,6 +41,7 @@ The [milestone](docs/MILESTONE.md) pairs a survey and cheap-probe workflow with 
 ## Start with the method or the next task
 
 - [Survey register](docs/SURVEY_REGISTER.md) explains the machine-readable output and its limits.
+- [Trace-freshness boundary](docs/TRACE_FRESHNESS_BOUNDARY.md) separates established fingerprint/impact behavior from Upheld's assurance layer.
 - [Component design](docs/COMPONENT_REGISTER_DESIGN.md) records the next schema work.
 - [Current method](docs/METHOD.md) explains how to assess a defense.
 - [Self-audit](docs/SELF_AUDIT.md) applies the method to Upheld and records observed faults and remaining gaps.
