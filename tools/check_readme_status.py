@@ -27,17 +27,32 @@ def check(root=ROOT, readme=None):
         match = re.search(r'^\| ' + re.escape(label) + r' \| (\d+) \|', readme, re.M)
         if not match or int(match.group(1)) != number:
             findings.append({'code': 'status_count_mismatch', 'subject': label, 'expected': number})
+
     collapsed = ' '.join(readme.lower().split())
     stale = ['nothing has been measured from a real register',
              'heldtospec has no register', 'neither is here yet']
     for claim in stale:
         if claim in collapsed:
             findings.append({'code': 'obsolete_status_claim', 'subject': claim})
-    if 'the upheld cli remains unbuilt' not in collapsed:
+
+    if 'full upheld cli remains unbuilt' not in collapsed:
         findings.append({'code': 'cli_status_requires_review', 'subject': 'README.md'})
-    # A newly added package must trigger a review of the explicit unbuilt claim.
     if any((root / p).exists() for p in ('src/upheld', 'upheld/__main__.py', 'pyproject.toml')):
         findings.append({'code': 'cli_status_requires_review', 'subject': 'package added; inspect actual command state'})
+
+    required_02 = (
+        'schemas/0.2/register.schema.json',
+        'schemas/0.2/evidence.schema.json',
+        'schemas/0.2/bindings.schema.json',
+        'schemas/0.2/assurance-report.schema.json',
+        'tools/assurance_report.py',
+    )
+    if 'schema 0.2 now represents that product model' not in collapsed:
+        findings.append({'code': 'schema_02_status_requires_review', 'subject': 'README.md'})
+    missing = [path for path in required_02 if not (root / path).is_file()]
+    if missing:
+        findings.append({'code': 'schema_02_status_requires_review', 'subject': ', '.join(missing)})
+
     return findings
 
 
