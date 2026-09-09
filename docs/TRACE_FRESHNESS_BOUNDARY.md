@@ -42,7 +42,7 @@ This layer answers concrete questions:
 
 Doorstop, Boundver, build graphs, requirements tools, and source resolvers already answer parts of these questions. Upheld may keep a small local version for standalone use. It should avoid growing another general dependency engine without measured need.
 
-### Layer 2 asks whether a defense deserves trust
+### Layer 2 tests whether a defense supports reliance
 
 This is Upheld's core work:
 
