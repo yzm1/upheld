@@ -18,7 +18,6 @@ def check_todo(text):
         task, status = cells[:2]
         require(task not in ids, f'Duplicate task: {task}')
         ids.append(task)
-        # Open-work tables currently use priority in this column.
         allowed = {'Complete', 'Open', 'Reopened', 'In progress', 'Deferred',
                    'P0', 'P1', 'P2', 'P0 release gate', 'Later', 'Later decision'}
         require(status in allowed, f'Unknown task status: {task}: {status}')
@@ -30,7 +29,8 @@ def check_todo(text):
 
 def check_fixtures(root):
     # These examples are explicitly unbound. Future examples may carry evidence.
-    for name in ('heldtospec-contracts', 'upheld-status', 'upheld-self-audit'):
+    for name in ('heldtospec-contracts', 'upheld-status', 'upheld-self-audit',
+                 'upheld-self-assurance'):
         folder = root / 'examples' / name
         evidence = folder / 'obligations.evidence.jsonl'
         require(evidence.is_file(), f'Missing evidence fixture: {evidence}')
@@ -46,7 +46,6 @@ def check_rules(root):
         rows = re.findall(r'^\| (\w+) \| (MUST|SHOULD) \|.*$', text, re.M)
         require(len(rows) == len(dict(rows)), f'Duplicate normative rule in {path}')
         require(dict(rows) == expected['strengths'], f'Rule strengths changed: {path}')
-        # A text pin requires an explicit reviewed update; it cannot judge meaning.
         actual = hashlib.sha256(text.encode()).hexdigest()
         require(actual == expected['sha256'],
                 f'Rule document changed: review semantics and update docs/rule-review.json: {path}')
