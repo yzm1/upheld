@@ -30,6 +30,18 @@ The corrected record maps that plan member to `tests/test_skill_package.py`. The
 
 This matters beyond bookkeeping. Finding “what exists” still requires a judgment about each artifact's role. Names and nearby files do not settle that question.
 
+## Integration exposed three stale defenses and regressions
+
+Running the existing repository checks against the 0.2 changes found three more concrete problems outside the derived twelve-gap report.
+
+First, the README status checker still defended the old positioning. Once the README began claiming schema 0.2 as the current product model, that defense failed. The checker now verifies the new CLI-status and schema-0.2 claims plus the files those claims depend on.
+
+Second, the 0.2 package edit accidentally dropped the package CLI's structured `clean`, `violated`, and `could_not_look` results. The existing package test and self-audit probe caught that regression. The structured states are restored without changing the file-verification semantics.
+
+Third, the evidence-lifecycle fixture copied the old inputs behind the README checker but omitted the new schema-0.2 files. Its clean fault challenge therefore stopped being clean. The fixture now includes those files in the exact environment grounds it hashes, so later changes to them correctly require review.
+
+These are development findings from integrating the new model. They do not add evidence or bindings to the 0.2 self-register.
+
 ## The planner needs proof next
 
 Upheld says it should help answer “how should this promise be held?” The repository can represent that answer, and the 0.2 skill gives an agent a procedure for producing it. **The project still lacks demonstrated planner quality.**
