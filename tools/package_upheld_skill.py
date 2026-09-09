@@ -157,10 +157,15 @@ def main():
             verify_package(args.verify)
         else:
             build(args.client, args.output)
-    except (OSError, ValueError, json.JSONDecodeError) as exc:
-        print(str(exc), file=sys.stderr)
-        raise SystemExit(2)
+        print(json.dumps({'result': 'clean', 'limit': 'File checks only; agent behavior remains unverified.'}))
+    except OSError as exc:
+        print(json.dumps({'result': 'could_not_look', 'error': str(exc)}))
+        return 2
+    except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
+        print(json.dumps({'result': 'violated', 'error': str(exc)}))
+        return 1
+    return 0
 
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(main())
