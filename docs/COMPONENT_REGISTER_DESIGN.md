@@ -8,7 +8,7 @@ Boundver declares component paths, contract inputs, and downstream consumers. It
 
 The payments demo traces an API change through a client library and checkout app to an external mobile consumer. External labels end traversal; they do not identify a verified remote contract. [Runnable demo](https://github.com/yzm1/boundver/blob/b8c886100694a0b9f9d45502d072876f07c43444/scripts/demo_consumer_impact.py), [graph code](https://github.com/yzm1/boundver/blob/b8c886100694a0b9f9d45502d072876f07c43444/src/boundver/_consumer_graph.py).
 
-Doorstop supplies the same lower-level pattern in a requirements setting: a parent-link stamp records the upstream item's fingerprint, and a changed fingerprint makes the link suspect until reviewed. [Current item implementation](https://github.com/doorstop-dev/doorstop/blob/develop/doorstop/core/item.py).
+Doorstop supplies the same lower-level pattern in a requirements setting: a parent-link stamp records the upstream item's fingerprint, and a changed fingerprint makes the link suspect until reviewed. [Reviewed Doorstop item implementation](https://github.com/doorstop-dev/doorstop/blob/1f5756390bdeeff58fc22e30d5c5a56bb1a81c16/doorstop/core/item.py).
 
 [The trace-freshness boundary](TRACE_FRESHNESS_BOUNDARY.md) therefore treats generic identity, fingerprint drift, and affected-relationship propagation as an established lower layer. S15–S17 must not recreate a second general dependency engine unless measured needs require semantics that the available tools cannot provide.
 
@@ -78,4 +78,4 @@ S15 defines the schema and migration. It must distinguish membership, dependency
 
 Small projects may keep one authored file. Splitting files adds reference and review work; its maintenance benefit remains unmeasured. An optional Boundver import can supply component context without requiring every Upheld user to adopt it. A Doorstop or StrictDoc import can likewise reduce duplicate obligation authoring without treating source-tool review status as accepted evidence.
 
-The research reviewed Boundver commit `b8c8861` on 8 September 2026. Its 23 graph tests and disposable Git demo passed. A historical-edge test was inspected but could not run because pytest was unavailable. These are focused checks. Large-project trials and a working cross-project resolver remain open.
+The research reviewed Boundver commit `b8c8861` on 8 September 2026 and Doorstop commit `1f57563` on 9 September 2026. Boundver's 23 graph tests and disposable Git demo passed in the recorded review. A historical-edge test was inspected but could not run because pytest was unavailable. These are focused checks. Large-project trials and a working cross-project resolver remain open.
