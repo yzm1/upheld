@@ -19,7 +19,7 @@ Doorstop saves a stamp for reviewed requirement content and another stamp on a p
 
 They remain different products. Doorstop centers on requirements and document review. Boundver classifies exact, behavior, boundary, and compatibility drift across component contracts.
 
-The overlap still matters. A tool that stores promise-to-artifact links, hashes them, and requests review after change would mostly rebuild established behavior. [The trace-freshness boundary](TRACE_FRESHNESS_BOUNDARY.md) says where Upheld should start instead: explain why a defense fits, challenge it, record the run, record the person's choice, and recheck the inputs behind that choice.
+The overlap still matters. A tool that stores promise-to-artifact links, hashes them, and requests review after change would mostly rebuild established behavior. [The trace-freshness boundary](TRACE_FRESHNESS_BOUNDARY.md) keeps that work underneath the larger Upheld map: what must stay true, the defense plan, the defenses that exist now, the evidence behind them, and the gap.
 
 ## Each precedent supplies a concrete lesson
 
@@ -49,12 +49,13 @@ No reviewed source establishes a universal ranking of defense kinds. Judge a pro
 
 ## Prior art changes what Upheld should build and test
 
-1. **A fresh link does not prove a good defense.** A suspect or affected link only says that earlier work may need another look.
-2. **Advice is not code.** Store a proposed defense separately from an implemented one.
-3. **Import rather than duplicate.** Doorstop, StrictDoc, Boundver, build graphs, and external requirements tools can supply candidate promises, stable IDs, locators, and affected links. Their review state does not become evidence or a binding.
-4. **Do not rebuild generic graph traversal by default.** Consume Boundver-style topology where available. Add an Upheld support link only when its conditions and grounds are explicit.
-5. **Test against the simpler tool.** Maintenance pilots must include an ordinary fingerprinted-link baseline. Upheld's extra records have to earn their review cost.
+1. **The main product is the promise-to-defense map.** Track what should hold each promise, what does hold it, and the gap.
+2. **A fresh link does not prove a good defense.** A suspect or affected link only says that earlier work may need another look.
+3. **Advice is not code.** Store a proposed defense plan separately from an implemented defense.
+4. **Import rather than duplicate.** Doorstop, StrictDoc, Boundver, build graphs, and external requirements tools can supply candidate promises, stable IDs, locators, and affected links. Their review state does not become evidence or a binding.
+5. **Do not rebuild generic graph traversal by default.** Consume Boundver-style topology where available. Add an Upheld support link only when its conditions and grounds are explicit.
+6. **Test the whole flow.** Judge promise discovery, defense-plan quality, current-defense inventory, gap finding, evidence quality, and upkeep cost. Use the simple fingerprint baseline only for the lower-layer upkeep comparison.
 
-The [method](METHOD.md) already requires a reason for each defense choice and keeps unknowns visible. The [checker rules](CHECKER.md) separate unchanged inputs from a sound original judgment. The [milestone](MILESTONE.md) now includes the simpler fingerprint baseline.
+The [method](METHOD.md) already requires a reason for each defense choice and keeps unknowns visible. The [checker rules](CHECKER.md) separate unchanged inputs from a sound original judgment. The [milestone](MILESTONE.md) now tests both defense plans and the simpler fingerprint baseline.
 
 The [component design](COMPONENT_REGISTER_DESIGN.md) and [trace-freshness boundary](TRACE_FRESHNESS_BOUNDARY.md) carry these limits into the next schema work.
