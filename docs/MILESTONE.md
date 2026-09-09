@@ -29,6 +29,25 @@ The initial success rule requires at least one confirmed useful finding in each 
 
 When testing categories, compare per-item choices against independently reviewed labels. Use the same categories and include abstentions. Category totals alone cannot pass the trial.
 
+## Compare Upheld with the simpler trace-freshness baseline
+
+Doorstop-style suspect links and Boundver-style affected consumers show that fingerprinted trace freshness is established prior art. [The product boundary](TRACE_FRESHNESS_BOUNDARY.md) makes that lower layer explicit.
+
+At least one maintenance comparison must therefore include a baseline that can store a stable obligation or contract relationship, fingerprint the reviewed grounds, and report changed, missing, or affected relationships. The baseline does not need Upheld's defense, oracle, evidence, or binding semantics.
+
+Measure whether Upheld's additional machinery earns its cost. Record, per arm:
+
+- stale or affected relationships surfaced;
+- defenses discovered but shown inadequate by a fault challenge;
+- unsupported conclusions from passing or fresh traces;
+- necessary and unnecessary reassessment decisions;
+- human review minutes and queue age;
+- cases where validated scope reduced work without hiding real impact;
+- preservation of explicit acceptance across regeneration;
+- useful next actions that the simpler baseline could not provide.
+
+Do not count a longer or more detailed report as a gain. If Upheld does not materially improve decisions or reduce risky ambiguity relative to this baseline, the added ontology is not justified for that workflow.
+
 ## Recheck evidence after a month of changes
 
 Follow the original evidence through roughly a month of real development. Report actual elapsed time and relevant changes. If nothing relevant changed, the trial supplies no upkeep result.
