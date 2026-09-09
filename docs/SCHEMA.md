@@ -47,7 +47,7 @@ The register stores deliberate accepted gaps under `accepted_gaps`. The reporter
 
 [The report schema](../schemas/0.2/assurance-report.schema.json) names `no_plan`, `no_defense`, `weaker_than_recommended`, `unproven_defense`, `stale_evidence`, `coverage_gap`, `unsupported_environment`, `divergence_unreviewed`, `conflicting_defenses`, `accepted_gap`, and `unknown`.
 
-The first reporter emits only the classes its inputs justify. It must not guess semantic coverage. Accepted gaps remain visible; acceptance changes their status, not their meaning.
+The first reporter emits only the classes its inputs justify. It must not guess semantic coverage. Accepted gaps remain visible. Acceptance changes only their status; their meaning stays the same.
 
 ## Evidence belongs to a current defense
 
