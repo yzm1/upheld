@@ -23,16 +23,25 @@ CURRENT += [ROOT / 'measurements/RESULTS.md']
 CURRENT += sorted((ROOT / 'reference').glob('*.md'))
 CURRENT += sorted((ROOT / 'skills/upheld').rglob('*.md'))
 CURRENT += sorted((ROOT / 'messages').glob('*.md'))
-CURRENT += sorted((ROOT / 'reviews').glob('*.md'))  # verbatim bodies are fenced from the gate
+CURRENT += sorted((ROOT / 'reviews').glob('*.md'))
 
 
 def json_file(path): return json.loads((ROOT / path).read_text())
 
 
+def compile_schemas(version):
+    return {
+        p.stem.replace('.schema', ''): fastjsonschema.compile(json.loads(p.read_text()))
+        for p in (ROOT / 'schemas' / version).glob('*.json')
+    }
+
+
 def check_artifacts():
     check_bundle(ROOT)
-    compiled = {p.stem.replace('.schema',''): fastjsonschema.compile(json.loads(p.read_text()))
-                for p in (ROOT / 'schemas/0.1').glob('*.json')}
+    compiled = compile_schemas('0.1')
+    compiled_02 = compile_schemas('0.2')
+    require(set(compiled_02) == {'register', 'evidence', 'bindings', 'assurance-report'},
+            'Schema 0.2 must publish the register, evidence, bindings, and assurance report')
     cases = [('probe-register','examples/heldtospec-contracts/obligations.register.json'),
              ('probe-bindings','examples/heldtospec-contracts/obligations.bindings.json'),
              ('register','examples/heldtospec-contracts/review-register.json'),
@@ -68,11 +77,11 @@ def check_artifacts():
     require(check() == [], 'README status check failed')
     check_rules(ROOT)
     check_todo((ROOT / 'TODO.md').read_text())
-    # Historical source snapshots must retain their content hashes.
     import hashlib
     for name,digest in json_file('docs/history/snapshot-hashes.json').items():
         require(hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==digest, name)
-    print(f'Artifact checks passed: {len(compiled)} schemas; 44 promises; 78 defenses; 19 triage bullets; 4 expected unresolved choices.')
+    total_schemas = len(compiled) + len(compiled_02)
+    print(f'Artifact checks passed: {total_schemas} schemas; 44 promises; 78 defenses; 19 triage bullets; 4 expected unresolved choices.')
 
 
 def check_links():
