@@ -1,0 +1,369 @@
+{
+  "metadata": {
+    "limit": "Author self-application. Plans are proposed; evidence and bindings are intentionally empty."
+  },
+  "obligations": [
+    {
+      "accepted_gaps": [],
+      "actual_defenses": [
+        {
+          "artifact_locator": "schemas/0.2/register.schema.json",
+          "guarded_by": "checker",
+          "id": "UPH-02-01:d:schema",
+          "implementation_state": "present",
+          "needs_environment": [],
+          "obligation_id": "UPH-02-01",
+          "recommendation_member_ids": [
+            "UPH-02-01:schema"
+          ],
+          "subject_scope": "schemas/0.2/register.schema.json",
+          "why_this_kind": "Executable or structural defense for this recorded claim."
+        }
+      ],
+      "confidence": "verified",
+      "constraints": {
+        "consequence": "Advice must not look like implementation.",
+        "environment": [],
+        "hard_limits": [],
+        "objectives": []
+      },
+      "falsifier": "A recommendation validates as an actual defense or missing implementation looks covered.",
+      "id": "UPH-02-01",
+      "origin": "authored",
+      "reachability": "live",
+      "recommended_assurance": {
+        "plans": [
+          {
+            "constraints_considered": [],
+            "id": "UPH-02-01:plan",
+            "members": [
+              {
+                "bypass_paths": [],
+                "fault_challenge": "Swap their shapes and require rejection.",
+                "guarded_by": "checker",
+                "id": "UPH-02-01:schema",
+                "intended_scope": "schemas/0.2/register.schema.json",
+                "needs_environment": [],
+                "rationale": "Keep plan and actual defenses in distinct fields.",
+                "residual_uncertainty": []
+              },
+              {
+                "bypass_paths": [],
+                "fault_challenge": "Remove a mapped implementation and require a gap.",
+                "guarded_by": "test",
+                "id": "UPH-02-01:fixture",
+                "intended_scope": "self-assurance fixture",
+                "needs_environment": [],
+                "rationale": "Exercise both states in a real 0.2 record.",
+                "residual_uncertainty": []
+              }
+            ],
+            "objective": "Keep the recorded product behavior aligned with the 0.2 model.",
+            "obligation_id": "UPH-02-01",
+            "portfolio_logic": "all_required",
+            "preference": "preferred",
+            "residual_uncertainty": [],
+            "tradeoffs": []
+          }
+        ],
+        "selected_plan_id": "UPH-02-01:plan",
+        "status": "proposed"
+      },
+      "source": "docs/PRODUCT_MODEL.md",
+      "subject_scope": "docs/PRODUCT_MODEL.md",
+      "text": "Intended assurance and actual defenses stay separate.",
+      "why": "Advice must not look like implementation."
+    },
+    {
+      "accepted_gaps": [],
+      "actual_defenses": [],
+      "confidence": "verified",
+      "constraints": {
+        "consequence": "Choosing how a promise should be held is a primary product job.",
+        "environment": [],
+        "hard_limits": [],
+        "objectives": []
+      },
+      "falsifier": "The system always recommends one technique or ignores a decisive constraint.",
+      "id": "UPH-02-02",
+      "origin": "authored",
+      "reachability": "live",
+      "recommended_assurance": {
+        "plans": [
+          {
+            "constraints_considered": [],
+            "id": "UPH-02-02:plan",
+            "members": [
+              {
+                "bypass_paths": [],
+                "fault_challenge": "Change a hard constraint and require the preferred plan to change.",
+                "guarded_by": "x-recommender",
+                "id": "UPH-02-02:recommend",
+                "intended_scope": "defense planner",
+                "mechanism": "constraint-aware defense planner",
+                "needs_environment": [],
+                "rationale": "Choose plans under project constraints instead of a fixed defense ranking.",
+                "residual_uncertainty": []
+              },
+              {
+                "bypass_paths": [],
+                "fault_challenge": "Score scope, bypasses, constraints, and portfolio need.",
+                "guarded_by": "test",
+                "id": "UPH-02-02:eval",
+                "intended_scope": "recommendation trials",
+                "needs_environment": [],
+                "rationale": "Compare suggestions with independently reviewed acceptable plans.",
+                "residual_uncertainty": []
+              }
+            ],
+            "objective": "Keep the recorded product behavior aligned with the 0.2 model.",
+            "obligation_id": "UPH-02-02",
+            "portfolio_logic": "all_required",
+            "preference": "preferred",
+            "residual_uncertainty": [],
+            "tradeoffs": []
+          }
+        ],
+        "selected_plan_id": "UPH-02-02:plan",
+        "status": "proposed"
+      },
+      "source": "docs/POSITIONING.md",
+      "subject_scope": "docs/POSITIONING.md",
+      "text": "Upheld recommends a justified defense plan or alternatives under stated constraints.",
+      "why": "Choosing how a promise should be held is a primary product job."
+    },
+    {
+      "accepted_gaps": [],
+      "actual_defenses": [
+        {
+          "artifact_locator": "tools/assurance_report.py",
+          "guarded_by": "checker",
+          "id": "UPH-02-03:d:gap",
+          "implementation_state": "present",
+          "needs_environment": [],
+          "obligation_id": "UPH-02-03",
+          "recommendation_member_ids": [
+            "UPH-02-03:gap"
+          ],
+          "subject_scope": "tools/assurance_report.py",
+          "why_this_kind": "Executable or structural defense for this recorded claim."
+        }
+      ],
+      "confidence": "verified",
+      "constraints": {
+        "consequence": "The plan-versus-current view depends on real defense links and honest evidence state.",
+        "environment": [],
+        "hard_limits": [],
+        "objectives": []
+      },
+      "falsifier": "A name match or unbound defense closes coverage.",
+      "id": "UPH-02-03",
+      "origin": "authored",
+      "reachability": "live",
+      "recommended_assurance": {
+        "plans": [
+          {
+            "constraints_considered": [],
+            "id": "UPH-02-03:plan",
+            "members": [
+              {
+                "bypass_paths": [],
+                "fault_challenge": "Seed a plausible name match that does not guard the obligation.",
+                "guarded_by": "checker",
+                "id": "UPH-02-03:inventory",
+                "intended_scope": "survey/code inventory",
+                "needs_environment": [],
+                "rationale": "Find actual defenses by reading mechanism and scope.",
+                "residual_uncertainty": []
+              },
+              {
+                "bypass_paths": [],
+                "fault_challenge": "Record missing, unmapped, and unbound defenses and require distinct gaps.",
+                "guarded_by": "checker",
+                "id": "UPH-02-03:gap",
+                "intended_scope": "tools/assurance_report.py",
+                "needs_environment": [],
+                "rationale": "Compare selected plan members with actual mappings and bindings.",
+                "residual_uncertainty": []
+              }
+            ],
+            "objective": "Keep the recorded product behavior aligned with the 0.2 model.",
+            "obligation_id": "UPH-02-03",
+            "portfolio_logic": "all_required",
+            "preference": "preferred",
+            "residual_uncertainty": [],
+            "tradeoffs": []
+          }
+        ],
+        "selected_plan_id": "UPH-02-03:plan",
+        "status": "proposed"
+      },
+      "source": "skills/upheld/SKILL.md",
+      "subject_scope": "skills/upheld/SKILL.md",
+      "text": "Upheld finds actual defenses and exposes missing, unmapped, or unproven coverage.",
+      "why": "The plan-versus-current view depends on real defense links and honest evidence state."
+    },
+    {
+      "accepted_gaps": [],
+      "actual_defenses": [],
+      "confidence": "verified",
+      "constraints": {
+        "consequence": "The assurance map must stay current without turning metadata refresh into trust.",
+        "environment": [],
+        "hard_limits": [],
+        "objectives": []
+      },
+      "falsifier": "Regeneration restores stale validity, or a producer creates a binding.",
+      "id": "UPH-02-04",
+      "origin": "authored",
+      "reachability": "live",
+      "recommended_assurance": {
+        "plans": [
+          {
+            "constraints_considered": [],
+            "id": "UPH-02-04:plan",
+            "members": [
+              {
+                "bypass_paths": [],
+                "fault_challenge": "Change a bound ground, regenerate disposable state, and require reassessment.",
+                "guarded_by": "checker",
+                "id": "UPH-02-04:fresh",
+                "intended_scope": "planned basis/verify commands",
+                "needs_environment": [],
+                "rationale": "Keep prior assurance current without treating hash drift as failure.",
+                "residual_uncertainty": []
+              },
+              {
+                "bypass_paths": [],
+                "fault_challenge": "Run producers and refresh operations and require binding bytes to stay unchanged.",
+                "guarded_by": "test",
+                "id": "UPH-02-04:accept",
+                "intended_scope": "producer/checker integration",
+                "needs_environment": [],
+                "rationale": "Keep evidence production separate from human bindings.",
+                "residual_uncertainty": []
+              }
+            ],
+            "objective": "Keep the recorded product behavior aligned with the 0.2 model.",
+            "obligation_id": "UPH-02-04",
+            "portfolio_logic": "all_required",
+            "preference": "preferred",
+            "residual_uncertainty": [],
+            "tradeoffs": []
+          }
+        ],
+        "selected_plan_id": "UPH-02-04:plan",
+        "status": "proposed"
+      },
+      "source": "docs/TRACE_FRESHNESS_BOUNDARY.md",
+      "subject_scope": "docs/TRACE_FRESHNESS_BOUNDARY.md",
+      "text": "Change review invalidates stale grounds without manufacturing failure or human acceptance.",
+      "why": "The assurance map must stay current without turning metadata refresh into trust."
+    },
+    {
+      "accepted_gaps": [],
+      "actual_defenses": [
+        {
+          "artifact_locator": "skills/upheld/SKILL.md",
+          "guarded_by": "checker",
+          "id": "UPH-02-05:d:skill",
+          "implementation_state": "present",
+          "needs_environment": [],
+          "obligation_id": "UPH-02-05",
+          "recommendation_member_ids": [
+            "UPH-02-05:live"
+          ],
+          "subject_scope": "skills/upheld/SKILL.md",
+          "why_this_kind": "Executable or structural defense for this recorded claim."
+        }
+      ],
+      "confidence": "verified",
+      "constraints": {
+        "consequence": "Migration and imports must lower adoption cost without upgrading meaning.",
+        "environment": [],
+        "hard_limits": [],
+        "objectives": []
+      },
+      "falsifier": "Migration invents a preferred plan, importer promotes source status, or the live guide invents evidence.",
+      "id": "UPH-02-05",
+      "origin": "authored",
+      "reachability": "live",
+      "recommended_assurance": {
+        "plans": [
+          {
+            "constraints_considered": [],
+            "id": "UPH-02-05:plan",
+            "members": [
+              {
+                "bypass_paths": [],
+                "fault_challenge": "Migrate real 0.1 fixtures and require recommendation status unknown.",
+                "guarded_by": "checker",
+                "id": "UPH-02-05:migrate",
+                "intended_scope": "0.1-to-0.2 migration",
+                "needs_environment": [],
+                "rationale": "Reuse old records without inventing a plan or mapping.",
+                "residual_uncertainty": []
+              },
+              {
+                "bypass_paths": [],
+                "fault_challenge": "Feed reviewed, passing, suspect, and affected states and require no new evidence or binding.",
+                "guarded_by": "checker",
+                "id": "UPH-02-05:import",
+                "intended_scope": "trace importers",
+                "needs_environment": [],
+                "rationale": "Reuse external identity and change context without importing trust state.",
+                "residual_uncertainty": []
+              },
+              {
+                "bypass_paths": [],
+                "fault_challenge": "Run held-out client cases and inspect scope, permissions, gaps, and invented evidence.",
+                "guarded_by": "test",
+                "id": "UPH-02-05:live",
+                "intended_scope": "live skill trials",
+                "needs_environment": [],
+                "rationale": "Show the packaged 0.2 guide follows the full workflow in real clients.",
+                "residual_uncertainty": []
+              }
+            ],
+            "objective": "Keep the recorded product behavior aligned with the 0.2 model.",
+            "obligation_id": "UPH-02-05",
+            "portfolio_logic": "all_required",
+            "preference": "preferred",
+            "residual_uncertainty": [],
+            "tradeoffs": []
+          }
+        ],
+        "selected_plan_id": "UPH-02-05:plan",
+        "status": "proposed"
+      },
+      "source": "docs/SCHEMA.md",
+      "subject_scope": "docs/SCHEMA.md",
+      "text": "0.2 can be adopted from existing Upheld and trace tools without inventing intent or trust.",
+      "why": "Migration and imports must lower adoption cost without upgrading meaning."
+    }
+  ],
+  "producer": {
+    "inputs": [
+      "README.md",
+      "docs/PRODUCT_MODEL.md",
+      "docs/POSITIONING.md",
+      "docs/DECISIONS.md",
+      "docs/SCHEMA.md",
+      "docs/TRACE_FRESHNESS_BOUNDARY.md",
+      "skills/upheld/SKILL.md",
+      "tools/assurance_report.py",
+      "tools/check_docs.py",
+      "tests/test_assurance_report.py",
+      "tests/test_skill_package.py"
+    ],
+    "metadata": {
+      "boundary": "0.2 product model, schema, agent guide, gap reporter, and immediate adoption paths."
+    },
+    "mode": "mixed",
+    "name": "maintainer-directed 0.2 self-application",
+    "recorded_on": "2026-09-09",
+    "source_repo": "https://github.com/yzm1/upheld",
+    "source_rev": "01bdaf0a0ef9bb880c3c42e3156c50800873431b"
+  },
+  "schema_version": "0.2"
+}
