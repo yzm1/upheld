@@ -41,7 +41,7 @@ Useful explicit requests include:
 - discover obligations and current defenses in this component;
 - recommend a defense portfolio under these latency, runtime, or infrastructure constraints;
 - compare the intended plan with the defenses that exist and show the gaps;
-- challenge this defense and tell me whether its evidence deserves reliance;
+- challenge this defense and tell me whether the evidence is strong enough to rely on;
 - review this change and identify which recorded grounds or recommendations need another look.
 
 A recommendation is advice, not proof that the mechanism exists. A current defense remains visible even when it differs from the recommendation. A passing test remains unproven until a suitable fault challenge supports it.
