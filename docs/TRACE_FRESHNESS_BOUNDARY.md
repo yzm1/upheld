@@ -60,7 +60,7 @@ A fresh trace can still point to a weak defense. A stale trace can still point t
 
 ## A changed hash means review the old grounds again
 
-Trace tools often give a change signal more meaning than it deserves.
+Trace tools often give a change signal more meaning than the signal supports.
 
 When a tracked input changes, Upheld should say:
 
