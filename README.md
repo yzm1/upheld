@@ -1,14 +1,14 @@
 # Upheld maps software obligations to the defenses that should and do uphold them
 
-Upheld is a software assurance tool in development. It records what software must keep true, how best to enforce each obligation under declared project constraints, what actually enforces it now, what evidence supports those defenses, and where the gaps are.
+Upheld is a software tool for keeping important software claims covered. It records what must stay true, the best defense plan under the project's limits, what defenses exist now, what the checks showed, and what gaps remain.
 
 **The survey has a runnable repository prototype. The Upheld CLI remains unbuilt.** The prototype prepares sources, imports candidate judgments, and writes schema 0.1 register proposals. Documentation checks run separately from the planned product commands.
 
-An obligation is a falsifiable condition the software is expected to preserve. Schema 0.1 currently calls this record a `promise`. A defense is a test, rule, type guarantee, runtime check, or other mechanism intended to uphold it. An evidence record describes a run that assessed a defense. A binding records a person's choice to rely on that evidence.
+An obligation is a falsifiable rule the software is expected to keep. Schema 0.1 calls this record a `promise`. A defense is a test, rule, type guarantee, runtime check, or other mechanism meant to uphold it. An evidence record describes a run that assessed a defense. A binding records a person's choice to rely on that evidence.
 
-Upheld supports two ways into the same model. A team can **author obligations while specifying or designing an application**, including the intended assurance plan before code exists. It can also **discover obligations and defenses from an existing codebase**. Both paths should converge on the same machine-readable view.
+Teams can enter the model in two ways. They can write promises while designing a new app and record the desired defense plan before code exists. They can also discover promises and defenses from an existing codebase. Both paths should reach the same machine-readable view.
 
-For each obligation, the useful view is:
+For each promise, the useful view is:
 
 | Question | Upheld record or result |
 |---|---|
@@ -19,11 +19,11 @@ For each obligation, the useful view is:
 | What is missing or weaker than intended? | Assurance gap, uncertainty, stale grounds, or accepted gap |
 | What needs attention after change? | Affected obligations and defenses whose grounds need reassessment |
 
-The recommendation is not automatically the implementation, and an implementation is not automatically adequate. Upheld should make the difference visible. A strong result may be “the obligation is best enforced by a type restriction plus an integration check; today it has only a unit test whose fault challenge is unproven.”
+Advice and reality stay separate. A plan may call for a type restriction plus an integration check while the code has only a unit test. Upheld should show that difference and whether the existing test has ever faced the fault it claims to catch.
 
-Doorstop and Boundver already fingerprint requirement or dependency links and flag them after changes. Upheld does not treat that behavior as its differentiator. Those tools can provide identity, trace, and change context. Upheld uses that context to maintain the obligation-to-assurance view rather than replacing it. [The boundary and adoption bypass](docs/TRACE_FRESHNESS_BOUNDARY.md) explain that split.
+Doorstop and Boundver already fingerprint requirement or dependency links and flag them after changes. Upheld can use those signals for identity, trace, and change context. [The boundary and adoption bypass](docs/TRACE_FRESHNESS_BOUNDARY.md) explain the split.
 
-The [development lifecycle](docs/EVIDENCE_LIFECYCLE.md) runs an existing checker through a fault challenge and changed-ground review. Acceptance in that case is simulated. [Earlier tools](docs/PRIOR_ART.md) supply precedents; useful findings, recommendation quality, gap detection, and review cost remain product tests.
+The [development lifecycle](docs/EVIDENCE_LIFECYCLE.md) runs an existing checker through a fault challenge and changed-ground review. Acceptance in that case is simulated. [Earlier tools](docs/PRIOR_ART.md) supply precedents; useful findings, defense-plan quality, gap finding, and review cost remain product tests.
 
 ## The committed example has no graded defenses
 
@@ -40,11 +40,11 @@ The heldtospec survey covers one contracts component. Its records date from 6 Se
 
 Sources: [survey records](examples/heldtospec-contracts/README.md) and [reconciled counts](examples/heldtospec-contracts/reconciliation.md).
 
-**Fresh evidence does not prove that a software obligation is true.** The checker will compare current files with the grounds recorded by an evidence producer. It will report when those grounds change. The larger product also needs to compare the actual defenses with the recommended assurance plan and keep resulting gaps visible.
+**Fresh evidence does not prove that a promise is true.** The checker will compare current files with the grounds recorded by an evidence producer. It will report when those grounds change. The larger product must also compare the defense plan with the defenses that exist and keep the gaps visible.
 
-## The next milestone tests discovery, defense choice, gaps, and upkeep
+## The next milestone tests promises, defense choice, gaps, and upkeep
 
-The [milestone](docs/MILESTONE.md) pairs a survey and cheap-probe workflow with a small checker run. It measures useful findings and human review work. The next design work also has to test whether Upheld can recommend appropriate defenses, inventory what exists, and surface consequential gaps without pretending there is one universal ranking of defense kinds.
+The [milestone](docs/MILESTONE.md) pairs source review and cheap probes with a small checker run. It also tests whether Upheld can propose useful defense plans, find what the project has now, and expose important gaps without assuming one universal rank for defense kinds.
 
 | Piece | Current state | Read next |
 |---|---|---|
@@ -56,9 +56,9 @@ The [milestone](docs/MILESTONE.md) pairs a survey and cheap-probe workflow with 
 
 ## Start with the product model or the next task
 
-- [Design choices](docs/DECISIONS.md) state the obligation-to-assurance product spine.
+- [Design choices](docs/DECISIONS.md) state the promise-to-defense product spine.
 - [Survey register](docs/SURVEY_REGISTER.md) explains the current machine-readable output and its limits.
-- [Trace-freshness boundary](docs/TRACE_FRESHNESS_BOUNDARY.md) keeps established fingerprint/impact behavior in its supporting role.
+- [Trace-freshness boundary](docs/TRACE_FRESHNESS_BOUNDARY.md) keeps fingerprint and impact work in its supporting role.
 - [Component design](docs/COMPONENT_REGISTER_DESIGN.md) records the next schema work.
 - [Current method](docs/METHOD.md) explains how to assess a defense.
 - [Self-audit](docs/SELF_AUDIT.md) applies the method to Upheld and records observed faults and remaining gaps.
