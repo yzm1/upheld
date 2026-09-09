@@ -11,7 +11,7 @@ import os
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_REV = '386a90748f8c6118bf296f1bc0391a172d217f88'
 METHOD_SHA256 = 'e245680b5d72751e105eab729caf1458f8a522ee4e6bfec0d75f438e8a1c38eb'
-VERSION = '0.1.2'
+VERSION = '0.2.0'
 CLIENTS = ('codex', 'claude', 'copilot')
 FILES = ('SKILL.md', 'references/method.md', 'references/connectlang.md')
 
@@ -46,7 +46,6 @@ def method_reference(root=ROOT):
         target = match.group(1)
         if re.match(r'^[a-z]+:', target) or target.startswith('#'):
             return match.group(0)
-        # Source links are relative to docs/METHOD.md, not the skill directory.
         path, sep, anchor = target.partition('#')
         resolved = (root / 'docs' / path).resolve().relative_to(root.resolve())
         return f'](https://github.com/yzm1/upheld/blob/{SOURCE_REV}/{resolved.as_posix()}{sep}{anchor})'
@@ -87,7 +86,6 @@ def build(client, output, root=ROOT):
     payload = {name: (base / name).read_bytes() for name in FILES}
     if client == 'codex':
         payload['agents/openai.yaml'] = (base / 'agents/openai.yaml').read_bytes()
-    # Shared discovery directories can expose a Codex package to Copilot too.
     text = payload['SKILL.md'].decode()
     payload['SKILL.md'] = text.replace('---\n', '---\ndisable-model-invocation: true\n', 1).encode()
     payload['LICENSE'] = (root / 'LICENSE').read_bytes()
@@ -95,7 +93,6 @@ def build(client, output, root=ROOT):
     manifest = {'version': VERSION, 'client': client, 'method_source_commit': SOURCE_REV,
                 'method_source_sha256': digest((root / 'docs/METHOD.md').read_bytes()),
                 'files': {name: digest(data) for name, data in sorted(payload.items())}}
-    # No shell, downloads, account discovery, global installation, or overwrite.
     output.mkdir(parents=True, exist_ok=False)
     for name, data in payload.items():
         path = output / name
@@ -111,7 +108,8 @@ def verify_package(output):
     fields = {'version', 'client', 'method_source_commit', 'method_source_sha256', 'files'}
     if not isinstance(manifest, dict) or set(manifest) != fields:
         raise ValueError('Invalid package manifest fields')
-    if manifest['version'] not in ('0.1.0', '0.1.1', VERSION) or manifest['client'] not in CLIENTS:
+    supported_versions = ('0.1.0', '0.1.1', '0.1.2', VERSION)
+    if manifest['version'] not in supported_versions or manifest['client'] not in CLIENTS:
         raise ValueError('Unsupported package version or client')
     for key, size in [('method_source_commit', 40), ('method_source_sha256', 64)]:
         if not isinstance(manifest[key], str) or not re.fullmatch('[0-9a-f]{' + str(size) + '}', manifest[key]):
@@ -163,7 +161,7 @@ def main():
     except OSError as exc:
         print(json.dumps({'result': 'could_not_look', 'error': str(exc)}))
         return 2
-    except (ValueError, KeyError, TypeError) as exc:
+    except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
         print(json.dumps({'result': 'violated', 'error': str(exc)}))
         return 1
     return 0

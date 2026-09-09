@@ -1,12 +1,14 @@
 # Use Upheld with your existing agent
 
-Readers are engineers trying the Upheld guide. Version 0.1.1 is a packaged prototype dated 7 September 2026. It helps an agent review promises and evidence within a chosen scope. It uses your existing account and tools.
+Readers are engineers trying the Upheld guide. Version 0.2.0 is a packaged prototype dated 9 September 2026. It helps an agent work from a software obligation to a recommended defense plan, the defenses that actually exist, the evidence behind them, and the gaps that still need attention.
 
 **Choose a client, export a fresh folder, and invoke the guide explicitly.** Package checks pass locally; actual loading and explicit-only behavior in installed clients remain untested under S14. The guide supplies instructions and references. Your agent's permissions still govern its tools.
 
+The guide now supports both entry paths. You can use it while specifying a new application, before defenses exist, or while auditing an existing codebase. In either case, advice, current implementation, evidence, and human acceptance stay separate.
+
 ## Export the package for your client
 
-From an Upheld checkout, use Python 3.11 or later and Git with the pinned source commit available. Export uses the Python standard library and reads the named commit with Git. A shallow checkout may need that history fetched first. Name the new output folder `upheld`.
+From an Upheld checkout, use Python 3.11 or later and Git with the pinned method source commit available. Export uses the Python standard library and reads the named commit with Git. A shallow checkout may need that history fetched first. Name the new output folder `upheld`.
 
 ```bash
 python tools/package_upheld_skill.py --client codex --output /tmp/upheld-codex/upheld
@@ -25,13 +27,26 @@ Move the exported folder into one selected location below. Preserve any existing
 
 | Client | Documented project location | Explicit request |
 |---|---|---|
-| [Codex](https://learn.chatgpt.com/docs/build-skills) | `.agents/skills/upheld` | `$upheld Review this change against the promises it affects.` |
-| [Claude Code](https://code.claude.com/docs/en/skills) | `.claude/skills/upheld` | `/upheld Review this change against the promises it affects.` |
-| [Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills) | `.github/skills/upheld` | `/upheld Review this change against the promises it affects.` |
+| [Codex](https://learn.chatgpt.com/docs/build-skills) | `.agents/skills/upheld` | `$upheld Map these obligations to the best defense plan, current defenses, and gaps.` |
+| [Claude Code](https://code.claude.com/docs/en/skills) | `.claude/skills/upheld` | `/upheld Map these obligations to the best defense plan, current defenses, and gaps.` |
+| [Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills) | `.github/skills/upheld` | `/upheld Map these obligations to the best defense plan, current defenses, and gaps.` |
 
 These locations come from official documentation checked on 7 September 2026. The exported Codex package includes both its own policy file and the other clients' explicit-only field because some directories are shared. Their actual handling still needs a live check. Do not install the unrendered `skills/upheld` source folder directly.
 
-A normal review returns source-backed findings, their limits, and useful next checks. It may find no issue within the inspected scope. Missing tools remain visible. The guide can propose records in prose; it does not ship a formal exporter or create accepted evidence.
+## Ask for the part of the assurance map you need
+
+Useful explicit requests include:
+
+- specify falsifiable obligations for this feature and propose a defense plan before implementation;
+- discover obligations and current defenses in this component;
+- recommend a defense portfolio under these latency, runtime, or infrastructure constraints;
+- compare the intended plan with the defenses that exist and show the gaps;
+- challenge this defense and tell me whether the evidence is strong enough to rely on;
+- review this change and identify which recorded grounds or recommendations need another look.
+
+A recommendation is advice, not proof that the mechanism exists. A current defense remains visible even when it differs from the recommendation. A passing test remains unproven until a suitable fault challenge supports it.
+
+The skill can propose schema 0.2 records in prose when the repository schemas are available to the agent. It does not create human bindings or accepted evidence by itself.
 
 ## Keep the package tied to reviewed rules
 
@@ -44,8 +59,8 @@ python tools/check_docs.py
 python -m unittest discover -s tests -p 'test_*.py'
 ```
 
-A method change also requires the existing rule review, a new source commit and digest in the packager, and a package version update. Do not change pins merely to pass a failing check. Re-export and review the package before replacing an installed copy. If a write fails partway through export, inspect the partial folder and retry into a fresh path.
+A normative method change still requires the existing rule review, a new source commit and digest in the packager, and a package version update. The 0.2.0 guide broadens the product workflow without changing method 1.4's reviewed evidence rules.
 
-The [implementation record](S12_IMPLEMENTATION.md) records the checks. The [research and design](S12_DESIGN.md) and [red-team review](S12_RED_TEAM.md) explain the choices and remaining trial work.
+Re-export and review the package before replacing an installed copy. If a write fails partway through export, inspect the partial folder and retry into a fresh path.
 
-The [self-audit](SELF_AUDIT.md) records the source-pin and verifier defects fixed in 0.1.1. Existing 0.1.0 manifests remain readable when their required files and hashes are valid.
+The [product model](PRODUCT_MODEL.md) explains the full obligation-to-defense map. The [schema](SCHEMA.md) defines the 0.2 record split. The [self-audit](SELF_AUDIT.md) records earlier source-pin and verifier defects; the newer self-assurance example applies the broader model to Upheld itself.

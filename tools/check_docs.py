@@ -7,6 +7,7 @@ import subprocess
 import sys
 
 import fastjsonschema
+from assurance_report import build_report as build_assurance_report
 from check_readme_status import check
 from prepare_probe_review import convert, diagnostics
 from package_upheld_skill import check_bundle
@@ -23,16 +24,26 @@ CURRENT += [ROOT / 'measurements/RESULTS.md']
 CURRENT += sorted((ROOT / 'reference').glob('*.md'))
 CURRENT += sorted((ROOT / 'skills/upheld').rglob('*.md'))
 CURRENT += sorted((ROOT / 'messages').glob('*.md'))
-CURRENT += sorted((ROOT / 'reviews').glob('*.md'))  # verbatim bodies are fenced from the gate
+CURRENT += sorted((ROOT / 'reviews').glob('*.md'))
 
 
 def json_file(path): return json.loads((ROOT / path).read_text())
 
 
+def compile_schemas(version):
+    return {
+        p.stem.replace('.schema', ''): fastjsonschema.compile(json.loads(p.read_text()))
+        for p in (ROOT / 'schemas' / version).glob('*.json')
+    }
+
+
 def check_artifacts():
     check_bundle(ROOT)
-    compiled = {p.stem.replace('.schema',''): fastjsonschema.compile(json.loads(p.read_text()))
-                for p in (ROOT / 'schemas/0.1').glob('*.json')}
+    compiled = compile_schemas('0.1')
+    compiled_02 = compile_schemas('0.2')
+    require(set(compiled_02) == {'register', 'evidence', 'bindings', 'assurance-report'},
+            'Schema 0.2 must publish the register, evidence, bindings, and assurance report')
+
     cases = [('probe-register','examples/heldtospec-contracts/obligations.register.json'),
              ('probe-bindings','examples/heldtospec-contracts/obligations.bindings.json'),
              ('register','examples/heldtospec-contracts/review-register.json'),
@@ -41,26 +52,57 @@ def check_artifacts():
              ('register','examples/upheld-self-audit/obligations.register.json'),
              ('bindings','examples/upheld-self-audit/obligations.bindings.json'),
              ('bindings','examples/upheld-status/obligations.bindings.json')]
-    for name, path in cases: compiled[name](json_file(path))
+    for name, path in cases:
+        compiled[name](json_file(path))
+
     lifecycle = json_file('measurements/lifecycle-2026-09-08/observation.json')
     for name, key in [('register', 'register'), ('evidence', 'evidence'), ('bindings', 'simulated_binding')]:
         compiled[name](lifecycle[key])
     check_recorded_demo(lifecycle)
+
+    self_register_path = 'examples/upheld-self-assurance/obligations.register.json'
+    self_register = json_file(self_register_path)
+    self_bindings = json_file('examples/upheld-self-assurance/obligations.bindings.json')
+    self_report = json_file('examples/upheld-self-assurance/assurance.report.json')
+    compiled_02['register'](self_register)
+    compiled_02['bindings'](self_bindings)
+    compiled_02['assurance-report'](self_report)
+    require((ROOT / 'examples/upheld-self-assurance/obligations.evidence.jsonl').read_text() == '',
+            'The 0.2 self-assurance example must not manufacture evidence')
+    regenerated = build_assurance_report(
+        self_register,
+        self_register_path,
+        self_bindings['bindings'],
+        {},
+        self_report['generated_at'],
+    )
+    require(regenerated == self_report,
+            'Self-assurance report changed independently of its register, bindings, and evidence')
+    require(self_report['summary'] == {
+        'obligations': 5,
+        'obligations_with_open_gaps': 5,
+        'open_gaps': 12,
+        'accepted_gaps': 0,
+    }, 'Unexpected 0.2 self-assurance summary')
+
     require(json_file('examples/survey-register/obligations.register.json') ==
             build_register(ROOT / 'examples/survey-heldtospec/run'),
             'Survey register changed independently of its saved source judgments')
     source = json_file(cases[0][1]); ps=source['promises']
-    require(json_file(cases[2][1]) == convert(source, cases[0][1]), 'Review copy changed independently of its source')
+    require(json_file(cases[2][1]) == convert(source, cases[0][1]),
+            'Review copy changed independently of its source')
     actual = {'promises':len(ps), 'defenses':sum(len(p['defenses']) for p in ps),
               'defenses_by_kind':dict(Counter(d['guarded_by'] for p in ps for d in p['defenses'])),
               'promises_with_no_defense_and_no_gap':[p['id'] for p in ps if not p['defenses'] and 'gap' not in p],
               'gaps':[p['id'] for p in ps if 'gap' in p],
               'promises_with_next_step':[p['id'] for p in ps if p.get('next_step')]}
     for key,value in actual.items(): require(source['summary'][key] == value, key)
-    require([x['subject'] for x in diagnostics(source)] == ['CTR-003','CTR-005','CTR-037','CTR-044'], 'Artifact invariant failed')
+    require([x['subject'] for x in diagnostics(source)] == ['CTR-003','CTR-005','CTR-037','CTR-044'],
+            'Artifact invariant failed')
     records = json_file('examples/heldtospec-contracts/observations.json')
     require(len(records['findings']) == 19, 'Artifact invariant failed')
-    require(Counter(x['group'] for x in records['findings']) == {'odd':5,'ambiguous':6,'missing':8}, 'Artifact invariant failed')
+    require(Counter(x['group'] for x in records['findings']) == {'odd':5,'ambiguous':6,'missing':8},
+            'Artifact invariant failed')
     require(len({x['id'] for x in records['findings']}) == 19, 'Artifact invariant failed')
     require(records['historical_summary']['confirmed_probe_count'] is None, 'Artifact invariant failed')
     require(len(records['observations']) == 5, 'Artifact invariant failed')
@@ -68,11 +110,12 @@ def check_artifacts():
     require(check() == [], 'README status check failed')
     check_rules(ROOT)
     check_todo((ROOT / 'TODO.md').read_text())
-    # Historical source snapshots must retain their content hashes.
     import hashlib
     for name,digest in json_file('docs/history/snapshot-hashes.json').items():
         require(hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==digest, name)
-    print(f'Artifact checks passed: {len(compiled)} schemas; 44 promises; 78 defenses; 19 triage bullets; 4 expected unresolved choices.')
+    total_schemas = len(compiled) + len(compiled_02)
+    print(f'Artifact checks passed: {total_schemas} schemas; 44 historical promises; '
+          f'5 self-assurance obligations; 12 open self-assurance gaps.')
 
 
 def check_links():

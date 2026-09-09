@@ -1,87 +1,78 @@
-# Version 0.1 separates claims, observations, and acceptance
+# Version 0.2 separates the defense plan from current defenses
 
-Readers are engineers producing or consuming Upheld JSON. The schemas under [schemas/0.1](../schemas/0.1/) define record shape. They check fields and types. They cannot decide whether evidence still applies.
+Readers are engineers producing or consuming Upheld JSON. **Schema 0.2 stores the full promise-to-defense map: what must stay true, what should hold it, what holds it now, what the checks showed, and which gaps need work.**
 
-This is the first published wire version, dated 6 September 2026. A breaking change requires a new schema version. Hashing is still unresolved; a structurally valid hash string establishes no agreed hash semantics.
+The files under [schemas/0.2](../schemas/0.2/) define the register, evidence, bindings, and gap report. Version 0.1 remains readable. The repository still lacks the full product commands, so only 0.1 publishes command output shapes for `validate`, `basis`, and `verify`.
 
-## Each file has one writer
+A breaking wire change gets a new version. An upgrade never invents a defense plan, current defense, evidence record, or human choice.
 
-| File | Writer | Contents |
-|---|---|---|
-| register | Survey producer or person | Promises, nested defenses, optional gaps, producer inputs |
-| config | Person | Gate choices, schema/hash/resolver versions, adapter declarations |
-| evidence, one JSON object per line | Oracle producer | Immutable observation with basis and execution context |
-| bindings | Person | Defense ID to accepted evidence ID |
-| lock, when implemented | generate | Disposable cached resolutions and indexes |
-| baseline, when implemented | ack | Finding fingerprint, reason, actor, and time |
+## The register stores the plan and current state
 
-This version publishes four input schemas and outputs for `validate`, `basis`, and `verify`. Lock and baseline formats remain deferred with their commands. Producers never write bindings.
+Version 0.2 renames the top-level `promises` array to `obligations`. Product prose can still say promise. Each record carries source, scope, project limits, defense plans, current defenses, and accepted gaps.
 
-The [development lifecycle](EVIDENCE_LIFECYCLE.md) embeds records of these shapes under a named test profile. Its binding is explicitly simulated. Schema validation cannot establish human acceptance, producer trust, or agreed product hash behavior.
+| Record | Question it answers |
+|---|---|
+| obligation | What must remain true? |
+| `recommended_assurance` | Which plan fits the stated goals and limits? |
+| plan member | Which mechanism should cover which part, and how should we challenge it? |
+| `actual_defenses` | Which mechanisms exist now? |
+| evidence | What did a real challenge observe? |
+| binding | Which supporting record did a person choose to trust? |
+| accepted gap | Which known shortfall did a person choose to leave open? |
+| gap report | What does the plan-versus-current comparison expose now? |
 
-## The promise carries survey notes; each defense carries its kind
+Advice and current code use different fields. A suggested type guard does not become a current defense until the project builds it. Finding a unit test does not make it part of the preferred plan.
 
-| Earlier field | Version 0.1 location | Rule |
-|---|---|---|
-| name | Promise text | Preserve the falsifiable claim |
-| answered_by | Defense guarded_by | No default; accepted becomes a separate gap |
-| satisfied_by | Defense locator plus evidence source_rev and basis | A named file cannot manufacture a record |
-| status | Removed from promise | Binding presence defines answered; verify derives validity |
-| source / published_in | Promise | Where the claim is made |
-| subject_scope | Promise and defense | What code the claim concerns |
-| confidence / detail | Promise | Reading confidence and quotation |
-| evidence_tier | Promise | Read, unread_dependence, structural, fuzzy, or unknown |
-| why / the_test_that_would_catch_it / next_step | Promise | Consequence, falsifier, unresolved question |
-| needs_environment | Defense | Separate requirements for running it |
-| reachability / armed_by | Promise | Latent requires an arming condition |
-| last_actually_ran | Defense, derived from a cited run | Timestamp or explicit unknown; no boolean |
+## A plan can use several mechanisms
 
-Each defense has an ID, promise ID, kind, locator, scope, reason for its kind, and environment needs. A promise without a defense or gap remains representable so `validate` can report `promise_without_defense_or_gap`.
+`recommended_assurance.plans` can hold one preferred plan and alternatives. Each plan names its goal, project limits, tradeoffs, and remaining unknowns.
 
-A gap requires a reason. Actor and time may be unknown in imported records. Unknown authors remain visible. A gap creates no evidence. Additional survey notes use `metadata`; unknown top-level fields fail shape checks.
+Each member names its defense kind, target scope, reason, known bypass paths, fault challenge, needed tools or target, optional cost notes, and remaining unknowns.
 
-## Built-in kinds have explicit evidence checks
+`portfolio_logic` says whether all members are required, any member can suffice, members form layers, or a custom rule applies. One promise can therefore call for a type guard plus an integration check without claiming either covers the other's scope.
 
-| guarded_by | Mechanism | Compatible oracle family |
-|---|---|---|
-| test | Chosen cases and asserted outcomes | mutation |
-| property | Generated inputs checked against an oracle | mutation |
-| checker | Rule over a declared surface | seeded_violation |
-| ratchet | Rule over releases or recorded behavior | seeded_transition |
-| type | Static guarantee makes the violation unrepresentable | compiler |
-| runtime_invariant | Check or alarm during execution | fault_injection |
+The built-in kinds remain `test`, `property`, `checker`, `ratchet`, `type`, and `runtime_invariant`. An extension kind begins with `x-` and supplies a plain mechanism name.
 
-The `compiler` family names the type-defense adapter; compiler acceptance alone never supports a binding. Its oracle needs an independent authority. The `mutation` family also permits a replayed defect or injected fault under a justified model. Family names do not establish that an oracle is adequate.
+## Current defenses map back to plan members
 
-A ratchet's seeded transition must show a forbidden change, an allowed change, and a failure to inspect. A runtime model check cannot use the compiler family merely because a model declares types.
+Each current defense names the real artifact, scope, kind, needed tools, and state. `recommendation_member_ids` links it to the plan members it claims to implement.
 
-An unfamiliar mechanism uses `x-` followed by its name and supplies `mechanism`. Configuration may declare its oracle and adapter. Naming an adapter does not install it. Before binding, the checker must confirm that it supports the declared pair. Otherwise it reports `unsupported_oracle`. Never fall back to test.
+The schema allows an empty mapping. That means nobody has reviewed where the defense fits in the selected plan. The gap report can flag it as `divergence_unreviewed`.
 
-## Basis and execution context answer different questions
+`implementation_state` is `present`, `partial`, `disabled`, or `unknown`. Partial or disabled code stays visible and can leave a plan gap.
 
-The basis records the hash profile, promise, defense assertion, artifact fingerprints, subject scope fingerprint, and declared environment files. Only tree inputs belong in the environment map.
+## The report derives open gaps
 
-Execution context records the producer's account of the run. Version 0.1 requires an explicit recorded or unknown state. An unknown state carries a reason. Recorded context includes command, time, duration, toolchain, target, configuration, dirty-tree account, and omissions. This shape leaves source capture and cross-machine scope to P01–P04; it does not certify reproducibility.
+The register stores deliberate accepted gaps under `accepted_gaps`. The reporter derives open gaps from the selected plan, current-defense mappings, bindings, and evidence.
 
-Supporting records must match the bound defense and oracle. The checker also checks fixed IDs, scope boundaries, profile support, and the order of records. Checking shape alone cannot establish those links.
+[The report schema](../schemas/0.2/assurance-report.schema.json) names `no_plan`, `no_defense`, `weaker_than_recommended`, `unproven_defense`, `stale_evidence`, `coverage_gap`, `unsupported_environment`, `divergence_unreviewed`, `conflicting_defenses`, `accepted_gap`, and `unknown`.
 
-## The probe format remains a preserved source
+The first reporter emits only the classes its inputs justify. It must not guess semantic coverage. Accepted gaps remain visible. Acceptance changes only their status; their meaning stays the same.
 
-The heldtospec input uses `0.1-probe`, nested defenses, and an empty binding map. [Its compatibility schema](../schemas/0.1/probe-register.schema.json) validates that historical shape. It is distinct from the new format.
+## Evidence belongs to a current defense
 
-The [review-copy tool](../tools/prepare_probe_review.py) writes a version 0.1 candidate to a chosen new path. It rejects unsupported source versions and validates the source shape before writing. Producer inputs name the supplied source path. It retains IDs, claims, locators, gaps, and notes. It adds explicit unknown context. It never changes the original or creates evidence. The generated [review copy](../examples/heldtospec-contracts/review-register.json) remains unaccepted.
+Version 0.2 keeps observation separate from human choice. Its main wire change is `basis.obligation`, replacing `basis.promise`.
 
-| Expected diagnostic | Count | Meaning |
-|---|---:|---|
-| promise_without_defense_or_gap | 4 | CTR-003, CTR-005, CTR-037, CTR-044 |
-| artifact_resolution_unchecked | 78 | No target checkout or resolver run in this task |
-| scope_containment_unchecked | 78 | Locators and scope strings have not established containment |
-| supporting_evidence_absent | 78 | All defenses remain open |
+The basis records the hash profile, promise fingerprint, defense-assertion fingerprint, artifact fingerprints, checked subject scope, and declared setup files. Run context records either an explicit unknown state or the producer's account of command, time, duration, toolchain, target, config, dirty-tree state, and omissions.
 
-The repository checks compare shape and counts against this table. They do not implement the full `validate` command. Migration from other older schemas remains T19 work.
+A supporting record must match the current defense and oracle. A binding maps one defense ID to one evidence ID. Producers never write bindings.
 
-## Schema checks reject two previously accepted contradictions
+## The schema does not give defense kinds a global rank
 
-Timestamp fields require date-time strings or their already supported unknown state. A verify result with an unresolvable finding or positive unresolvable count requires exit 5. These corrections enforce the documented version 0.1 contract; they add no new record fields. Producers relying on the earlier permissive schemas must correct invalid records.
+The plan stores goals and project limits because “best” depends on the case. Cost, delay, likely harm, available tools, bypass paths, and the need for independent checks can change the preferred plan.
 
-The example checks require the two current evidence files and empty bindings. Future examples may hold evidence. Full cross-record and output-count consistency checks remain C02 work.
+The wire format stores those facts and alternatives instead of a score such as `type > property > test`.
+
+## Version 0.1 upgrades without inventing a plan
+
+Version 0.1 remains under [schemas/0.1](../schemas/0.1/). A future 0.1-to-0.2 tool must preserve IDs, claim text, current defenses, accepted gaps, dates, and evidence fingerprints.
+
+It must set the new plan state to `unknown` unless a separate review supplies a plan. It must leave plan-member mappings empty unless someone reviewed them. It must never create evidence from `last_actually_ran` or create a binding.
+
+The current review-copy and survey-register tools still write 0.1. Existing 0.1 fixtures and checks remain part of CI until the upgrade path exists.
+
+## The first gap reporter stays narrow
+
+`tools/assurance_report.py` compares a selected plan with current-defense mappings. If bindings and evidence are present, it can tell a mapped defense with supporting evidence from one that merely exists.
+
+Today it derives `no_plan`, `no_defense`, `weaker_than_recommended`, `unproven_defense`, and `divergence_unreviewed`, while keeping accepted gaps visible. It does not yet check the live tree for stale evidence, prove that several members cover a whole promise, rank plans, or find omitted promises.

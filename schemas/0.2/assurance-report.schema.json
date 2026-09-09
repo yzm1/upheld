@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/yzm1/upheld/schemas/0.2/assurance-report.schema.json",
+  "title": "Upheld 0.2 assurance report",
+  "type": "object",
+  "definitions": {
+    "gap": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["no_plan", "no_defense", "weaker_than_recommended", "unproven_defense", "stale_evidence", "coverage_gap", "unsupported_environment", "divergence_unreviewed", "conflicting_defenses", "accepted_gap", "unknown"]},
+        "status": {"enum": ["open", "accepted"]},
+        "severity": {"enum": ["critical", "high", "medium", "low", "unknown"]},
+        "scope": {"type": "string", "minLength": 1},
+        "summary": {"type": "string", "minLength": 1},
+        "rationale": {"type": "string", "minLength": 1},
+        "recommendation_member_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "defense_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "next_action": {"type": "string", "minLength": 1},
+        "metadata": {"type": "object"}
+      },
+      "required": ["id", "kind", "status", "severity", "scope", "summary", "rationale", "recommendation_member_ids", "defense_ids", "next_action"],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schema_version": {"const": "0.2"},
+    "source_register": {"type": "string", "minLength": 1},
+    "source_rev": {"type": "string", "minLength": 1},
+    "generated_at": {"type": "string", "minLength": 1, "format": "date-time"},
+    "obligations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "obligation_id": {"type": "string", "minLength": 1},
+          "recommendation_status": {"enum": ["unknown", "proposed", "reviewed", "accepted"]},
+          "selected_plan_id": {"type": ["string", "null"]},
+          "actual_defense_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "gap_state": {"enum": ["clean", "gaps", "unknown"]},
+          "gaps": {"type": "array", "items": {"$ref": "#/definitions/gap"}},
+          "next_actions": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "metadata": {"type": "object"}
+        },
+        "required": ["obligation_id", "recommendation_status", "selected_plan_id", "actual_defense_ids", "gap_state", "gaps", "next_actions"],
+        "additionalProperties": false
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "obligations": {"type": "integer", "minimum": 0},
+        "obligations_with_open_gaps": {"type": "integer", "minimum": 0},
+        "open_gaps": {"type": "integer", "minimum": 0},
+        "accepted_gaps": {"type": "integer", "minimum": 0}
+      },
+      "required": ["obligations", "obligations_with_open_gaps", "open_gaps", "accepted_gaps"],
+      "additionalProperties": false
+    },
+    "metadata": {"type": "object"}
+  },
+  "required": ["schema_version", "source_register", "source_rev", "generated_at", "obligations", "summary"],
+  "additionalProperties": false
+}

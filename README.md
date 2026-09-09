@@ -1,14 +1,39 @@
-# Upheld tracks the evidence behind software promises
+# Upheld maps software promises to the defenses that should and do uphold them
 
-Upheld is a software assurance tool in development. It records what code promises, what evidence defends each promise, and when that evidence needs another check.
+Upheld records what software must keep true, the defense plan it should have, the defenses it has now, and the gaps that need work.
 
-**The survey has a runnable repository prototype. The Upheld CLI remains unbuilt.** The prototype prepares sources, imports candidate judgments, and writes schema 0.1 register proposals. Documentation checks run separately from the planned product commands.
+**Schema 0.2 now represents that product model. The full Upheld CLI remains unbuilt.** The survey prototype still writes 0.1 proposals. Version 0.2 adds defense plans, current-defense mappings, accepted gaps, and a derived gap report. The first report tool and repository checks run here.
 
-A promise is a claim that can be false. A defense is a test, rule, type guarantee, or other mechanism intended to uphold it. An evidence record describes a run that assessed a defense. A binding records a person's choice to rely on that evidence.
+An obligation is a falsifiable rule that software must preserve. The rest of this README calls it a promise. A defense plan says which mechanism or set of mechanisms should hold that promise under stated project limits. A current defense is a mechanism that really exists. Evidence records what a fault challenge observed. A binding records a person's choice to trust supporting evidence.
 
-The [development lifecycle](docs/EVIDENCE_LIFECYCLE.md) runs an existing checker through a fault challenge and changed-ground review. Acceptance in that case is simulated. [Earlier tools](docs/PRIOR_ART.md) supply precedents; useful findings and review cost remain the product tests.
+Teams can start before or after implementation. They can write promises and defense plans while designing an app, or discover promises and current defenses from an existing codebase. Both routes lead to the same machine-readable view.
 
-## The committed example has no graded defenses
+| Question | Upheld answer |
+|---|---|
+| What must stay true? | Promise |
+| How should we hold it? | Defense plan, with reasons and limits |
+| What holds it now? | Current defenses |
+| Why trust those defenses? | Fault challenges, evidence, and bindings |
+| What is missing or weak? | Gaps and accepted exceptions |
+| What needs another look after change? | Affected promises, plans, defenses, or evidence grounds |
+
+Advice and code stay separate. A plan may call for a type guard plus an integration check while the code has only a unit test. Upheld should show that difference and whether the test has faced the fault it claims to catch.
+
+Read [the positioning](docs/POSITIONING.md) for the short product story and [the product model](docs/PRODUCT_MODEL.md) for the full lifecycle.
+
+## Trace freshness supports the map
+
+Doorstop can mark requirement links suspect after upstream changes. Boundver can report consumers of changed contracts. Upheld can reuse those signals instead of building another general dependency engine.
+
+A changed fingerprint means earlier grounds need review. It does not mean the promise is false or the defense failed. [The trace-freshness boundary](docs/TRACE_FRESHNESS_BOUNDARY.md) records that split.
+
+## Schema 0.2 exposes the plan-versus-current gap
+
+The [schema guide](docs/SCHEMA.md) defines four 0.2 shapes: a register for promises, plans, current defenses, and accepted gaps; evidence records; human bindings; and a derived gap report.
+
+`tools/assurance_report.py` currently derives only gaps justified by recorded mappings, evidence, and bindings. It does not yet choose plans, inspect the live tree for stale evidence, or discover omitted promises.
+
+## The committed 0.1 survey remains historical input
 
 The heldtospec survey covers one contracts component. Its records date from 6 September 2026; they do not describe that project's current state.
 
@@ -23,29 +48,30 @@ The heldtospec survey covers one contracts component. Its records date from 6 Se
 
 Sources: [survey records](examples/heldtospec-contracts/README.md) and [reconciled counts](examples/heldtospec-contracts/reconciliation.md).
 
-**Fresh evidence does not prove that a software promise is true.** The checker will compare current files with the grounds recorded by an evidence producer. It will report when those grounds change.
+Fresh evidence never proves a promise true. It can justify trusting one defense within a recorded scope. Upheld must still compare that current defense with the plan and keep any gap visible.
 
-## The next milestone tests discovery and upkeep
+## The next milestone tests the whole flow
 
-The [milestone](docs/MILESTONE.md) pairs a survey and cheap-probe workflow with a small checker run. It measures useful findings and human review work.
+The [milestone](docs/MILESTONE.md) tests promise discovery or authorship, defense-plan quality, discovery of current defenses, gap finding, evidence quality, and upkeep cost.
 
 | Piece | Current state | Read next |
 |---|---|---|
-| Survey | Source packets, external judgments, register proposals, and an experimental Codex adapter | [Run the prototype](docs/SURVEY_PROTOTYPE.md) |
-| Evidence producers | Specified; no product producer | [Checker and producer rules](docs/CHECKER.md) |
-| Checker CLI | Specified; no product commands | [Schemas and compatibility](docs/SCHEMA.md) |
-| Documentation checks | Executable repository tools | [Contribution checks](CONTRIBUTING.md) |
+| Product model | Schema 0.2 and design docs | [Product model](docs/PRODUCT_MODEL.md) |
+| Survey | Source packets, external judgments, 0.1 proposals, and an experimental Codex adapter | [Run the prototype](docs/SURVEY_PROTOTYPE.md) |
+| Defense planner | Record shape and trial plan; agent-guidance route unproven | [Design choices](docs/DECISIONS.md) |
+| Gap report | Small 0.2 structural reporter | [Schema guide](docs/SCHEMA.md) |
+| Evidence producer and checker | Specified; product commands unbuilt | [Checker design](docs/CHECKER.md) |
+| Agent guide | Packaged 0.2 workflow around method 1.4 | [Use the skill](docs/UPHELD_SKILL.md) |
 
-## Start with the method or the next task
+## Start here
 
-- [Survey register](docs/SURVEY_REGISTER.md) explains the machine-readable output and its limits.
-- [Component design](docs/COMPONENT_REGISTER_DESIGN.md) records the next schema work.
-- [Current method](docs/METHOD.md) explains how to assess a defense.
-- [Self-audit](docs/SELF_AUDIT.md) applies the method to Upheld and records observed faults and remaining gaps.
-- [Agent guide](docs/UPHELD_SKILL.md) explains the opt-in skill prototype and its untested live-client behavior.
-- [Todo list](TODO.md) records remaining work and completed decisions.
-- [Design choices](docs/DECISIONS.md) explain the product boundary and the source of each rule.
-- [Measured results](measurements/RESULTS.md) separate observed results from pending trials.
-- [Earlier drafts](docs/history/README.md) preserve the original arguments and reviews.
+- [Positioning](docs/POSITIONING.md): the problem Upheld solves.
+- [Product model](docs/PRODUCT_MODEL.md): promise, plan, current defenses, evidence, and gaps.
+- [Schema](docs/SCHEMA.md): 0.2 shapes and 0.1 compatibility.
+- [Self-application](examples/upheld-self-assurance/README.md): what 0.2 says about Upheld itself.
+- [Milestone](docs/MILESTONE.md): how the product claims will be tested.
+- [Current method](docs/METHOD.md): how a current defense earns evidence.
+- [Prior art](docs/PRIOR_ART.md): what Doorstop, Boundver, and adjacent systems already establish.
+- [Todo list](TODO.md): remaining work.
 
 Apache-2.0 covers code and documents. See [license terms](LICENSE) and [attribution notice](NOTICE).

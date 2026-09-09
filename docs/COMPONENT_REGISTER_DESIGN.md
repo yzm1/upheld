@@ -1,6 +1,8 @@
-# Components own claims; shared contracts need their own records
+# Components own promises; shared contracts need their own records
 
-Readers are engineers planning Upheld's next schema. **Keep a component's promises near its code, and give shared contracts an explicit owner.** Combine those files into a generated system view. This is agreed design work for S15–S17; the current exporter uses schema 0.1.
+Readers are engineers planning Upheld's next schema. **Keep a component's promises near its code or design record, and give shared contracts an explicit owner.** Combine those files into a generated system view. This is agreed design work for S15–S17; the current exporter uses schema 0.1.
+
+A component register can come from design work or a survey. A team may write it before code exists, then fill in actual defenses as code appears. A survey of an existing codebase reaches the same model from the other direction. The system view should compare the desired defense plan with current defenses and show the gaps.
 
 ## Boundver supplies component names and change impact
 
@@ -8,19 +10,66 @@ Boundver declares component paths, contract inputs, and downstream consumers. It
 
 The payments demo traces an API change through a client library and checkout app to an external mobile consumer. External labels end traversal; they do not identify a verified remote contract. [Runnable demo](https://github.com/yzm1/boundver/blob/b8c886100694a0b9f9d45502d072876f07c43444/scripts/demo_consumer_impact.py), [graph code](https://github.com/yzm1/boundver/blob/b8c886100694a0b9f9d45502d072876f07c43444/src/boundver/_consumer_graph.py).
 
+Doorstop supplies the same lower-level pattern for requirements: a parent-link stamp records the upstream item's fingerprint, and a changed fingerprint makes the link suspect until reviewed. [Reviewed Doorstop item implementation](https://github.com/doorstop-dev/doorstop/blob/1f5756390bdeeff58fc22e30d5c5a56bb1a81c16/doorstop/core/item.py).
+
+[The trace-freshness boundary](TRACE_FRESHNESS_BOUNDARY.md) treats generic identity, fingerprint drift, and affected-link propagation as an established lower layer. S15–S17 must not recreate a second general dependency engine unless measured needs require semantics that the available tools cannot provide.
+
+## Membership, dependency, and support are different relations
+
+The next schema must not overload one edge type.
+
+| Relation | Meaning | Evidence implication |
+|---|---|---|
+| Membership | A promise, defense, or artifact belongs to a component or authored register. | None. It organizes ownership and scope. |
+| Dependency / consumer | A change in one component may affect another. | None. It selects possible review work. |
+| Trace / source relation | A promise is derived from, published in, or linked to another record or artifact. | None by itself. It may become stale. |
+| Support | One claim, mechanism, or argument is offered as grounds for another claim under stated conditions. | Requires an explicit reason, scope, and compatible defenses/evidence before reliance. |
+
+Boundver can supply dependency topology. Doorstop or StrictDoc can supply requirement/source traceability. Upheld owns support semantics only when it can say why the link matters and what grounds justify relying on it.
+
+A generated view may combine these relation types, but it must label their provenance and never promote a dependency or fresh trace into evidence.
+
+## Component records carry the defense plan and current defenses
+
+The next schema should make the product spine visible without forcing one document layout.
+
+| Proposed record | What belongs there |
+|---|---|
+| Component register | Owned promises, assumptions, constraints, defense plans, current defenses, and accepted gaps |
+| Defense plan | One proposed mechanism or portfolio with rationale, cost, scope, bypass paths, and proposed fault challenge |
+| Implemented defense | A mechanism that actually exists and is claimed to uphold a promise |
+| Evidence and binding | What challenged an implemented defense and which supporting record a person chose to rely on |
+| Exported contract | Claims that other components may rely on |
+| Shared-contract register | Participating claims, support mapping, conditions, owner, defense plan, and current defenses |
+| Manifest | Included files, exported names, external references, and optional topology providers |
+| Generated view | Resolved sources, plan-versus-current gaps, relation types, cycles, and change-impact context |
+
+These names describe planned roles. S15 will define the fields and a schema version. Upheld already uses binding for a person's evidence choice; shared contracts need a distinct name.
+
+A defense plan may contain several mechanisms. One mechanism can cover a local invariant while another covers an integration boundary. The plan should say whether the set is conjunctive, alternative, or layered. Exact composition rules remain schema work.
+
+The gap view should distinguish at least missing defense, weaker or narrower defense, unproven defense, stale evidence, uncovered scope, unavailable infrastructure, and deliberately accepted gap. Exact wire names remain open.
+
 ## A shared claim needs more than a link
 
 The Object Management Group's assurance standard lets a package expose selected claims. A separate package records the argument connecting claims from other packages. This gives us a place to explain why one guarantee meets another requirement. It does not prescribe our JSON layout or prove the claims. [Structured Assurance Case Metamodel 2.3, October 2023, sections 11.4–11.6](https://www.omg.org/spec/SACM/2.3/PDF).
 
-| Proposed record | What belongs there |
-|---|---|
-| Component register | Owned promises, assumptions, and defenses |
-| Exported contract | Claims that other components may rely on |
-| Shared-contract register | Participating claims, mapping, conditions, owner, and its own defenses |
-| Manifest | Included files, exported names, and external references |
-| Generated view | Resolved sources, open questions, cycles, and change impact |
+A cross-project consumer edge only says where change may matter. A shared-contract record must separately explain why an exported guarantee from one component is sufficient for a consumer promise. It should also state versions, conditions, the defense plan for that support link, current defenses, and the evidence that backs them.
 
-These names describe planned roles. S15 will define the fields and a schema version. Upheld already uses binding for a person's evidence choice; shared contracts need a distinct name.
+## Existing trace systems provide an adoption bypass
+
+A project should not need to migrate its entire requirements or dependency model before using Upheld.
+
+S15 should define provenance for imported records and references. S16 should be able to assemble a view using optional external context such as:
+
+- Boundver component IDs, contract facets, and affected consumers;
+- Doorstop or StrictDoc requirement IDs and source links;
+- build-system affected-target output;
+- ReqIF or requirements-management records as candidate promise sources.
+
+Imported `suspect`, `affected`, `reviewed`, passing-test, or link-hash state is context only. It never becomes an Upheld evidence verdict or binding. The importer should minimize duplicate authoring without inheriting the source tool's acceptance semantics.
+
+For standalone use, Upheld may keep minimal locators, fingerprints, and relations required to verify its own evidence basis. That fallback must remain smaller than a general dependency-management subsystem unless evaluation shows a real unmet need.
 
 ## Cycles stay visible and need a justified argument
 
@@ -32,12 +81,14 @@ A group of mutually dependent claims can define a review scope. Merely visiting 
 
 Pact's matrix associates consumer and provider versions through contracts and test results. Upheld should likewise record which versions and conditions support a shared claim. A version label alone does not establish compatible behavior. [Pact's version-based check](https://docs.pact.io/pact_broker/can_i_deploy).
 
-Keep stable claim IDs separate from source paths and inspected revisions. Missing remote sources remain unknown. Review deleted links using both the old and new graph. Boundver's range review uses that approach so removed consumers remain visible. [Range-review rules](https://github.com/yzm1/boundver/blob/b8c886100694a0b9f9d45502d072876f07c43444/docs/reference.md).
+Keep stable promise IDs separate from source paths and inspected revisions. Missing remote sources remain unknown. Review deleted links using both the old and new graph. Boundver's range review uses that approach so removed consumers remain visible. [Range-review rules](https://github.com/yzm1/boundver/blob/b8c886100694a0b9f9d45502d072876f07c43444/docs/reference.md).
 
 ## The next work must preserve local choices
 
-S15 defines the schema and migration. S16 loads component files and builds views. S17 adds cross-project mappings and real shared-contract cases. Their gates must cover moved files, missing sources, changed assumptions, conflicting versions, and unsupported cycles. Regeneration must preserve reviewed claims and evidence choices.
+S15 defines the schema and migration. It must distinguish authored or discovered promises, defense plans, current defenses, evidence, accepted gaps, membership, dependency, trace, and support. S16 loads component files and builds views; it should consume existing topology providers where available instead of reproducing their graph semantics. S17 adds cross-project mappings and real shared-contract cases.
 
-Small projects may keep one authored file. Splitting files adds reference and review work; its maintenance benefit remains unmeasured. An optional Boundver import can supply component context without requiring every Upheld user to adopt it.
+Their gates must cover moved files, missing sources, changed assumptions, changed plan constraints, conflicting versions, unsupported cycles, imported suspect/affected states, and source-tool drift. Regeneration must preserve reviewed promises, plans that have not semantically changed, evidence, and human choices.
 
-The research reviewed Boundver commit `b8c8861` on 8 September 2026. Its 23 graph tests and disposable Git demo passed. A historical-edge test was inspected but could not run because pytest was unavailable. These are focused checks. Large-project trials and a working cross-project resolver remain open.
+Small projects may keep one authored file. Splitting files adds reference and review work; its maintenance benefit remains unmeasured. An optional Boundver import can supply component context without requiring every Upheld user to adopt it. A Doorstop or StrictDoc import can likewise reduce duplicate promise authoring without treating source-tool review status as accepted evidence.
+
+The research reviewed Boundver commit `b8c8861` on 8 September 2026 and Doorstop commit `1f57563` on 9 September 2026. Boundver's 23 graph tests and disposable Git demo passed in the recorded review. A historical-edge test was inspected but could not run because pytest was unavailable. These are focused checks. Large-project trials and a working cross-project resolver remain open.

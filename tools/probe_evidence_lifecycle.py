@@ -19,8 +19,16 @@ PROFILE = 'development/readme-byte-snapshot/v1'
 CHECKER = 'tools/check_readme_status.py'
 RUNNER = 'tools/probe_evidence_lifecycle.py'
 SUBJECT = 'README.md'
-INPUTS = tuple('examples/heldtospec-contracts/' + name for name in (
-    'obligations.register.json', 'obligations.bindings.json', 'observations.json'))
+INPUTS = (
+    'examples/heldtospec-contracts/obligations.register.json',
+    'examples/heldtospec-contracts/obligations.bindings.json',
+    'examples/heldtospec-contracts/observations.json',
+    'schemas/0.2/register.schema.json',
+    'schemas/0.2/evidence.schema.json',
+    'schemas/0.2/bindings.schema.json',
+    'schemas/0.2/assurance-report.schema.json',
+    'tools/assurance_report.py',
+)
 
 
 def encoded(value):
@@ -62,12 +70,17 @@ def basis(root, register):
         if path.is_symlink():
             raise ValueError('Snapshot cannot contain symlinks')
         paths.append(path.relative_to(root).as_posix() + ('/' if path.is_dir() else ''))
-    return {'hashing_profile': PROFILE, 'promise': digest(encoded(promise)),
-            'defense_assertion': digest(encoded(defense)),
-            'artifacts': {name: file_hash(root, name) for name in (CHECKER, RUNNER)},
-            'subject_scope': {'scope': SUBJECT, 'hash': file_hash(root, SUBJECT)},
-            'environment': {**{name: file_hash(root, name) for name in INPUTS},
-                            'demo-tree-paths': digest(encoded(sorted(paths)))}}
+    return {
+        'hashing_profile': PROFILE,
+        'promise': digest(encoded(promise)),
+        'defense_assertion': digest(encoded(defense)),
+        'artifacts': {name: file_hash(root, name) for name in (CHECKER, RUNNER)},
+        'subject_scope': {'scope': SUBJECT, 'hash': file_hash(root, SUBJECT)},
+        'environment': {
+            **{name: file_hash(root, name) for name in INPUTS},
+            'demo-tree-paths': digest(encoded(sorted(paths))),
+        },
+    }
 
 
 def evidence_id(record):
@@ -137,9 +150,11 @@ def inspect(root, register, record, bindings):
 
 def simulate_accept(root, register, record):
     """Create only a labeled test decision; never claim a person accepted evidence."""
-    bindings = {'schema_version': '0.1',
-                'bindings': {record['defense_id']: record['evidence_id']},
-                'note': 'SIMULATED acceptance for a development probe; no human acceptance.'}
+    bindings = {
+        'schema_version': '0.1',
+        'bindings': {record['defense_id']: record['evidence_id']},
+        'note': 'SIMULATED acceptance for a development probe; no human acceptance.',
+    }
     if inspect(root, register, record, bindings)['state'] != 'still_valid':
         raise ValueError('Cannot simulate accepting incompatible or stale evidence')
     return bindings
@@ -149,14 +164,18 @@ def execute(root):
     start = time.monotonic()
     command = [sys.executable, str(root / CHECKER)]
     run = subprocess.run(command, cwd=root, capture_output=True, text=True, timeout=10)
-    return {'command': command, 'exit_code': run.returncode, 'stdout': run.stdout,
-            'stderr': run.stderr, 'duration_seconds': time.monotonic() - start}
+    return {
+        'command': command,
+        'exit_code': run.returncode,
+        'stdout': run.stdout,
+        'stderr': run.stderr,
+        'duration_seconds': time.monotonic() - start,
+    }
 
 
 def run_demo(source=ROOT):
     source = Path(source).resolve()
     register = json.loads((source / 'examples/upheld-status/obligations.register.json').read_text())
-    # Copy an existing promise and checker; seeded faults are explicit test data.
     started = datetime.now(timezone.utc).isoformat()
     begin = time.monotonic()
     source_rev = subprocess.check_output(['git', '-C', str(source), 'rev-parse', 'HEAD'], text=True).strip()
@@ -166,11 +185,18 @@ def run_demo(source=ROOT):
         for name in (SUBJECT, CHECKER, *INPUTS):
             (root / name).parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(source / name, root / name)
+        (root / RUNNER).parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(Path(__file__), root / RUNNER)
-        original = {name: (root / name).read_bytes() for name in (SUBJECT, CHECKER, RUNNER, *INPUTS)}
+        original = {name: (root / name).read_bytes()
+                    for name in (SUBJECT, CHECKER, RUNNER, *INPUTS)}
         captured = basis(root, register)
-        expected = {'clean': 0, 'count_fault': 1, 'historical_claim': 1,
-                    'missing_input': 2, 'weakened_checker': 0}
+        expected = {
+            'clean': 0,
+            'count_fault': 1,
+            'historical_claim': 1,
+            'missing_input': 2,
+            'weakened_checker': 0,
+        }
         runs['clean'] = execute(root)
         text = original[SUBJECT].decode()
         if text.count('| Promises | 44 |') != 1:
@@ -191,40 +217,64 @@ def run_demo(source=ROOT):
         (root / INPUTS[0]).write_bytes(original[INPUTS[0]])
         outputs = {name: json.loads(run['stdout']) for name, run in runs.items()}
         matched = all(runs[name]['exit_code'] == code for name, code in expected.items())
-        matched &= any(x['code'] == 'status_count_mismatch' for x in outputs['count_fault'].get('findings', []))
-        matched &= any(x['code'] == 'obsolete_status_claim' for x in outputs['historical_claim'].get('findings', []))
+        matched &= any(x['code'] == 'status_count_mismatch'
+                       for x in outputs['count_fault'].get('findings', []))
+        matched &= any(x['code'] == 'obsolete_status_claim'
+                       for x in outputs['historical_claim'].get('findings', []))
         matched &= outputs['missing_input'].get('result') == 'could_not_look'
         if not matched or basis(root, register) != captured:
             raise ValueError('Fault challenge failed or did not restore its input snapshot')
-        record = {'schema_version': '0.1', 'evidence_id': 'pending',
-                  'defense_id': register['promises'][0]['defenses'][0]['id'],
-                  'oracle': 'seeded_violation', 'oracle_result': 'fired', 'verdict': 'supports',
-                  'validated_subject_scope': SUBJECT, 'basis': captured,
-                  'source_rev': source_rev, 'producer': 'development-readme-lifecycle',
-                  'supersedes': None, 'execution': {'status': 'recorded',
-                      'command': [sys.executable, *sys.argv],
-                      'started_at': started, 'duration_seconds': time.monotonic() - begin,
-                      'toolchain': {'python': platform.python_version(), 'platform': platform.platform()},
-                      'target': 'Disposable snapshot of Upheld README status checks',
-                      'configuration': {'profile': PROFILE},
-                      'dirty_tree': {'state': 'dirty', 'snapshot': digest(encoded(captured))},
-                      'omissions': ['Arbitrary prose, concurrency, other platforms, and external state were not assessed.']},
-                  'metadata': {'development_only': True, 'expected_exits': expected, 'observed_runs': runs,
-                               'source_identity': 'source_rev names checkout HEAD; basis hashes the copied working files.'}}
+        record = {
+            'schema_version': '0.1',
+            'evidence_id': 'pending',
+            'defense_id': register['promises'][0]['defenses'][0]['id'],
+            'oracle': 'seeded_violation',
+            'oracle_result': 'fired',
+            'verdict': 'supports',
+            'validated_subject_scope': SUBJECT,
+            'basis': captured,
+            'source_rev': source_rev,
+            'producer': 'development-readme-lifecycle',
+            'supersedes': None,
+            'execution': {
+                'status': 'recorded',
+                'command': [sys.executable, *sys.argv],
+                'started_at': started,
+                'duration_seconds': time.monotonic() - begin,
+                'toolchain': {'python': platform.python_version(), 'platform': platform.platform()},
+                'target': 'Disposable snapshot of Upheld README status checks',
+                'configuration': {'profile': PROFILE},
+                'dirty_tree': {'state': 'dirty', 'snapshot': digest(encoded(captured))},
+                'omissions': ['Arbitrary prose, concurrency, other platforms, and external state were not assessed.'],
+            },
+            'metadata': {
+                'development_only': True,
+                'expected_exits': expected,
+                'observed_runs': runs,
+                'source_identity': 'source_rev names checkout HEAD; basis hashes the copied working files.',
+            },
+        }
         record['evidence_id'] = evidence_id(record)
         validate('evidence', record)
         no_binding = {'schema_version': '0.1', 'bindings': {}}
-        rows.append({'case': 'candidate_without_acceptance', 'expected': 'open',
-                     'actual': inspect(root, register, record, no_binding)})
+        rows.append({
+            'case': 'candidate_without_acceptance',
+            'expected': 'open',
+            'actual': inspect(root, register, record, no_binding),
+        })
         binding = simulate_accept(root, register, record)
         protected = encoded({'register': register, 'evidence': record, 'bindings': binding})
+
         def observe(case, expected_state, changed_register=register, changed_record=record):
-            rows.append({'case': case, 'expected': expected_state,
-                         'actual': inspect(root, changed_register, changed_record, binding)})
+            rows.append({
+                'case': case,
+                'expected': expected_state,
+                'actual': inspect(root, changed_register, changed_record, binding),
+            })
+
         observe('accepted_fixture_unchanged', 'still_valid')
         (root / SUBJECT).write_bytes(original[SUBJECT] + b'\n')
         observe('subject_changed', 'review_required')
-        # Recomputing a disposable view cannot update the record or the binding.
         first = encoded(basis(root, register))
         if first != encoded(basis(root, register)):
             raise ValueError('Snapshot regeneration is not deterministic')
@@ -255,13 +305,21 @@ def run_demo(source=ROOT):
         row['matched'] = row['expected'] == row['actual']['state']
     if not all(row['matched'] for row in rows):
         raise ValueError('Lifecycle result differs from its declared expectation')
-    return {'kind': 'development_evidence_lifecycle', 'started_at': started,
-            'finished_at': datetime.now(timezone.utc).isoformat(), 'register': register,
-            'evidence': record, 'simulated_binding': binding, 'scenarios': rows,
-            'accepted_human_bindings_created': 0,
-            'limits': ['This is a closed fixture demonstration, not a product checker or hashing profile.',
-                       'Acceptance is simulated and does not change any project bindings.',
-                       'Lineage, arbitrary scopes, multi-component graphs, cycles, and review cost remain untested.']}
+    return {
+        'kind': 'development_evidence_lifecycle',
+        'started_at': started,
+        'finished_at': datetime.now(timezone.utc).isoformat(),
+        'register': register,
+        'evidence': record,
+        'simulated_binding': binding,
+        'scenarios': rows,
+        'accepted_human_bindings_created': 0,
+        'limits': [
+            'This is a closed fixture demonstration, not a product checker or hashing profile.',
+            'Acceptance is simulated and does not change any project bindings.',
+            'Lineage, arbitrary scopes, multi-component graphs, cycles, and review cost remain untested.',
+        ],
+    }
 
 
 def main():
@@ -276,8 +334,11 @@ def main():
     with args.output.open('x') as stream:
         json.dump(result, stream, indent=2)
         stream.write('\n')
-    print(json.dumps({'scenarios': len(result['scenarios']), 'matched': sum(r['matched'] for r in result['scenarios']),
-                      'accepted_human_bindings_created': 0}))
+    print(json.dumps({
+        'scenarios': len(result['scenarios']),
+        'matched': sum(r['matched'] for r in result['scenarios']),
+        'accepted_human_bindings_created': 0,
+    }))
 
 
 if __name__ == '__main__':
