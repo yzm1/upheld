@@ -2,28 +2,28 @@
 
 Readers are engineers, maintainers, and reviewers deciding whether Upheld solves a problem they have.
 
-**Upheld keeps a machine-readable map of what software must keep true, how it should be defended, how it is actually defended, and where the gaps need attention.**
+**Upheld keeps a machine-readable map of what software must keep true, which defenses should hold each promise, which defenses do so now, and where gaps need work.**
 
-That sentence is the primary positioning. Evidence, trace freshness, agents, schemas, and change impact support it.
+That is the primary positioning. Evidence, change tracking, agents, and schemas support it.
 
-## The problem is not a lack of requirements or tests
+## Teams already have requirements and tests
 
-Teams already have requirements, tests, types, static checks, runtime guards, contract tests, CI rules, and review practices. The missing view is often the relationship between intent and coverage.
+Most projects already have requirements, tests, types, static checks, runtime guards, contract tests, CI rules, and review habits. They often lack one view that connects the promise to the coverage.
 
-For an important promise, a team may not have one place that answers:
+For an important promise, Upheld should answer:
 
 - what exactly must stay true;
-- what defense plan would fit the failure mode and project limits;
+- what defense plan fits the failure mode and project limits;
 - which defenses actually exist;
-- whether those defenses have been challenged against the right fault;
+- whether those defenses have faced the right fault;
 - what part remains uncovered or uncertain;
 - which earlier judgment needs another look after a change.
 
-Upheld makes that comparison explicit and machine-readable.
+Upheld stores that comparison in a form people and tools can inspect.
 
 ## The core output is the plan-versus-current gap
 
-A useful Upheld result looks like this:
+A useful result looks like this:
 
 > Promise: requests outside the allowed tenant cannot read this object.
 >
@@ -31,7 +31,7 @@ A useful Upheld result looks like this:
 >
 > Current defenses: route-level permission test only.
 >
-> Evidence: the test has not been challenged through the lower-level data path.
+> Evidence: the test has not faced a challenge through the lower-level data path.
 >
 > Gap: the current defense is narrower than the plan; direct data access remains uncovered.
 >
@@ -39,21 +39,21 @@ A useful Upheld result looks like this:
 
 The value is the visible difference between what should hold the promise and what does.
 
-## Upheld serves design and audit with the same model
+## The same model serves design and audit
 
-For a new application, teams can author promises and defense plans before code exists. Upheld becomes a design aid: decide how each important promise should be made hard to violate.
+For a new app, teams can write promises and defense plans before code exists. Use Upheld during design to choose defenses that make each important promise hard to violate.
 
-For an existing application, Upheld can discover promises and current defenses from source, tests, docs, types, configuration, and runtime checks. It then compares the discovered state with reviewed defense plans.
+For an existing app, Upheld can find promises and current defenses in source, tests, docs, types, config, and runtime checks. It then compares that current state with reviewed defense plans.
 
-The two paths converge on the same register and report.
+Both routes lead to the same register and gap report.
 
-## “Best defense” is conditional
+## “Best defense” depends on the case
 
-Upheld does not advertise one defense kind as universally strongest. It should compare plans under the project's own constraints: failure consequence, scope, bypass paths, feedback speed, runtime cost, upkeep cost, available infrastructure, and independence between defenses.
+Upheld does not advertise one defense kind as universally strongest. Compare plans using the project's own limits: likely harm, scope, bypass paths, feedback speed, runtime cost, upkeep cost, available tools, and independence between defenses.
 
-A type guard may be best for a local representation rule. A property test may be better for a broad input space. An integration check may be necessary for a remote boundary. A runtime invariant may cover failures no build-time mechanism can see. One promise can require several of them together.
+A type guard may fit a local representation rule. A property test may suit a broad input space. An integration check may be necessary at a remote boundary. A runtime invariant may catch faults that build-time checks cannot see. One promise can need several of them together.
 
-When the inputs do not justify one winner, Upheld should show sound alternatives and tradeoffs rather than fabricate certainty.
+When the facts do not justify one winner, show sound alternatives and tradeoffs.
 
 ## What Upheld is not
 
@@ -61,34 +61,34 @@ Upheld is not primarily:
 
 - a requirements editor;
 - a generic dependency graph;
-- a test-management system;
+- a test manager;
 - a code-coverage dashboard;
 - a formal proof system;
 - a compliance checklist;
 - a service that declares software safe.
 
-It can consume records from requirements tools, Boundver, build graphs, test runners, and other systems. Their data reduces duplicate work. Their review or pass state does not automatically become Upheld evidence.
+It can consume records from requirements tools, Boundver, build graphs, test runners, and other systems. Their data can reduce duplicate work. Their review or pass state never becomes Upheld evidence by default.
 
-## The differentiator is assurance coverage, not trace freshness
+## The differentiator is the coverage judgment
 
-Doorstop can make requirement links suspect after upstream changes. Boundver can report consumers of changed contracts. Those mechanisms are useful inputs.
+Doorstop can mark requirement links suspect after upstream changes. Boundver can report consumers of changed contracts. Those are useful inputs.
 
-Upheld adds the layer that asks whether the linked mechanism is the right defense, whether it can detect or prevent the named fault, what evidence supports it, and what gap remains relative to the desired plan.
+Upheld asks a different set of questions: Is the linked mechanism the right defense? Can it detect or prevent the named fault? What evidence supports it? What gap remains against the plan?
 
-The [trace-freshness boundary](TRACE_FRESHNESS_BOUNDARY.md) records this lower-layer split.
+The [trace-freshness boundary](TRACE_FRESHNESS_BOUNDARY.md) records the lower-layer split.
 
 ## The short forms
 
 **One sentence:** Upheld maps software promises to the defenses that should and do uphold them, then shows the gaps.
 
-**For a new project:** Specify what must stay true and decide how each promise should be defended before implementation drifts away from intent.
+**For a new project:** Specify what must stay true and choose defenses before code drifts away from intent.
 
-**For an existing project:** Discover what the code promises, see what really defends each promise, and expose weak, missing, unproven, or stale coverage.
+**For an existing project:** Find what the code promises, see what really defends each promise, and expose weak, missing, unproven, or stale coverage.
 
-**For change review:** Revisit only the promise-to-defense judgments whose recorded grounds or design constraints actually changed.
+**For change review:** Revisit only the promise-to-defense judgments whose recorded grounds or design limits changed.
 
 ## Product success
 
-Upheld succeeds when it helps a team make a better coverage decision with acceptable review work. Examples include finding an important promise with no defense, showing that a passing test cannot catch the promised fault, recommending a cheaper or stronger defense portfolio, or preserving a good decision across unrelated changes.
+Upheld succeeds when it helps a team make a better coverage decision with acceptable review work. Examples include finding a promise with no defense, showing that a passing test cannot catch the promised fault, proposing a cheaper or stronger defense set, or preserving a good decision across unrelated changes.
 
-A larger register or more warnings are not success by themselves. The [milestone](MILESTONE.md) measures finding quality, defense-plan quality, gap detection, and human review cost.
+A larger register or more warnings do not prove success. The [milestone](MILESTONE.md) measures finding quality, plan quality, gap detection, and human review cost.
