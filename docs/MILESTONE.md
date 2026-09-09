@@ -29,24 +29,24 @@ The initial success rule requires at least one confirmed useful finding in each 
 
 When testing categories, compare per-item choices against independently reviewed labels. Use the same categories and include abstentions. Category totals alone cannot pass the trial.
 
-## Compare Upheld with the simpler trace-freshness baseline
+## Compare with a simpler fingerprint baseline
 
-Doorstop-style suspect links and Boundver-style affected consumers show that fingerprinted trace freshness is established prior art. [The product boundary](TRACE_FRESHNESS_BOUNDARY.md) makes that lower layer explicit.
+Doorstop marks a link suspect when its upstream fingerprint changes. Boundver lists consumers after a declared contract drifts. These tools set a useful lower baseline. [The product boundary](TRACE_FRESHNESS_BOUNDARY.md) explains why.
 
-At least one maintenance comparison must therefore include a baseline that can store a stable obligation or contract relationship, fingerprint the reviewed grounds, and report changed, missing, or affected relationships. The baseline does not need Upheld's defense, oracle, evidence, or binding semantics.
+At least one follow-up must also run against a small tool or fixture that stores named links, records hashes, and lists changed, missing, or affected links. It does not need defenses, oracles, evidence logs, or bindings.
 
-Measure whether Upheld's additional machinery earns its cost. Record, per arm:
+Ask whether Upheld earns the extra work. Record, for each arm:
 
-- stale or affected relationships surfaced;
-- defenses discovered but shown inadequate by a fault challenge;
-- unsupported conclusions from passing or fresh traces;
-- necessary and unnecessary reassessment decisions;
-- human review minutes and queue age;
-- cases where validated scope reduced work without hiding real impact;
-- preservation of explicit acceptance across regeneration;
-- useful next actions that the simpler baseline could not provide.
+- which stale or affected links it surfaced;
+- which existing defenses failed a fault challenge;
+- which fresh or passing traces led to unsupported claims;
+- which findings needed another human check and which did not;
+- review minutes and queue age;
+- cases where a narrower checked scope saved work without hiding impact;
+- whether regeneration preserved the person's recorded choice;
+- useful next actions that the simpler tool could not give.
 
-Do not count a longer or more detailed report as a gain. If Upheld does not materially improve decisions or reduce risky ambiguity relative to this baseline, the added ontology is not justified for that workflow.
+A longer report is not a gain. If Upheld does not improve the decisions or expose a risky ambiguity that the simpler tool misses, its extra records are not worth the cost for that workflow.
 
 ## Recheck evidence after a month of changes
 
