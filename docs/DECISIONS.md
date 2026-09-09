@@ -10,6 +10,18 @@ The earlier tagline ended with “whether it still does.” Readers could take t
 
 “Continuous assurance” can describe the category after that sentence. It is not a claim that the current repository provides a running service.
 
+## Upheld does not own generic trace freshness
+
+Doorstop's suspect-link stamps and Boundver's contract fingerprints establish the lower-level pattern of recording identity, linking downstream work, and surfacing relationships after drift. Requirements-as-code, build graphs, and ALM tools provide related mechanisms.
+
+Upheld must not present machine-readable requirement links, fingerprinted reviewed state, suspect-link detection, or generic affected-consumer traversal as its differentiator. [The trace-freshness boundary](TRACE_FRESHNESS_BOUNDARY.md) records the comparison and its consequences.
+
+Upheld's product responsibility begins with justified reliance: the falsifiable promise, an asserted or recommended defense, the reason that mechanism is appropriate, the fault model and oracle that challenge it, the resulting evidence and basis, a person's explicit binding, and changed-ground invalidation that does not claim semantic failure.
+
+Use existing systems as inputs where practical. Doorstop or StrictDoc may supply candidate promises and locators. Boundver or a build graph may supply component topology and impact context. Imported review state, passing tests, link stamps, or affected status never become Upheld evidence or bindings.
+
+Implement only the minimum standalone freshness machinery Upheld needs. Revisit that boundary only if measured workflows require semantics that the existing systems cannot supply.
+
 ## The survey and checker belong in a dedicated repository
 
 The survey produces candidate promises and useful findings. Evidence producers assess defenses. The checker compares the current tree with recorded evidence. These pieces share a record format.
@@ -36,6 +48,12 @@ An unfamiliar mechanism uses an extension name and a plain description. Until an
 
 The old sketch's five-way vocabulary omitted distinctions already present in the method. A fixed distribution is not a classifier target. Different projects and input sources can have different mixes.
 
+## Recommendations stay separate from implemented defenses
+
+A recommendation about how best to enforce a promise is valuable design advice, not evidence that the mechanism exists. Future schema work must preserve the distinction between a recommended defense pattern, an implemented candidate defense, observed evidence that challenged it, and a person's accepted binding.
+
+A recommendation should carry its rationale, intended scope, bypass paths, proposed fault challenge, cost, and residual uncertainty. Discovering an existing test does not establish that it is adequate or preferable. A recommended type or property defense must not appear in the register as an implemented defense until it actually exists.
+
 ## Product learning sets the next scope
 
 The [milestone](MILESTONE.md) sets the next deliverables and evaluation rules. The working effort split is 60% survey and trials, 30% checker demonstration, and 10% document repair. These are planning choices; review them after the first trials.
@@ -44,6 +62,6 @@ Advanced history, rename handling, indexes, and review acknowledgments wait for 
 
 ## Earlier tools establish the value we must demonstrate
 
-The [prior-art review](PRIOR_ART.md) covers Doorstop, Boundver, ComplianceAsCode, shared control models, and assurance-case upkeep. Fingerprinted links, tests of checks, and structured evidence have precedents. Upheld combines them around the reasons to rely on a software defense.
+The [prior-art review](PRIOR_ART.md) covers Doorstop, Boundver, ComplianceAsCode, shared control models, and assurance-case upkeep. Fingerprinted links, tests of checks, and structured evidence have precedents. The [trace-freshness boundary](TRACE_FRESHNESS_BOUNDARY.md) makes the resulting product split explicit. Upheld combines these ideas around the reasons to rely on a software defense.
 
-The [development lifecycle](EVIDENCE_LIFECYCLE.md) exercises one existing checker and a simulated choice to rely on its evidence. Product commands and pilot results remain open. New features must improve useful findings or review work against a stated baseline.
+The [development lifecycle](EVIDENCE_LIFECYCLE.md) exercises one existing checker and a simulated choice to rely on its evidence. Product commands and pilot results remain open. New features must improve useful findings or review work against a stated baseline, including a simpler fingerprinted-trace baseline where relevant.
