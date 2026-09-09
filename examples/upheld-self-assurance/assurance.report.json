@@ -18,27 +18,27 @@
       "selected_plan_id": "UPH-02-01:plan"
     },
     {
-      "actual_defense_ids": [],
+      "actual_defense_ids": ["UPH-02-02:d:skill-recommend"],
       "gap_state": "gaps",
       "gaps": [
-        {"defense_ids": [], "id": "UPH-02-02:gap:member-UPH-02-02:recommend-missing", "kind": "no_defense", "metadata": {}, "next_action": "Implement the member or review the plan. Proposed challenge: Change a hard constraint and require the preferred plan to change.", "rationale": "Choose plans under project constraints instead of a fixed defense ranking.", "recommendation_member_ids": ["UPH-02-02:recommend"], "scope": "docs/POSITIONING.md", "severity": "unknown", "status": "open", "summary": "Recommended defense member UPH-02-02:recommend has no mapped implementation."},
+        {"defense_ids": ["UPH-02-02:d:skill-recommend"], "id": "UPH-02-02:gap:member-UPH-02-02:recommend-unproven", "kind": "unproven_defense", "metadata": {}, "next_action": "Run a compatible fault challenge and explicitly bind supporting evidence for UPH-02-02:recommend.", "rationale": "Presence or a passing suite does not establish that the defense detects the stated fault.", "recommendation_member_ids": ["UPH-02-02:recommend"], "scope": "docs/POSITIONING.md", "severity": "unknown", "status": "open", "summary": "Defense for recommended member UPH-02-02:recommend exists but has no bound supporting evidence."},
         {"defense_ids": [], "id": "UPH-02-02:gap:member-UPH-02-02:eval-missing", "kind": "no_defense", "metadata": {}, "next_action": "Implement the member or review the plan. Proposed challenge: Score scope, bypasses, constraints, and portfolio need.", "rationale": "Compare suggestions with independently reviewed acceptable plans.", "recommendation_member_ids": ["UPH-02-02:eval"], "scope": "docs/POSITIONING.md", "severity": "unknown", "status": "open", "summary": "Recommended defense member UPH-02-02:eval has no mapped implementation."}
       ],
       "metadata": {},
-      "next_actions": ["Implement the member or review the plan. Proposed challenge: Change a hard constraint and require the preferred plan to change.", "Implement the member or review the plan. Proposed challenge: Score scope, bypasses, constraints, and portfolio need."],
+      "next_actions": ["Run a compatible fault challenge and explicitly bind supporting evidence for UPH-02-02:recommend.", "Implement the member or review the plan. Proposed challenge: Score scope, bypasses, constraints, and portfolio need."],
       "obligation_id": "UPH-02-02",
       "recommendation_status": "proposed",
       "selected_plan_id": "UPH-02-02:plan"
     },
     {
-      "actual_defense_ids": ["UPH-02-03:d:gap"],
+      "actual_defense_ids": ["UPH-02-03:d:skill-inventory", "UPH-02-03:d:gap"],
       "gap_state": "gaps",
       "gaps": [
-        {"defense_ids": [], "id": "UPH-02-03:gap:member-UPH-02-03:inventory-missing", "kind": "no_defense", "metadata": {}, "next_action": "Implement the member or review the plan. Proposed challenge: Seed a plausible name match that does not guard the obligation.", "rationale": "Find actual defenses by reading mechanism and scope.", "recommendation_member_ids": ["UPH-02-03:inventory"], "scope": "skills/upheld/SKILL.md", "severity": "unknown", "status": "open", "summary": "Recommended defense member UPH-02-03:inventory has no mapped implementation."},
+        {"defense_ids": ["UPH-02-03:d:skill-inventory"], "id": "UPH-02-03:gap:member-UPH-02-03:inventory-unproven", "kind": "unproven_defense", "metadata": {}, "next_action": "Run a compatible fault challenge and explicitly bind supporting evidence for UPH-02-03:inventory.", "rationale": "Presence or a passing suite does not establish that the defense detects the stated fault.", "recommendation_member_ids": ["UPH-02-03:inventory"], "scope": "skills/upheld/SKILL.md", "severity": "unknown", "status": "open", "summary": "Defense for recommended member UPH-02-03:inventory exists but has no bound supporting evidence."},
         {"defense_ids": ["UPH-02-03:d:gap"], "id": "UPH-02-03:gap:member-UPH-02-03:gap-unproven", "kind": "unproven_defense", "metadata": {}, "next_action": "Run a compatible fault challenge and explicitly bind supporting evidence for UPH-02-03:gap.", "rationale": "Presence or a passing suite does not establish that the defense detects the stated fault.", "recommendation_member_ids": ["UPH-02-03:gap"], "scope": "skills/upheld/SKILL.md", "severity": "unknown", "status": "open", "summary": "Defense for recommended member UPH-02-03:gap exists but has no bound supporting evidence."}
       ],
       "metadata": {},
-      "next_actions": ["Implement the member or review the plan. Proposed challenge: Seed a plausible name match that does not guard the obligation.", "Run a compatible fault challenge and explicitly bind supporting evidence for UPH-02-03:gap."],
+      "next_actions": ["Run a compatible fault challenge and explicitly bind supporting evidence for UPH-02-03:inventory.", "Run a compatible fault challenge and explicitly bind supporting evidence for UPH-02-03:gap."],
       "obligation_id": "UPH-02-03",
       "recommendation_status": "proposed",
       "selected_plan_id": "UPH-02-03:plan"
