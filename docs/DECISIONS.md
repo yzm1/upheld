@@ -2,13 +2,45 @@
 
 Readers are engineers deciding how to build or adopt Upheld. This record states the current choices and when to revisit them.
 
-## The product tracks evidence for software promises
+## The product maps obligations to intended and actual assurance
 
-Use this sentence: “Upheld records what code promises, what evidence defends each promise, and when that evidence needs another check.”
+Use this sentence: “Upheld records what software must keep true, how it should be upheld, what actually upholds it, and where the assurance gaps are.”
 
-The earlier tagline ended with “whether it still does.” Readers could take that to mean proof of the promise itself. The new sentence names the narrower result. The trade is a longer opening sentence.
+The current schema calls the falsifiable obligation a `promise`. That wire name can remain during schema 0.1. Product discussions should keep the larger purpose visible: a promise record is useful because a team wants to know how the obligation should be enforced, whether that enforcement exists, whether it has earned trust, and what remains uncovered.
 
-“Continuous assurance” can describe the category after that sentence. It is not a claim that the current repository provides a running service.
+Upheld supports both authored and discovered obligations. A team may write obligations while specifying an application, before implementation. A survey may also extract candidate obligations from an existing project. Both paths feed the same assurance model.
+
+For each obligation, preserve four distinct layers:
+
+1. **Obligation.** What must remain true, including scope, conditions, consequence, and uncertainty.
+2. **Recommended assurance.** The best justified defense pattern or portfolio under declared constraints.
+3. **Actual assurance.** The implemented defenses that currently claim to uphold the obligation, with their scope and evidence.
+4. **Gap and attention.** What is absent, weaker than recommended, unproven, stale, unreachable, conflicting, or deliberately accepted as a gap.
+
+The main product view compares layers two and three and makes layer four visible. Evidence and bindings explain why an actual defense may be relied upon; they are part of this model rather than the whole product.
+
+“Continuous assurance” can describe the category after this explanation. It is not a claim that the current repository provides a running service.
+
+## “Best defense” means best under stated constraints
+
+Upheld should help choose how to enforce an obligation. It must not pretend that defense kinds have a universal ranking.
+
+A recommendation may prefer one defense or a portfolio of defenses. The comparison can consider:
+
+- strength of prevention or detection;
+- validated scope and coverage;
+- known bypass paths and residual uncertainty;
+- independence or diversity between defenses;
+- feedback latency;
+- runtime and maintenance cost;
+- required environment or infrastructure;
+- reachability and failure consequence;
+- ease of adversarial challenge;
+- whether the guarantee can move earlier, such as from runtime detection to construction-time prevention.
+
+An “optimal” recommendation is therefore conditional on an objective and constraints. If those inputs are missing, Upheld should expose several justified choices or state that no ranking is established.
+
+A portfolio can be better than one mechanism. For example, a type restriction may prevent invalid local states while an integration check defends a remote boundary. The schema must eventually represent that recommendation without implying that either mechanism already exists.
 
 ## Upheld does not own generic trace freshness
 
@@ -16,17 +48,17 @@ Doorstop stamps parent links. Boundver fingerprints declared contracts and repor
 
 Do not present machine-readable requirement links, reviewed hashes, suspect-link detection, or generic affected-consumer traversal as Upheld's differentiator. [The trace-freshness boundary](TRACE_FRESHNESS_BOUNDARY.md) records the comparison and its consequences.
 
-Upheld starts after that signal. It records a falsifiable promise, the mechanism claimed to defend it, why that mechanism fits, how to challenge it, what a run observed, which record a person chose to rely on, and which changed inputs force another review.
+That layer supports the main product. Change context tells Upheld which obligations, defenses, recommendations, or evidence grounds may need another look. It does not define Upheld's purpose.
 
-Use existing systems as inputs where practical. Doorstop or StrictDoc may supply candidate promises and locators. Boundver or a build graph may supply component topology and affected consumers. Imported review state, passing tests, link stamps, or affected status never become Upheld evidence or bindings.
+Use existing systems as inputs where practical. Doorstop or StrictDoc may supply candidate obligations and locators. Boundver or a build graph may supply component topology and affected consumers. Imported review state, passing tests, link stamps, or affected status never become Upheld evidence or bindings.
 
 Implement only enough local hashing and resolution to check Upheld's own evidence records. Build more only if measured workflows need something the existing tools cannot supply.
 
 ## The survey and checker belong in a dedicated repository
 
-The survey produces candidate promises and useful findings. Evidence producers assess defenses. The checker compares the current tree with recorded evidence. These pieces share a record format.
+The survey produces candidate obligations and useful findings. A recommender proposes defense patterns. Evidence producers assess implemented defenses. The checker compares the current tree with recorded evidence. Reports compare intended and actual assurance and surface gaps. These pieces share a record format.
 
-Boundver checks changes to declared contracts. Heldtospec checks data against contracts. Upheld keeps its broader software-promise scope here. Revisit this choice if adopters consistently find copying the design easier than using the tool.
+Boundver checks changes to declared contracts. Heldtospec checks data against contracts. Upheld keeps its broader software-obligation scope here. Revisit this choice if adopters consistently find copying the design easier than using the tool.
 
 Python remains the intended language. Apache-2.0 remains the license for code and documents. These choices do not require publishing a package now.
 
@@ -50,9 +82,11 @@ The old sketch's five-way vocabulary omitted distinctions already present in the
 
 ## Keep advice separate from implemented defenses
 
-A recommendation says what mechanism may fit a promise and why. It does not say that mechanism exists. Future schemas need separate records or fields for advice, an implemented defense, a run that challenged it, and the evidence a person chose.
+A recommendation says what mechanism or portfolio may fit an obligation and why. It does not say that mechanism exists. Future schemas need separate records or fields for advice, an implemented defense, a run that challenged it, and the evidence a person chose.
 
 The advice should name scope, bypass paths, a proposed fault challenge, cost, and what remains uncertain. Discovering an existing test does not show that it is adequate or preferable. A recommended type or property defense stays advice until the project implements it.
+
+The comparison between recommendation and reality should produce explicit gap classes. Examples include `no_defense`, `weaker_than_recommended`, `unproven_defense`, `stale_evidence`, `coverage_gap`, `unsupported_environment`, `conflicting_defenses`, and `accepted_gap`. Exact wire names remain schema work.
 
 ## Product learning sets the next scope
 
@@ -62,6 +96,6 @@ Advanced history, rename handling, indexes, and review acknowledgments wait for 
 
 ## Earlier tools establish the value we must demonstrate
 
-The [prior-art review](PRIOR_ART.md) covers Doorstop, Boundver, ComplianceAsCode, shared control models, and assurance-case upkeep. Fingerprinted links, tests of checks, and structured evidence have precedents. The [trace-freshness boundary](TRACE_FRESHNESS_BOUNDARY.md) makes the product split explicit. Upheld combines these ideas around the reasons to rely on a software defense.
+The [prior-art review](PRIOR_ART.md) covers Doorstop, Boundver, ComplianceAsCode, shared control models, and assurance-case upkeep. Fingerprinted links, tests of checks, and structured evidence have precedents. The [trace-freshness boundary](TRACE_FRESHNESS_BOUNDARY.md) keeps that lower layer in its supporting role.
 
-The [development lifecycle](EVIDENCE_LIFECYCLE.md) exercises one existing checker and a simulated choice to rely on its evidence. Product commands and pilot results remain open. New features must improve useful findings or review work against a stated baseline, including a simpler fingerprinted-trace baseline where relevant.
+The [development lifecycle](EVIDENCE_LIFECYCLE.md) exercises one existing checker and a simulated choice to rely on its evidence. Product commands and pilot results remain open. New features must improve obligation coverage decisions, defense choice, gap detection, or review work against a stated baseline.
