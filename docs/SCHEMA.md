@@ -1,135 +1,78 @@
-# Version 0.2 separates the defense plan from the defenses that exist
+# Version 0.2 separates the defense plan from current defenses
 
-Readers are engineers producing or consuming Upheld JSON. **Schema 0.2 represents the whole promise-to-defense map: what must stay true, what should hold it, what holds it now, what evidence supports those defenses, and which gaps need attention.**
+Readers are engineers producing or consuming Upheld JSON. **Schema 0.2 stores the full promise-to-defense map: what must stay true, what should hold it, what holds it now, what the checks showed, and which gaps need work.**
 
-The schemas under [schemas/0.2](../schemas/0.2/) define the new register, evidence, bindings, and derived assurance report. Version 0.1 remains supported as the first published wire format. Product commands are still unbuilt, so 0.1 command-output schemas remain the only published `validate`, `basis`, and `verify` shapes for now.
+The files under [schemas/0.2](../schemas/0.2/) define the register, evidence, bindings, and gap report. Version 0.1 remains readable. The repository still lacks the full product commands, so only 0.1 publishes command output shapes for `validate`, `basis`, and `verify`.
 
-A breaking record change uses a new schema version. Upgrading a file never creates a defense, recommendation, evidence record, or human choice that was not present in the source.
+A breaking wire change gets a new version. An upgrade never invents a defense plan, current defense, evidence record, or human choice.
 
-## The register holds intent and current implementation
+## The register stores the plan and current state
 
-Version 0.2 renames the top-level `promises` array to `obligations`. Each obligation carries its source, scope, constraints, recommended defense plans, actual defenses, and accepted exceptions.
+Version 0.2 renames the top-level `promises` array to `obligations`. Product prose can still say promise. Each record carries source, scope, project limits, defense plans, current defenses, and accepted gaps.
 
 | Record | Question it answers |
 |---|---|
 | obligation | What must remain true? |
-| `recommended_assurance` | Which defense plan or plans fit the stated objective and limits? |
-| plan member | Which mechanism should cover which part of the obligation, and how should it be challenged? |
-| `actual_defenses` | Which mechanisms really exist in the project now? |
-| evidence | What did a real challenge of an actual defense observe? |
-| binding | Which supporting evidence did a person choose to rely on? |
-| accepted gap | Which known shortfall did a person deliberately leave open? |
-| assurance report | What does the recorded plan-versus-current comparison expose now? |
+| `recommended_assurance` | Which plan fits the stated goals and limits? |
+| plan member | Which mechanism should cover which part, and how should we challenge it? |
+| `actual_defenses` | Which mechanisms exist now? |
+| evidence | What did a real challenge observe? |
+| binding | Which supporting record did a person choose to trust? |
+| accepted gap | Which known shortfall did a person choose to leave open? |
+| gap report | What does the plan-versus-current comparison expose now? |
 
-Advice and implementation are different record types. A recommended type check does not become an actual defense until the project implements it. A discovered unit test does not become recommended merely because it exists.
+Advice and current code use different fields. A suggested type guard does not become a current defense until the project builds it. Finding a unit test does not make it part of the preferred plan.
 
-## A defense plan is conditional and may contain several mechanisms
+## A plan can use several mechanisms
 
-`recommended_assurance.plans` can hold a preferred plan and alternatives. A plan records its objective, the project limits considered, its tradeoffs, and remaining unknowns.
+`recommended_assurance.plans` can hold one preferred plan and alternatives. Each plan names its goal, project limits, tradeoffs, and remaining unknowns.
 
-Each plan member records:
+Each member names its defense kind, target scope, reason, known bypass paths, fault challenge, needed tools or target, optional cost notes, and remaining unknowns.
 
-- a defense kind;
-- intended scope;
-- why that mechanism fits;
-- known bypass paths;
-- the fault challenge that should test it;
-- required environment;
-- optional cost notes;
-- residual uncertainty.
+`portfolio_logic` says whether all members are required, any member can suffice, members form layers, or a custom rule applies. One promise can therefore call for a type guard plus an integration check without claiming either covers the other's scope.
 
-`portfolio_logic` says whether all members are required, any member is sufficient, the members are layered, or a custom rule applies. This lets one obligation call for a type restriction plus an integration check without pretending either mechanism covers the other one's scope.
+The built-in kinds remain `test`, `property`, `checker`, `ratchet`, `type`, and `runtime_invariant`. An extension kind begins with `x-` and supplies a plain mechanism name.
 
-The built-in defense kinds remain `test`, `property`, `checker`, `ratchet`, `type`, and `runtime_invariant`. An extension kind still begins with `x-` and supplies a mechanism description.
+## Current defenses map back to plan members
 
-## Actual defenses map back to the plan without being forced to match it
+Each current defense names the real artifact, scope, kind, needed tools, and state. `recommendation_member_ids` links it to the plan members it claims to implement.
 
-Each actual defense records the real artifact, scope, kind, environment, and implementation state. `recommendation_member_ids` links the current mechanism to the plan members it is meant to implement.
+The schema allows an empty mapping. That means nobody has reviewed where the defense fits in the selected plan. The gap report can flag it as `divergence_unreviewed`.
 
-An empty mapping is allowed. It means the project has a defense whose place in the chosen plan has not been reviewed. A generated report can surface that as `divergence_unreviewed` rather than silently deleting or promoting the defense.
+`implementation_state` is `present`, `partial`, `disabled`, or `unknown`. Partial or disabled code stays visible and can leave a plan gap.
 
-`implementation_state` is `present`, `partial`, `disabled`, or `unknown`. A partial or disabled implementation remains visible and can create a plan-coverage gap.
+## The report derives open gaps
 
-## Derived gaps belong in a report; accepted gaps belong in the register
+The register stores deliberate accepted gaps under `accepted_gaps`. The reporter derives open gaps from the selected plan, current-defense mappings, bindings, and evidence.
 
-The register stores only deliberate accepted exceptions under `accepted_gaps`. Open gaps are derived from the current plan, actual defense mappings, bindings, and evidence.
+[The report schema](../schemas/0.2/assurance-report.schema.json) names `no_plan`, `no_defense`, `weaker_than_recommended`, `unproven_defense`, `stale_evidence`, `coverage_gap`, `unsupported_environment`, `divergence_unreviewed`, `conflicting_defenses`, `accepted_gap`, and `unknown`.
 
-[The assurance report schema](../schemas/0.2/assurance-report.schema.json) currently names these derived gap kinds:
+The first reporter emits only the classes its inputs justify. It must not guess semantic coverage. Accepted gaps remain visible; acceptance changes their status, not their meaning.
 
-- `no_plan`;
-- `no_defense`;
-- `weaker_than_recommended`;
-- `unproven_defense`;
-- `stale_evidence`;
-- `coverage_gap`;
-- `unsupported_environment`;
-- `divergence_unreviewed`;
-- `conflicting_defenses`;
-- `accepted_gap`;
-- `unknown`.
+## Evidence belongs to a current defense
 
-The first reporter implements only the gap classes it can justify from recorded structure, mappings, bindings, and evidence. It must not infer semantic coverage that the records do not establish.
+Version 0.2 keeps observation separate from human choice. Its main wire change is `basis.obligation`, replacing `basis.promise`.
 
-An accepted gap stays visible in the report. Acceptance changes the gap's status and review instruction; it does not convert the gap into a defense or evidence.
+The basis records the hash profile, promise fingerprint, defense-assertion fingerprint, artifact fingerprints, checked subject scope, and declared setup files. Run context records either an explicit unknown state or the producer's account of command, time, duration, toolchain, target, config, dirty-tree state, and omissions.
 
-## Evidence still belongs only to an actual defense
+A supporting record must match the current defense and oracle. A binding maps one defense ID to one evidence ID. Producers never write bindings.
 
-Version 0.2 evidence keeps the 0.1 separation between observation and human acceptance. The main wire change is that the basis hashes the `obligation` rather than the older `promise` field.
+## The schema does not give defense kinds a global rank
 
-The basis still records:
+The plan stores goals and project limits because “best” depends on the case. Cost, delay, likely harm, available tools, bypass paths, and the need for independent checks can change the preferred plan.
 
-- the hashing profile;
-- obligation fingerprint;
-- defense assertion fingerprint;
-- artifact fingerprints;
-- validated subject scope;
-- declared environment files.
+The wire format stores those facts and alternatives instead of a score such as `type > property > test`.
 
-Execution context still records either an explicit unknown state or the producer's account of command, time, duration, toolchain, target, configuration, dirty-tree state, and omissions.
+## Version 0.1 upgrades without inventing a plan
 
-A supporting record must match the actual defense and its oracle. A binding still maps one defense ID to one evidence ID. Producers never write bindings.
+Version 0.1 remains under [schemas/0.1](../schemas/0.1/). A future 0.1-to-0.2 tool must preserve IDs, claim text, current defenses, accepted gaps, dates, and evidence fingerprints.
 
-## Version 0.2 does not rank defense kinds globally
+It must set the new plan state to `unknown` unless a separate review supplies a plan. It must leave plan-member mappings empty unless someone reviewed them. It must never create evidence from `last_actually_ran` or create a binding.
 
-The schema records the objective and constraints behind a recommendation because “best” depends on the project. Cost, latency, failure consequence, infrastructure, bypass paths, and the need for independent defenses can change the preferred plan.
+The current review-copy and survey-register tools still write 0.1. Existing 0.1 fixtures and checks remain part of CI until the upgrade path exists.
 
-The wire format therefore stores the reasoning inputs and alternatives rather than a universal score such as `type > property > test`.
+## The first gap reporter stays narrow
 
-## Version 0.1 remains readable and migrates without inventing intent
+`tools/assurance_report.py` compares a selected plan with current-defense mappings. If bindings and evidence are present, it can tell a mapped defense with supporting evidence from one that merely exists.
 
-Version 0.1 remains under [schemas/0.1](../schemas/0.1/). It separates claims, candidate defenses, evidence, and bindings, but has no first-class defense-plan model.
-
-A future 0.1-to-0.2 migration must preserve these rules:
-
-| Version 0.1 | Version 0.2 | Migration rule |
-|---|---|---|
-| `promises` | `obligations` | Preserve IDs and claim text. |
-| `the_test_that_would_catch_it` | `falsifier` | Preserve the prose. |
-| `defenses` | `actual_defenses` | Preserve real mechanisms; initialize recommendation mappings empty unless separately reviewed. |
-| `gap` | `accepted_gaps` | Preserve the recorded choice and unknown actor/time honestly. |
-| no defense-plan field | `recommended_assurance` | Set status to `unknown`; never infer a preferred plan from existing tests. |
-| evidence `basis.promise` | evidence `basis.obligation` | Preserve the fingerprint value when the obligation text and hash profile are unchanged. |
-| `surveyed_on` | `recorded_on` | Preserve the date and name the producer mode. |
-
-Migration does not turn an existing defense into a recommendation. It does not create evidence from `last_actually_ran`, and it does not bind any evidence.
-
-## Version 0.1 compatibility rules still apply to old records
-
-The heldtospec probe remains `0.1-probe`. The review-copy and survey-register tools still emit 0.1 until their 0.2 migration work is implemented. Existing 0.1 fixtures, diagnostics, and command-output schemas remain checked by the repository.
-
-The historical 0.1 rules remain important:
-
-- every actual defense has an explicit mechanism kind;
-- a compiler's acceptance cannot establish its own soundness;
-- a test or property needs a justified fault challenge before binding;
-- a checker must distinguish clean, violated, and unable-to-inspect states;
-- execution context and evidence basis answer different questions;
-- unchanged hashes do not establish that the original defense judgment was sound.
-
-## The first 0.2 reporter is deliberately narrow
-
-`tools/assurance_report.py` compares a selected plan with actual defense mappings. With bindings and evidence supplied, it can distinguish a mapped present defense with supporting evidence from one that is merely present.
-
-It currently derives `no_plan`, `no_defense`, `weaker_than_recommended`, `unproven_defense`, and `divergence_unreviewed`, while keeping accepted exceptions visible. It does not yet calculate stale evidence from the live tree, prove scope composition, rank recommendations, or discover omitted obligations.
-
-Those limits are product work, not reasons to blur the record types.
+Today it derives `no_plan`, `no_defense`, `weaker_than_recommended`, `unproven_defense`, and `divergence_unreviewed`, while keeping accepted gaps visible. It does not yet check the live tree for stale evidence, prove that several members cover a whole promise, rank plans, or find omitted promises.
