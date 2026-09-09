@@ -60,7 +60,20 @@
     },
     {
       "accepted_gaps": [],
-      "actual_defenses": [],
+      "actual_defenses": [
+        {
+          "artifact_locator": "skills/upheld/SKILL.md",
+          "guarded_by": "x-agent-guidance",
+          "id": "UPH-02-02:d:skill-recommend",
+          "implementation_state": "present",
+          "mechanism": "Upheld skill recommendation route executed by a configured agent",
+          "needs_environment": ["configured agent client"],
+          "obligation_id": "UPH-02-02",
+          "recommendation_member_ids": ["UPH-02-02:recommend"],
+          "subject_scope": "defense planning workflow",
+          "why_this_kind": "The 0.2 skill instructs an agent to compare defense plans under project constraints."
+        }
+      ],
       "confidence": "verified",
       "constraints": {"consequence": "Choosing how a promise should be held is a primary product job.", "environment": [], "hard_limits": [], "objectives": []},
       "falsifier": "The system always recommends one technique or ignores a decisive constraint.",
@@ -92,17 +105,31 @@
     },
     {
       "accepted_gaps": [],
-      "actual_defenses": [{
-        "artifact_locator": "tools/assurance_report.py",
-        "guarded_by": "checker",
-        "id": "UPH-02-03:d:gap",
-        "implementation_state": "present",
-        "needs_environment": [],
-        "obligation_id": "UPH-02-03",
-        "recommendation_member_ids": ["UPH-02-03:gap"],
-        "subject_scope": "tools/assurance_report.py",
-        "why_this_kind": "Executable or structural defense for this recorded claim."
-      }],
+      "actual_defenses": [
+        {
+          "artifact_locator": "skills/upheld/SKILL.md",
+          "guarded_by": "x-agent-guidance",
+          "id": "UPH-02-03:d:skill-inventory",
+          "implementation_state": "present",
+          "mechanism": "Upheld skill inventory route executed by a configured agent",
+          "needs_environment": ["configured agent client", "source access"],
+          "obligation_id": "UPH-02-03",
+          "recommendation_member_ids": ["UPH-02-03:inventory"],
+          "subject_scope": "survey/code inventory",
+          "why_this_kind": "The 0.2 skill instructs an agent to read mechanisms and scope before recording current defenses."
+        },
+        {
+          "artifact_locator": "tools/assurance_report.py",
+          "guarded_by": "checker",
+          "id": "UPH-02-03:d:gap",
+          "implementation_state": "present",
+          "needs_environment": [],
+          "obligation_id": "UPH-02-03",
+          "recommendation_member_ids": ["UPH-02-03:gap"],
+          "subject_scope": "tools/assurance_report.py",
+          "why_this_kind": "Executable or structural defense for this recorded claim."
+        }
+      ],
       "confidence": "verified",
       "constraints": {"consequence": "The plan-versus-current view depends on real defense links and honest evidence state.", "environment": [], "hard_limits": [], "objectives": []},
       "falsifier": "A name match or unbound defense closes coverage.",
