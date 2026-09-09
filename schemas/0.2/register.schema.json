@@ -1,0 +1,179 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/yzm1/upheld/schemas/0.2/register.schema.json",
+  "title": "Upheld 0.2 assurance register",
+  "type": "object",
+  "definitions": {
+    "defense_kind": {
+      "anyOf": [
+        {"enum": ["test", "property", "checker", "ratchet", "type", "runtime_invariant"]},
+        {"type": "string", "pattern": "^x-[a-z][a-z0-9_-]*$"}
+      ]
+    },
+    "locator": {
+      "anyOf": [
+        {"type": "string", "minLength": 1},
+        {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true}
+      ]
+    },
+    "plan_member": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "guarded_by": {"$ref": "#/definitions/defense_kind"},
+        "mechanism": {"type": "string", "minLength": 1},
+        "intended_scope": {"type": "string", "minLength": 1},
+        "rationale": {"type": "string", "minLength": 1},
+        "bypass_paths": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "fault_challenge": {"type": "string", "minLength": 1},
+        "needs_environment": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "expected_cost": {"type": "string"},
+        "residual_uncertainty": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "metadata": {"type": "object"}
+      },
+      "required": ["id", "guarded_by", "intended_scope", "rationale", "bypass_paths", "fault_challenge", "needs_environment", "residual_uncertainty"],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"guarded_by": {"pattern": "^x-"}}},
+          "then": {"required": ["mechanism"]}
+        }
+      ]
+    },
+    "assurance_plan": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "obligation_id": {"type": "string", "minLength": 1},
+        "preference": {"enum": ["preferred", "alternative", "unranked"]},
+        "portfolio_logic": {"enum": ["all_required", "any_sufficient", "layered", "custom"]},
+        "objective": {"type": "string", "minLength": 1},
+        "constraints_considered": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "members": {"type": "array", "items": {"$ref": "#/definitions/plan_member"}, "minItems": 1},
+        "tradeoffs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "residual_uncertainty": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "metadata": {"type": "object"}
+      },
+      "required": ["id", "obligation_id", "preference", "portfolio_logic", "objective", "constraints_considered", "members", "tradeoffs", "residual_uncertainty"],
+      "additionalProperties": false
+    },
+    "actual_defense": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "obligation_id": {"type": "string", "minLength": 1},
+        "guarded_by": {"$ref": "#/definitions/defense_kind"},
+        "mechanism": {"type": "string", "minLength": 1},
+        "artifact_locator": {"$ref": "#/definitions/locator"},
+        "subject_scope": {"type": "string", "minLength": 1},
+        "why_this_kind": {"type": "string", "minLength": 1},
+        "needs_environment": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "implementation_state": {"enum": ["present", "partial", "disabled", "unknown"]},
+        "recommendation_member_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "last_actually_ran": {"type": ["string", "null"], "format": "date-time"},
+        "run_reference": {"type": ["string", "null"]},
+        "metadata": {"type": "object"}
+      },
+      "required": ["id", "obligation_id", "guarded_by", "artifact_locator", "subject_scope", "why_this_kind", "needs_environment", "implementation_state", "recommendation_member_ids"],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"guarded_by": {"pattern": "^x-"}}},
+          "then": {"required": ["mechanism"]}
+        }
+      ]
+    },
+    "accepted_gap": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["no_defense", "weaker_than_recommended", "unproven_defense", "stale_evidence", "coverage_gap", "unsupported_environment", "divergence_unreviewed", "conflicting_defenses", "other"]},
+        "scope": {"type": "string", "minLength": 1},
+        "reason": {"type": "string", "minLength": 1},
+        "related_plan_member_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "related_defense_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "accepted_by": {"type": ["string", "null"]},
+        "accepted_at": {"type": ["string", "null"], "format": "date-time"},
+        "revisit_when": {"type": ["string", "null"]},
+        "metadata": {"type": "object"}
+      },
+      "required": ["id", "kind", "scope", "reason", "related_plan_member_ids", "related_defense_ids", "accepted_by", "accepted_at", "revisit_when"],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schema_version": {"const": "0.2"},
+    "producer": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "mode": {"enum": ["authored", "survey", "import", "mixed"]},
+        "inputs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "source_repo": {"type": "string", "minLength": 1},
+        "source_rev": {"type": "string", "minLength": 1},
+        "recorded_on": {"type": "string", "minLength": 1},
+        "metadata": {"type": "object"}
+      },
+      "required": ["name", "mode", "inputs"],
+      "additionalProperties": false
+    },
+    "obligations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "text": {"type": "string", "minLength": 1},
+          "subject_scope": {"type": "string", "minLength": 1},
+          "source": {"type": "string", "minLength": 1},
+          "published_in": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "origin": {"enum": ["authored", "discovered", "imported", "mixed"]},
+          "confidence": {"enum": ["draft", "verified", "suspected"]},
+          "detail": {"type": "string"},
+          "why": {"type": "string", "minLength": 1},
+          "falsifier": {"type": "string", "minLength": 1},
+          "next_step": {"type": "string", "minLength": 1},
+          "reachability": {"enum": ["live", "latent", "impossible", "unknown"]},
+          "armed_by": {"type": "string", "minLength": 1},
+          "constraints": {
+            "type": "object",
+            "properties": {
+              "objectives": {"type": "array", "items": {"type": "string", "minLength": 1}},
+              "hard_limits": {"type": "array", "items": {"type": "string", "minLength": 1}},
+              "environment": {"type": "array", "items": {"type": "string", "minLength": 1}},
+              "consequence": {"type": "string"},
+              "metadata": {"type": "object"}
+            },
+            "required": ["objectives", "hard_limits", "environment", "consequence"],
+            "additionalProperties": false
+          },
+          "recommended_assurance": {
+            "type": "object",
+            "properties": {
+              "status": {"enum": ["unknown", "proposed", "reviewed", "accepted"]},
+              "selected_plan_id": {"type": ["string", "null"]},
+              "plans": {"type": "array", "items": {"$ref": "#/definitions/assurance_plan"}},
+              "rationale": {"type": "string"}
+            },
+            "required": ["status", "selected_plan_id", "plans"],
+            "additionalProperties": false
+          },
+          "actual_defenses": {"type": "array", "items": {"$ref": "#/definitions/actual_defense"}},
+          "accepted_gaps": {"type": "array", "items": {"$ref": "#/definitions/accepted_gap"}},
+          "metadata": {"type": "object"}
+        },
+        "required": ["id", "text", "subject_scope", "source", "origin", "confidence", "why", "falsifier", "reachability", "constraints", "recommended_assurance", "actual_defenses", "accepted_gaps"],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {"properties": {"reachability": {"const": "latent"}}},
+            "then": {"required": ["armed_by"]}
+          }
+        ]
+      }
+    },
+    "metadata": {"type": "object"}
+  },
+  "required": ["schema_version", "producer", "obligations"],
+  "additionalProperties": false
+}
