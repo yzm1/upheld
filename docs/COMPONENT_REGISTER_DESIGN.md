@@ -1,6 +1,8 @@
-# Components own claims; shared contracts need their own records
+# Components own obligations; shared contracts need their own records
 
-Readers are engineers planning Upheld's next schema. **Keep a component's promises near its code, and give shared contracts an explicit owner.** Combine those files into a generated system view. This is agreed design work for S15–S17; the current exporter uses schema 0.1.
+Readers are engineers planning Upheld's next schema. **Keep a component's obligations near its code or design record, and give shared contracts an explicit owner.** Combine those files into a generated system view. This is agreed design work for S15–S17; the current exporter uses schema 0.1.
+
+A component register is not only survey output. A team may author it while specifying a new application, then fill in actual defenses as implementation appears. A survey of an existing codebase reaches the same model from the other direction. The system view should compare intended assurance with actual assurance and show the resulting gaps.
 
 ## Boundver supplies component names and change impact
 
@@ -18,7 +20,7 @@ The next schema must not overload one edge type.
 
 | Relation | Meaning | Evidence implication |
 |---|---|---|
-| Membership | A claim or artifact belongs to a component or authored register. | None. It organizes ownership and scope. |
+| Membership | An obligation, defense, or artifact belongs to a component or authored register. | None. It organizes ownership and scope. |
 | Dependency / consumer | A change in one component may affect another. | None. It selects possible review work. |
 | Trace / source relation | An obligation is derived from, published in, or linked to another record or artifact. | None by itself. It may become stale. |
 | Support | One claim, mechanism, or argument is offered as grounds for another claim under stated conditions. | Requires an explicit reason, scope, and compatible defenses/evidence before reliance. |
@@ -27,21 +29,32 @@ Boundver can supply dependency topology. Doorstop or StrictDoc can supply requir
 
 A generated view may combine these relation types, but it must label their provenance and never promote a dependency or fresh trace into evidence.
 
+## Component records carry intended and actual assurance
+
+The next schema should make the product spine visible without forcing one document layout.
+
+| Proposed record | What belongs there |
+|---|---|
+| Component register | Owned obligations, assumptions, constraints, recommended assurance, implemented defenses, and accepted gaps |
+| Defense recommendation | One proposed mechanism or portfolio with rationale, cost, scope, bypass paths, and proposed fault challenge |
+| Implemented defense | A mechanism that actually exists and is claimed to uphold an obligation |
+| Evidence and binding | What challenged an implemented defense and which supporting record a person chose to rely on |
+| Exported contract | Claims that other components may rely on |
+| Shared-contract register | Participating claims, support mapping, conditions, owner, intended assurance, and actual defenses |
+| Manifest | Included files, exported names, external references, and optional topology providers |
+| Generated view | Resolved sources, intended-versus-actual assurance, gaps, relation types, cycles, and change-impact context |
+
+These names describe planned roles. S15 will define the fields and a schema version. Upheld already uses binding for a person's evidence choice; shared contracts need a distinct name.
+
+A recommendation may contain several mechanisms. One mechanism can cover a local invariant while another covers an integration boundary. The recommendation should say whether the portfolio is conjunctive, alternative, or layered. Exact composition rules remain schema work.
+
+The generated gap view should distinguish at least missing defense, weaker or narrower defense, unproven defense, stale evidence, uncovered scope, unavailable infrastructure, and deliberately accepted gap. Exact wire names remain open.
+
 ## A shared claim needs more than a link
 
 The Object Management Group's assurance standard lets a package expose selected claims. A separate package records the argument connecting claims from other packages. This gives us a place to explain why one guarantee meets another requirement. It does not prescribe our JSON layout or prove the claims. [Structured Assurance Case Metamodel 2.3, October 2023, sections 11.4–11.6](https://www.omg.org/spec/SACM/2.3/PDF).
 
-| Proposed record | What belongs there |
-|---|---|
-| Component register | Owned promises, assumptions, implemented defenses, and separately labeled recommendations |
-| Exported contract | Claims that other components may rely on |
-| Shared-contract register | Participating claims, support mapping, conditions, owner, and its own defenses |
-| Manifest | Included files, exported names, external references, and optional topology providers |
-| Generated view | Resolved sources, open questions, relation types, cycles, and change-impact context |
-
-These names describe planned roles. S15 will define the fields and a schema version. Upheld already uses binding for a person's evidence choice; shared contracts need a distinct name.
-
-Recommendations about how best to enforce a promise remain proposals. They need rationale, scope, bypass paths, fault challenge, cost, and residual uncertainty, and they must not appear as though the recommended mechanism already exists.
+A cross-project consumer edge only says where change may matter. A shared-contract record must separately explain why an exported guarantee from one component is sufficient for a consumer obligation. It should also state versions, conditions, intended assurance for that support relationship, actual defenses, and the evidence that backs them.
 
 ## Existing trace systems provide an adoption bypass
 
@@ -62,19 +75,19 @@ For standalone use, Upheld may keep minimal locators, fingerprints, and relation
 
 Requiring A, B, and C together does not create a dependency cycle. Mutual conditions can both hold while their desired outcomes remain false. Formal assume-guarantee rules permit some circular reasoning under added premises. Upheld must record the rule and grounds before claiming a cycle has support. [Abadi and Lamport, Conjoining Specifications, 1995, sections 4.3 and 5](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/Conjoining-Specifications.pdf).
 
-A group of mutually dependent claims can define a review scope. Merely visiting every node supplies no evidence. Full promise-level grading remains deferred in [the checker rules](CHECKER.md).
+A group of mutually dependent claims can define a review scope. Merely visiting every node supplies no evidence. Full obligation-level grading remains deferred in [the checker rules](CHECKER.md).
 
 ## Cross-project checks bind the participating versions
 
 Pact's matrix associates consumer and provider versions through contracts and test results. Upheld should likewise record which versions and conditions support a shared claim. A version label alone does not establish compatible behavior. [Pact's version-based check](https://docs.pact.io/pact_broker/can_i_deploy).
 
-Keep stable claim IDs separate from source paths and inspected revisions. Missing remote sources remain unknown. Review deleted links using both the old and new graph. Boundver's range review uses that approach so removed consumers remain visible. [Range-review rules](https://github.com/yzm1/boundver/blob/b8c886100694a0b9f9d45502d072876f07c43444/docs/reference.md).
-
-A cross-project consumer edge only says where change may matter. The shared-contract record must separately explain why an exported guarantee from one component is sufficient for a consumer obligation, under which versions and conditions, and what evidence defends that support relationship.
+Keep stable obligation IDs separate from source paths and inspected revisions. Missing remote sources remain unknown. Review deleted links using both the old and new graph. Boundver's range review uses that approach so removed consumers remain visible. [Range-review rules](https://github.com/yzm1/boundver/blob/b8c886100694a0b9f9d45502d072876f07c43444/docs/reference.md).
 
 ## The next work must preserve local choices
 
-S15 defines the schema and migration. It must distinguish membership, dependency, trace, support, and recommendation state. S16 loads component files and builds views; it should consume existing topology providers where available instead of reproducing their graph semantics. S17 adds cross-project mappings and real shared-contract cases. Their gates must cover moved files, missing sources, changed assumptions, conflicting versions, unsupported cycles, imported suspect/affected states, and source-tool drift. Regeneration must preserve reviewed claims and evidence choices.
+S15 defines the schema and migration. It must distinguish authored or discovered obligation state, recommendation state, actual defenses, evidence, accepted gaps, membership, dependency, trace, and support. S16 loads component files and builds views; it should consume existing topology providers where available instead of reproducing their graph semantics. S17 adds cross-project mappings and real shared-contract cases.
+
+Their gates must cover moved files, missing sources, changed assumptions, changed recommendation constraints, conflicting versions, unsupported cycles, imported suspect/affected states, and source-tool drift. Regeneration must preserve reviewed obligations, recommendations that have not semantically changed, evidence, and human choices.
 
 Small projects may keep one authored file. Splitting files adds reference and review work; its maintenance benefit remains unmeasured. An optional Boundver import can supply component context without requiring every Upheld user to adopt it. A Doorstop or StrictDoc import can likewise reduce duplicate obligation authoring without treating source-tool review status as accepted evidence.
 
