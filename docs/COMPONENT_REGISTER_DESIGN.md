@@ -52,7 +52,7 @@ S15 should define provenance for imported records and references. S16 should be 
 - Boundver component IDs, contract facets, and affected consumers;
 - Doorstop or StrictDoc requirement IDs and source links;
 - build-system affected-target output;
-- ReqIF or ALM records as candidate obligation sources.
+- ReqIF or requirements-management records as candidate obligation sources.
 
 Imported `suspect`, `affected`, `reviewed`, passing-test, or link-hash state is context only. It never becomes an Upheld evidence verdict or binding. The importer should minimize duplicate authoring without inheriting the source tool's acceptance semantics.
 
